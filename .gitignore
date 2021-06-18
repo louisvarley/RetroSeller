@@ -3,3 +3,4 @@ dumps
 
 composer.lock
 sample_data.php
+App/Config.php
