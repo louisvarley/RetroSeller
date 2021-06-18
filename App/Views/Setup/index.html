@@ -1,0 +1,87 @@
+{% extends "base.public.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+	{% embed "forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			<h2>Welcome to RetroSeller Initial Setup</h2>
+			
+			<hr class="my-4">
+			
+			<h4>User Setup</h4>
+			<hr class="my-4">		
+			{% include "forms/elements/text-email.html" with {
+				'label' : 'Enter Email Address',
+				'id': 'user_email', 
+				'name': "user_email", 
+				'required': 'required',
+				'description': 'Enter your email address'
+			}%}		
+
+			{% include "forms/elements/text-password.html" with {
+				'label' : 'Choose a Password',
+				'id': 'user_password', 
+				'name': "user_password", 
+				'description': 'Choose a password'				
+			}%}		
+			
+			<hr class="my-4">	
+			<h4>Database Setup</h4>
+			<hr class="my-4">		
+			
+			{% include "forms/elements/text.html" with {
+				'label' : 'MySQL Hostname',
+				'id': 'db_host', 
+				'name': "db_host", 
+				'required': 'required',
+				'description': 'Enter your MySQL Hostname'
+			}%}		
+
+
+			{% include "forms/elements/text.html" with {
+				'label' : 'MySQL Database Name',
+				'id': 'db_name', 
+				'name': "db_name", 
+				'required': 'required',
+				'description': 'Choose a database name'
+			}%}				
+			
+
+			{% include "forms/elements/text.html" with {
+				'label' : 'MySQL Username',
+				'id': 'db_user', 
+				'name': "db_user", 
+				'required': 'required',
+				'description': 'Enter your MySQL Username'
+			}%}	
+
+			{% include "forms/elements/text-password.html" with {
+				'label' : 'MySQL Password',
+				'id': 'db_password', 
+				'name': "db_password", 
+				'description': 'Enter your MySQL Password'
+			}%}					
+	
+			{% include "forms/elements/text.html" with {
+				'label' : 'Database Port',
+				'id': 'db_port', 
+				'name': "db_port", 
+				'required': 'required',
+				'value': '3306',
+				'description': 'Enter your MySQL Port'
+			}%}	
+			
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

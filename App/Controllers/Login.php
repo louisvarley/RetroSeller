@@ -24,7 +24,7 @@ class Login extends \Core\Controller
 			header('Location: /');
 		
 		if($this->isPOST()){
-			
+
 			$user = findBy("user", ['email' => $this->post['email']]);
 			 
 			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
