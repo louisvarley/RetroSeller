@@ -28,6 +28,7 @@ define('_DB_NAME','retroseller');
 define('_DB_USER','root');
 define('_DB_PASSWORD','');
 define('_DB_PORT','3306');
+define('_DB_DUMPER','C:\wamp64\bin\mysql\mysql8.0.22\bin\mysqldump.exe');
 
 /* CLI Mode */
 if(php_sapi_name() !== 'cli'){

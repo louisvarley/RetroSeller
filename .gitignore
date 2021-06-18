@@ -1,4 +1,5 @@
 vendor
+dumps
 
 composer.lock
 sample_data.php

@@ -56,26 +56,3 @@ jobManager()->Add(function(){
 	
 });
 
-
-
-jobManager()->Add(function(){
-	
-	$sql = '	
-		
-	CREATE OR REPLACE VIEW rs_unsold_purchases_vw AS
-	SELECT   id,
-			 name,
-			 concat(" <span class=\'badge badge-primary\'>", name,"</span> ", "<span class=\'badge badge-info\'>ID:",id,"</span> ","<span class=\'badge badge-secondary\'>", date, "</span>") as optionset_name
-			
-	from rs_purchases
-
-	WHERE purchase_status_id <> ' . _SOLD_STATUS . '
-
-	ORDER BY id';
-		 		
-	$connection = entityManager()->getConnection();
-	$statement = $connection->prepare($sql);
-	$statement->execute();		 
-	
-});
-
