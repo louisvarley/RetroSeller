@@ -1,0 +1,109 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	<ul class="navbar-nav mr-auto">
+	  <li class="nav-item active">
+		<a class="nav-link" href="/">
+			<img class="logo" src="/static/img/nav-logo.png">
+		</a>
+	  </li>
+
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Sales
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/sale/new">New Sale</a>
+		  <div class="dropdown-divider"></div>
+		  <a class="dropdown-item" href="/sale/list">View Sales</a>
+		</div>
+	  </li>
+
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Purchases
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/purchase/new">New Purchase</a>		  
+		  <div class="dropdown-divider"></div>
+		  <a class="dropdown-item" href="/purchase/list">All Purchases</a>
+		  <a class="dropdown-item" href="/purchaseCategory/list">All Purchase Categories</a>		  
+		</div>
+	  </li>
+	  
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Expenses
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/expense/new">New Expense</a>
+		  <div class="dropdown-divider"></div>
+		  <a class="dropdown-item" href="/expense/list">All Expenses</a>
+		</div>
+	  </li>	  
+	  
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Buy Outs
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/buyout/new">New Buy Out</a>
+		  <div class="dropdown-divider"></div>
+		  <a class="dropdown-item" href="/buyout/list">All Buy Outs</a>
+		</div>
+	  </li>		  
+	  
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Accounts
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">			
+		  <a class="dropdown-item" href="/account/list">All Accounts</a>
+		  <a class="dropdown-item" href="/withdrawal/list">All Withdrawals</a>		  
+		</div>
+	  </li>	  
+	  
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Stock
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/stock/list">Stock List</a>				
+		</div>
+	  </li>	  	  
+
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Configuration
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/paymentVendor/list">Payment Vendors</a>
+		  <div class="dropdown-divider"></div>
+		  <a class="dropdown-item" href="/saleVendor/list">Sale Vendors</a>
+		  <div class="dropdown-divider"></div>
+		  <a class="dropdown-item" href="/purchaseVendor/list">Purchase Vendors</a>
+		  <div class="dropdown-divider"></div>		  
+		  <a class="dropdown-item" href="/user/list">User Management</a>
+		</div>
+	  </li>	
+	</ul>
+  </div>
+  
+	<div class="navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  {{ session.user.email }}
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				  <a class="dropdown-item" href="/user/edit/{{ session.user.id }}">Profile</a>				
+		
+				  <a class="dropdown-item" href="/logout">Logout</a>				
+				</div>
+		  </li>	  
+        </ul>
+    </div> 
+</nav>

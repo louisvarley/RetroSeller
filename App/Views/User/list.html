@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+	{% embed "tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Email Address",""]	} %}
+		{% block table_body %}
+			{% for entity in entities %}
+			<tr>
+			<td>{{ entity.id }}</td>
+			<td>{{ entity.email }}</td>			
+			<td>
+			{% include '/buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+			</td>				
+			</tr>
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

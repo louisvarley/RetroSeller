@@ -1,0 +1,16 @@
+{% embed "forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+
+{% set object = value[0] %}
+{% set field = value[1] %}
+
+<select autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} multiple="multiple" id="{{ id }}" name="{{ name }}" type="text" {{required}} class="form-control select-multiple {{classes}}">
+{% for option in options %}  
+	<option 
+	 {% for value in object %}{% if attribute(value, field) == option.value %}selected="selected"{% endif %}{% endfor %}
+	 value="{{option.value}}">{{option.text}}
+	</option>
+{% endfor %}  
+</select>
+{% endblock %}
+{% endembed %}

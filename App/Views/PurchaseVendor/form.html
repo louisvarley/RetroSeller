@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+	{% embed "forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( purchaseVendor.id ) %}
+			
+				{% include "forms/elements/text.html" with {
+					'label' : 'ID',
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'description': 'ID of this Account',
+					'readonly': 'readonly',
+					'value': purchaseVendor.id
+				}%}
+				
+				<hr class="my-4">		
+
+			{% endif %}		
+
+			{% include "forms/elements/text.html" with {
+				'label' : 'Name',
+				'id': 'name', 
+				'name': "#{controller}[name]", 
+				'description': 'Vendor Name',
+				'value': purchaseVendor.name
+			}%}			
+					
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

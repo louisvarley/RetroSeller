@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Purchases{% endblock %}
+
+{% block body %}
+	{% embed "forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( purchase.id ) %}
+			
+				{% include "forms/elements/text.html" with {
+					'label' : 'ID',
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'description': 'ID of this purchase',
+					'readonly': 'readonly',
+					'value': purchase.id
+				}%}
+				
+				<hr class="my-4">		
+
+			{% endif %}			
+
+			{% include "forms/elements/text.html" with {
+				'label' : 'Title',
+				'id': 'title', 
+				'name': "#{controller}[name]", 
+				'description': 'Name of this purchase',
+				'required': 'required',
+				'value': purchase.name,
+			}%}
+			
+			{% include "forms/elements/text-currency.html" with {
+				'label' : 'Valuation',			
+				'id': 'valuation', 
+				'name': "#{controller}[valuation]", 
+				'description': 'Give this purchase a valuation, will be used for stock lists',
+				'required': 'required',
+				'value': purchase.valuation				
+			}%}					
+			
+			{% include "forms/elements/textarea.html" with {
+				'label' : 'Description',
+				'id': 'description', 
+				'name': "#{controller}[description]", 
+				'description': 'Description of this purchase',
+				'required': 'required',
+				'value' : purchase.description
+			}%}		
+
+			{% include "forms/elements/select.html" with {
+				'label' : 'Status',		
+				'id': 'status', 
+				'name': "#{controller}[status]", 
+				'description': 'Status of this purchase?',
+				'required': 'required',
+				'value': purchase.status.Id,
+				'options': purchaseStatuses			
+			}%}				
+			
+			{% include "forms/elements/select.html" with {
+				'label' : 'Category',		
+				'id': 'category', 
+				'name': "#{controller}[category]", 
+				'description': 'Category of this Purchase?',
+				'required': 'required',
+				'value': purchase.category.Id,
+				'options': purchaseCategories			
+			}%}	
+			
+			{% include "forms/elements/select.html" with {
+				'label' : 'Purchase Vendor',		
+				'id': 'purchase_vendor_id', 
+				'name': "#{controller}[purchase_vendor_id]", 
+				'description': 'What service was this purchase made through?',
+				'required': 'required',
+				'value': purchase.purchaseVendor.Id,
+				'options': purchaseVendors			
+			}%}	
+			
+			{% include "forms/elements/text-date.html" with {
+				'label' : 'Date',	
+				'id': 'date', 
+				'name': "#{controller}[date]", 
+				'description': 'Date this purchase was made',
+				'required': 'required',
+				'value' : purchase.date				
+			}%}		
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+
+

@@ -1,0 +1,9 @@
+{% embed "forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+
+<span class="input-group-text">
+<i class="fas fa-barcode"></i></span>
+<input autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} id="{{ id }}" name="{{ name }}" value="{{ value }}" type="number" {{ required }} class="form-control {{classes}}">
+<button class="btn btn-secondary" type="button">Lookup</button>
+{% endblock %}
+{% endembed %}

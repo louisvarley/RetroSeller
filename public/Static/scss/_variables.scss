@@ -1,0 +1,40 @@
+$transition: all 0.2s ease-in-out; //Transition animation
+
+$color__typo-primary: #4c5159; // Headings and text
+$color__border-soft:  rgba(76, 81, 89, 0.15);
+
+$color__brand-primary: #ea5153;
+$color__brand-primary--hover: darken(#ea5153, 5%);
+
+
+/* Colors */
+$color__white: #fff;
+
+$color__orange: #f29100;
+$color__orange--dark: darken($color__orange, 50%);
+$color__orange--light: lighten($color__orange, 45%);
+
+$color__green: #afca0b;
+$color__green--dark: darken($color__green, 20%);
+$color__green--light: lighten($color__green, 50%);
+
+$color__red: #ea5153;
+$color__red--dark: darken($color__red, 50%);
+$color__red--light: lighten($color__red, 35%);
+
+$color__blue: #0069b4;
+$color__blue--dark: darken($color__blue, 50%);
+$color__blue--light: lighten($color__blue, 23%);
+
+$color__pink: #ec008c;
+$color__pink--dark: darken($color__pink, 50%);
+$color__pink--light: lighten($color__pink, 50%);
+
+$color__grey: #efefef;
+$color__grey--dark: darken($color__grey, 50%);
+$color__grey--light: lighten($color__grey, 50%);
+
+$background__danger: rgba(234, 81, 83, 0.2)
+
+
+

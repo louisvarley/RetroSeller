@@ -1,0 +1,34 @@
+{% extends "base.public.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+	{% embed "forms/login-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% include "forms/elements/text-email.html" with {
+				'label' : 'Email Address',
+				'id': 'user_email', 
+				'name': "email", 
+				'required': 'required',
+				'value': user.email
+			}%}		
+
+			{% include "forms/elements/text-password.html" with {
+				'label' : 'Password',
+				'id': 'user_password', 
+				'name': "password", 
+			}%}		
+	
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.public.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+	{% embed "tables/table-base.public.html" with {'table_id': controller, 'headers': ["Category", "Name", "Description", "Price"]	} %}
+		{% block table_body %}
+			{% for entity in entities %}
+				<tr style="background-color:{{ entity.category.color}}">		
+				<td>{{ entity.category.view.path }}</td>					
+				<td>{{ entity.name }}</td>	
+				<td>{{ entity.description }}</td>					
+				<td>{{ entity.valuation  | format_currency('GBP', {rounding_mode: 'floor'})  }}</td>				
+				</tr>
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

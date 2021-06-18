@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+	{% embed "tables/table-base.html" with {'table_id': controller, 'headers': ["Expenses","Id","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
+		{% block table_body %}
+			{% for entity in entities %}
+				<tr>
+				<td>{% include '/buttons/sub-table-button.html' with {'id': entity.id} %}</td>
+				<td>{{ entity.id }}</td>
+				<td><span class="badge badge-{{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>			
+				<td>{{ entity.name }}</td>	
+				<td>{{ entity.date | date('d/m/Y') }}</td>
+				<td>{{ entity.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'})  }}</td>
+				<td>
+					<div class="progress">
+					{% for account in entity.expenseShare %}
+						<div data-tooltip="{{ account.name }} {{ account.percentage |round(1, 'floor') }}%" class="progress-bar tool-tip" role="progressbar" style="background-color:{{ account.color }}; width: {{ account.percentage }}%" aria-valuenow="{{ account.amount }}" aria-valuemin="0" aria-valuemax="{{ entity.totalSpend }}"></div>
+					{% endfor %}
+					</div>
+				</td>
+				<td>
+				{% include '/buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+				{% include '/buttons/buy-button.html' with {'model': controller, 'id': entity.id} %}				
+				{% include '/buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+				</td>				
+				</tr>
+				<tr data-id="{{entity.id}}" class="sub-table">
+					<td colspan="99">
+						<table>
+						<tr>
+							<th>Account</th>
+							<th>Date</th>							
+							<th>Expense</th>				
+							<th>Amount</th>
+							<th></th>
+						</tr>
+						{% for expense in entity.expenses %}
+						
+						<tr {% if( entity.buyout != null and entity.buyout.account.id != expense.account.id ) %}class="buyout"{% endif %}>
+							<td>{{ expense.account.name }}</td>
+							<td>{{ expense.date | date('d/m/Y') }}</td>
+							<td>{{ expense.name }}</td>				
+							<td>{{ expense.ProporationAmount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
+							<td>{% include '/buttons/edit-button.html' with {'model': "expense", 'id': expense.id} %}</td>
+						</tr>
+						{% endfor %}
+						</table>
+					
+					</td>
+				</tr>
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

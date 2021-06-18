@@ -1,0 +1,14 @@
+<a href="{{ controller }}">
+{% include '/buttons/add-button.html' with {'model': controller} %}
+</a>
+
+<table id="{{ table_id }}" class="list-table table table-striped {{ classes }}" style="width:100%">
+
+<thead>
+{% for header in headers %}  
+	<th> {{ header }} </th>
+{% endfor %} 
+</thead>
+
+{% block table_body %}{% endblock %}
+</table>

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="row">
+
+
+	{% for account in accounts %}
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-info panel-colorful">
+                <div class="panel-body text-center">
+                	<p class="text-uppercase mar-btm text-sm">{{ account.name }}</p>
+                	<i class="fas fa-piggy-bank"></i>
+                	<hr>
+                	<p class="h2 text-thin">{{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</p>
+                	<small><span class="text-semibold">Balance</span></small>
+                </div>
+            </div>
+        </div>
+		
+	{% endfor %}	
+
+	
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="panel panel-success panel-colorful">
+			<div class="panel-body text-center">
+				<p class="text-uppercase mar-btm text-sm">Sales</p>
+				<i class="fas fa-shopping-cart"></i>
+				<hr>
+				<p class="h2 text-thin">{{ sales |length }}</p>
+				<small><span class="text-semibold">Total Sales</span></small>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="panel panel-secondary panel-colorful">
+			<div class="panel-body text-center">
+				<p class="text-uppercase mar-btm text-sm">Stock for Sale</p>
+				<i class="fas fa-cubes"></i>
+				<hr>
+				<p class="h2 text-thin">{{ purchases | length }}</p>
+				<small><span class="text-semibold">Items Set as For Sale</span></small>
+			</div>
+		</div>
+	</div>
+	
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-primary panel-colorful">
+                <div class="panel-body text-center">
+                	<p class="text-uppercase mar-btm text-sm">Profits</p>
+                	<i class="fas fa-pound-sign"></i>
+                	<hr>
+                	<p class="h2 text-thin">{{ profit | format_currency('GBP', {rounding_mode: 'floor'}) }}</p>
+                	<small><span class="text-semibold">Total Profits</span></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-info panel-colorful">
+                <div class="panel-body text-center">
+                	<p class="text-uppercase mar-btm text-sm">Stock Value</p>
+                	<i class="fas fa-pound-sign"></i>
+                	<hr>
+                	<p class="h2 text-thin">{{ valuation | format_currency('GBP', {rounding_mode: 'floor'}) }}</p>
+                	<small><span class="text-semibold">Value of all stock for sale</span></small>
+                </div>
+            </div>
+        </div>       
+	</div>
+
+{% endblock %}

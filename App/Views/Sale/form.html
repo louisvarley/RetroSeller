@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}sales{% endblock %}
+
+{% block body %}
+	{% embed "forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( sale.id ) %}
+			
+				{% include "forms/elements/text.html" with {
+					'label' : 'ID',
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'description': 'ID of this sale',
+					'readonly': 'readonly',
+					'value': sale.id
+				}%}
+				
+				<hr class="my-4">		
+
+			{% endif %}		
+
+			{% include "forms/elements/text-ebay.html" with {
+				'label' : 'Auction Item Number',			
+				'id': 'amount', 
+				'name': "#{controller}[ebay_item_no]", 
+				'description': 'If listed on eBay, enter the Item Number',
+				'value': sale.ebayItemNo				
+			}%}			
+
+			{% include "forms/elements/text-date.html" with {
+				'label' : 'Date',	
+				'id': 'date', 
+				'name': "#{controller}[date]", 
+				'description': 'Date this sale was made',
+				'required': 'required',
+				'value' : sale.date				
+			}%}					
+
+			{% include "forms/elements/select.html" with {
+				'label' : 'Sale Vendor',		
+				'id': 'status', 
+				'name': "#{controller}[sale_vendor_id]", 
+				'description': 'Status of this sale?',
+				'required': 'required',
+				'value': sale.saleVendor.Id,
+				'options': saleVendors			
+			}%}		
+
+			{% include "forms/elements/select.html" with {
+				'label' : 'Payment Vendor',		
+				'id': 'status', 
+				'name': "#{controller}[payment_vendor_id]", 
+				'description': 'Status of this sale?',
+				'required': 'required',
+				'value': sale.paymentVendor.Id,
+				'options': paymentVendors			
+			}%}				
+			
+			{% include "forms/elements/select-multiple.html" with {
+				'label' : 'Accounts',		
+				'id': 'account_id', 
+				'name': "#{controller}[accounts][]", 
+				'description': 'Purchases to assign to this expense',
+				'value': [sale.accounts, "id"],
+				'options': accounts						
+			}%}			
+			
+			{% include "forms/elements/select-multiple.html" with {
+				'label' : 'Purchases',		
+				'id': 'purchase_id', 
+				'name': "#{controller}[purchases][]", 
+				'description': 'Purchases to assign to this expense',
+				'required': 'required',
+				'value': [sale.purchases, "id"],
+				'options': purchases						
+			}%}		
+				
+			{% include "forms/elements/text-currency.html" with {
+				'label' : 'Gross Sale Amount',			
+				'id': 'gross_amount', 
+				'name': "#{controller}[gross_amount]", 
+				'description': 'Gross Sale price (Sale Price + Postage Charged Buyer)',
+				'required': 'required',
+				'value': sale.grossAmount				
+			}%}				
+
+			{% include "forms/elements/text-currency.html" with {
+				'label' : 'Postage Cost Amount',			
+				'id': 'postage_cost', 
+				'name': "#{controller}[postage_cost]", 
+				'description': 'Cost of Postage (Exclude extra for Packaging)',
+				'required': 'required',
+				'value': sale.postageCost				
+			}%}	
+			
+			{% if( sale.id ) %}
+
+			{% include "forms/elements/text-currency.html" with {
+				'label' : 'Fee Amount',			
+				'id': 'amount', 
+				'name': "#{controller}[fee_cost]", 
+				'description': 'Fee amount for both Sale and Payment Vendors Charges',
+				'required': 'required',
+				'value': sale.feeCost				
+			}%}	
+			
+			<hr class="my-4">	
+			
+			{% include "forms/elements/text-currency.html" with {
+				'label' : 'Net Sale Amount',			
+				'id': 'net_amount', 
+				'name': "#{controller}[net_amount]", 
+				'description': 'Net Sale Amount (Minus Postage Cost and Fees)',
+				'required': 'required',
+				'readonly': true,
+				'value': sale.netAmount				
+			}%}				
+			
+			{% endif %}
+		
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+
+
