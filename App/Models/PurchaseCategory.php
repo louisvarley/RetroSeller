@@ -34,10 +34,7 @@ class PurchaseCategory
      */
     protected $parent;	
 	
-    /**
-     * @ORM\ManyToOne(targetEntity="PurchaseCategoryView", inversedBy="id" )
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
-     */
+
     protected $view;		
 	
     public function getId()

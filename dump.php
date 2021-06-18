@@ -1,4 +1,4 @@
-<?php // create_product.php <name>
+<?php 
 
 require __DIR__ . '/Core/Globals.php';
 $d = new \DateTime('now');

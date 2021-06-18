@@ -4,16 +4,53 @@ use Core\EntityManager;
 use Core\SessionManager;
 use Core\ToastManager;
 use Core\ActionsManager;
+
 /**
  * Config
  */
-require(dirname(dirname(__FILE__)) . "/app/config.php");
+ 
+/* Directories */
+define("DIR_ROOT", dirname(dirname(__FILE__)));
+define("DIR_APP", DIR_ROOT . '/app');	
+define("DIR_CORE", DIR_ROOT . '/core');	
+define("DIR_PUBLIC", DIR_ROOT . '/public');
+define("DIR_STATIC", DIR_PUBLIC  . '/static');	
+define("DIR_PROXIES", DIR_CORE  . '/proxies');
+
+define("WWW_STATIC", '/static');	
+define("WWW_JS", WWW_STATIC  . '/js');		
+define("WWW_CSS", WWW_STATIC  . '/css');	
+
+/* Name Spaces */
+define("_MODELS", "\\App\\Models\\");
+define("_CONTROLLERS", "\\App\\Controllers\\");
+define("_VIEWS", "\\App\\Views\\");	
+
+/* CLI Mode */
+if(php_sapi_name() !== 'cli'){
+	define("_URL", ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+}
+
+define('_SHOW_ERRORS', true); 
+ 
+if(file_exists(dirname(dirname(__FILE__)) . "/app/config.php")){
+	require(dirname(dirname(__FILE__)) . "/app/config.php");
+}
 
 /**
  * Composer
  */
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+/**
+ * First Launch
+ */
+if(!defined("_FIRST_LAUNCH")){
+	if($_SERVER['REQUEST_URI'] != "/setup"){
+		header('Location: /setup');
+	}
+	return false;
+}
 
 /**
 * Global Functions
@@ -62,8 +99,6 @@ function createQuery($query){
 function createQueryBuilder($fields = null){	
 	return entityManager()->createQueryBuilder($fields);
 }
-
-
 
 function createOptionSet($model, $valueField, $textField){
 	
