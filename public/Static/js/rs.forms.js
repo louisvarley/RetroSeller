@@ -377,11 +377,14 @@ rs.validateForm = function(form){
 
 rs.formSubmitLoading = function(){
 	
-	$("form button[type=submit]").click(function() {
+	
+	$("form button[type=submit]").click(function(e) {
 		if($(this).hasClass("disabled")) return;
 		$(this).prop("og", $(this).html());
 		$(this).prop("disabled", "disabled");		
 		$(this).html('<i class="fas fa-circle-notch fa-spin"></i>')
+		return true;
+		
     });
 	
 }
