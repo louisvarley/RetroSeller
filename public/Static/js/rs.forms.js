@@ -383,6 +383,9 @@ rs.formSubmitLoading = function(){
 		$(this).prop("og", $(this).html());
 		$(this).prop("disabled", "disabled");		
 		$(this).html('<i class="fas fa-circle-notch fa-spin"></i>')
+		
+		$(this).parents('form:first').submit();
+		
 		return true;
 		
     });
