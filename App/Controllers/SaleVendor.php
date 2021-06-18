@@ -29,7 +29,9 @@ class SaleVendor extends \App\Controllers\ManagerController
 		
 		$vendor = findEntity($this->route_params['controller'], $id);
 		$vendor->setName($data[$this->route_params['controller']]['name']);
-
+		$vendor->setFixedFee($data[$this->route_params['controller']]['fixed_fee']);
+		$vendor->setPercentageFee($data[$this->route_params['controller']]['percentage_fee']);
+		
 		entityManager()->persist($vendor);
 		entityManager()->flush();
 		
@@ -40,6 +42,8 @@ class SaleVendor extends \App\Controllers\ManagerController
 		$vendor = new \App\Models\SaleVendor();
 
 		$vendor->setName($data[$this->route_params['controller']]['name']);
+		$vendor->setFixedFee($data[$this->route_params['controller']]['fixed_fee']);
+		$vendor->setPercentageFee($data[$this->route_params['controller']]['percentage_fee']);	
 		
 		entityManager()->persist($vendor);
 		entityManager()->flush();
