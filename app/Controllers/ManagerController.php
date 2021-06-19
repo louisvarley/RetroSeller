@@ -59,7 +59,7 @@ class ManagerController extends \Core\Controller
      */		
 	public function deleteEntity($id){
 		
-		$entity = entityManager()->find(_MODELS . $this->route_params['controller'], $this->route_params['id']);
+		$entity = entityManager()->findEntity($this->route_params['controller'], $this->route_params['id']);
 		entityManager()->remove($entity);
 		entityManager()->flush();
 		
@@ -105,7 +105,7 @@ class ManagerController extends \Core\Controller
 		/* ON GET */
 		if($this->isGET()){
 			
-			$entity = entityManager()->find(_MODELS . $this->route_params['controller'], $this->route_params['id']);
+			$entity = entityManager()->findEntity($this->route_params['controller'], $this->route_params['id']);
 			$this->deleteEntity($entity);
 			header('Location: /'. $this->route_params['controller'] . '/list');
 			die();
@@ -148,7 +148,7 @@ class ManagerController extends \Core\Controller
 		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
 			$this->route_params, 
 			$this->page_data,
-			array("entities" => findAll(_MODELS . $this->route_params['controller'])),
+			array("entities" => findAll($this->route_params['controller'])),
 		));
 
 	}	
