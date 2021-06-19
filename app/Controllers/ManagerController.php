@@ -148,7 +148,7 @@ class ManagerController extends \Core\Controller
 		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
 			$this->route_params, 
 			$this->page_data,
-			array("entities" => findAll(_MODELS . $this->route_params['controller']);
+			array("entities" => findAll(_MODELS . $this->route_params['controller']));
 		));
 
 	}	
