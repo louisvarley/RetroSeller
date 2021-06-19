@@ -3,7 +3,7 @@
 {% block title %}Expenses{% endblock %}
 
 {% block body %}
-	{% embed "forms/form-base.html" with {'form_id': controller} %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
@@ -17,7 +17,7 @@
 
 			{% if( account.id ) %}
 			
-				{% include "forms/elements/text.html" with {
+				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
 					'id': 'id', 
 					'name': "#{controller}[id]", 
@@ -30,7 +30,7 @@
 
 			{% endif %}		
 
-			{% include "forms/elements/text-email.html" with {
+			{% include "Forms/Elements/text-email.html" with {
 				'label' : 'Email Address',
 				'id': 'email', 
 				'name': "#{controller}[email]", 
@@ -41,14 +41,14 @@
 
 			<hr class="my-4">	
 
-			{% include "forms/elements/text-password.html" with {
+			{% include "Forms/Elements/text-password.html" with {
 				'label' : 'Password',
 				'id': 'password', 
 				'name': "#{controller}[password]", 
 				'description': 'Change your password',
 			}%}		
 
-			{% include "forms/elements/text-password.html" with {
+			{% include "Forms/Elements/text-password.html" with {
 				'label' : 'Password Confirm',
 				'id': 'password-confirm', 
 				'name': "#{controller}[password_confirm]", 

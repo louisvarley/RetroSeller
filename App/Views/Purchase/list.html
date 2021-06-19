@@ -4,11 +4,11 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "tables/table-base.html" with {'table_id': controller, 'headers': ["Expenses","Id","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Expenses","Id","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr>
-				<td>{% include '/buttons/sub-table-button.html' with {'id': entity.id} %}</td>
+				<td>{% include '/Buttons/sub-table-button.html' with {'id': entity.id} %}</td>
 				<td>{{ entity.id }}</td>
 				<td><span class="badge badge-{{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>			
 				<td>{{ entity.name }}</td>	
@@ -22,9 +22,9 @@
 					</div>
 				</td>
 				<td>
-				{% include '/buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
-				{% include '/buttons/buy-button.html' with {'model': controller, 'id': entity.id} %}				
-				{% include '/buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+				{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+				{% include '/Buttons/buy-button.html' with {'model': controller, 'id': entity.id} %}				
+				{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 				</td>				
 				</tr>
 				<tr data-id="{{entity.id}}" class="sub-table">
@@ -44,7 +44,7 @@
 							<td>{{ expense.date | date('d/m/Y') }}</td>
 							<td>{{ expense.name }}</td>				
 							<td>{{ expense.ProporationAmount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
-							<td>{% include '/buttons/edit-button.html' with {'model': "expense", 'id': expense.id} %}</td>
+							<td>{% include '/Buttons/edit-button.html' with {'model': "expense", 'id': expense.id} %}</td>
 						</tr>
 						{% endfor %}
 						</table>

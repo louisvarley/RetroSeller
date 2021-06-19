@@ -1,4 +1,4 @@
-{% embed "forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
 {% block element %}
 <select placeholder="Select..." autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} id="{{ id }}" name="{{ name }}" type="text" {{required}} class="form-control {{classes}}">
 {% if not required %}

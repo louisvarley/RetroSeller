@@ -3,7 +3,7 @@
 {% block title %}Purchases{% endblock %}
 
 {% block body %}
-	{% embed "forms/form-base.html" with {'form_id': controller} %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
@@ -17,7 +17,7 @@
 
 			{% if( purchase.id ) %}
 			
-				{% include "forms/elements/text.html" with {
+				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
 					'id': 'id', 
 					'name': "#{controller}[id]", 
@@ -30,7 +30,7 @@
 
 			{% endif %}			
 
-			{% include "forms/elements/text.html" with {
+			{% include "Forms/Elements/text.html" with {
 				'label' : 'Title',
 				'id': 'title', 
 				'name': "#{controller}[name]", 
@@ -39,7 +39,7 @@
 				'value': purchase.name,
 			}%}
 			
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Valuation',			
 				'id': 'valuation', 
 				'name': "#{controller}[valuation]", 
@@ -48,7 +48,7 @@
 				'value': purchase.valuation				
 			}%}					
 			
-			{% include "forms/elements/textarea.html" with {
+			{% include "Forms/Elements/textarea.html" with {
 				'label' : 'Description',
 				'id': 'description', 
 				'name': "#{controller}[description]", 
@@ -57,7 +57,7 @@
 				'value' : purchase.description
 			}%}		
 
-			{% include "forms/elements/select.html" with {
+			{% include "Forms/Elements/select.html" with {
 				'label' : 'Status',		
 				'id': 'status', 
 				'name': "#{controller}[status]", 
@@ -67,7 +67,7 @@
 				'options': purchaseStatuses			
 			}%}				
 			
-			{% include "forms/elements/select.html" with {
+			{% include "Forms/Elements/select.html" with {
 				'label' : 'Category',		
 				'id': 'category', 
 				'name': "#{controller}[category]", 
@@ -77,7 +77,7 @@
 				'options': purchaseCategories			
 			}%}	
 			
-			{% include "forms/elements/select.html" with {
+			{% include "Forms/Elements/select.html" with {
 				'label' : 'Purchase Vendor',		
 				'id': 'purchase_vendor_id', 
 				'name': "#{controller}[purchase_vendor_id]", 
@@ -87,7 +87,7 @@
 				'options': purchaseVendors			
 			}%}	
 			
-			{% include "forms/elements/text-date.html" with {
+			{% include "Forms/Elements/text-date.html" with {
 				'label' : 'Date',	
 				'id': 'date', 
 				'name': "#{controller}[date]", 

@@ -1,4 +1,4 @@
-{% embed "forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
 {% block element %}
 <input autocomplete="off" {% if readonly %}readonly="readonly"{% endif %} {% if disabled %}disabled="disabled"{% endif %} id="{{ id }}" name="{{ name }}" type="text" {{ required }} value="{{ value }}" class="form-control colorpicker {{classes}}">
 {% endblock %}

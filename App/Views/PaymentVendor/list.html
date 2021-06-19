@@ -4,15 +4,15 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Name",""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Name",""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td>{{ entity.id }}</td>
 			<td>{{ entity.name }}</td>		
 			<td>
-			{% include '/buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
-			{% include '/buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 			</td>				
 			</tr>
 			{% endfor %}

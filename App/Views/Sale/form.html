@@ -3,7 +3,7 @@
 {% block title %}sales{% endblock %}
 
 {% block body %}
-	{% embed "forms/form-base.html" with {'form_id': controller} %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
@@ -17,7 +17,7 @@
 
 			{% if( sale.id ) %}
 			
-				{% include "forms/elements/text.html" with {
+				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
 					'id': 'id', 
 					'name': "#{controller}[id]", 
@@ -30,7 +30,7 @@
 
 			{% endif %}		
 
-			{% include "forms/elements/text-ebay.html" with {
+			{% include "Forms/Elements/text-ebay.html" with {
 				'label' : 'Auction Item Number',			
 				'id': 'amount', 
 				'name': "#{controller}[ebay_item_no]", 
@@ -38,7 +38,7 @@
 				'value': sale.ebayItemNo				
 			}%}			
 
-			{% include "forms/elements/text-date.html" with {
+			{% include "Forms/Elements/text-date.html" with {
 				'label' : 'Date',	
 				'id': 'date', 
 				'name': "#{controller}[date]", 
@@ -47,7 +47,7 @@
 				'value' : sale.date				
 			}%}					
 
-			{% include "forms/elements/select.html" with {
+			{% include "Forms/Elements/select.html" with {
 				'label' : 'Sale Vendor',		
 				'id': 'status', 
 				'name': "#{controller}[sale_vendor_id]", 
@@ -57,7 +57,7 @@
 				'options': saleVendors			
 			}%}		
 
-			{% include "forms/elements/select.html" with {
+			{% include "Forms/Elements/select.html" with {
 				'label' : 'Payment Vendor',		
 				'id': 'status', 
 				'name': "#{controller}[payment_vendor_id]", 
@@ -67,7 +67,7 @@
 				'options': paymentVendors			
 			}%}				
 			
-			{% include "forms/elements/select-multiple.html" with {
+			{% include "Forms/Elements/select-multiple.html" with {
 				'label' : 'Accounts',		
 				'id': 'account_id', 
 				'name': "#{controller}[accounts][]", 
@@ -76,7 +76,7 @@
 				'options': accounts						
 			}%}			
 			
-			{% include "forms/elements/select-multiple.html" with {
+			{% include "Forms/Elements/select-multiple.html" with {
 				'label' : 'Purchases',		
 				'id': 'purchase_id', 
 				'name': "#{controller}[purchases][]", 
@@ -86,7 +86,7 @@
 				'options': purchases						
 			}%}		
 				
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Gross Sale Amount',			
 				'id': 'gross_amount', 
 				'name': "#{controller}[gross_amount]", 
@@ -95,7 +95,7 @@
 				'value': sale.grossAmount				
 			}%}				
 
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Postage Cost Amount',			
 				'id': 'postage_cost', 
 				'name': "#{controller}[postage_cost]", 
@@ -106,7 +106,7 @@
 			
 			{% if( sale.id ) %}
 
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Fee Amount',			
 				'id': 'amount', 
 				'name': "#{controller}[fee_cost]", 
@@ -117,7 +117,7 @@
 			
 			<hr class="my-4">	
 			
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Net Sale Amount',			
 				'id': 'net_amount', 
 				'name': "#{controller}[net_amount]", 

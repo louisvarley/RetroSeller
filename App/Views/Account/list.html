@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Name","Outstanding Expenses","Balance",""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Name","Outstanding Expenses","Balance",""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
@@ -13,8 +13,8 @@
 			<td>£0.00</td>
 			<td>{{ entity.balance| format_currency('GBP', {rounding_mode: 'floor'})}}</td>			
 			<td>
-			{% include '/buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
-			{% include '/buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 			</td>				
 			</tr>
 			{% endfor %}

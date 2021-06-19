@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "tables/table-base.public.html" with {'table_id': controller, 'headers': ["Category", "Name", "Description", "Price"]	} %}
+	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Category", "Name", "Description", "Price"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr style="background-color:{{ entity.category.color}}">		

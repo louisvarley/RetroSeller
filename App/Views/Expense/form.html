@@ -3,7 +3,7 @@
 {% block title %}Expenses{% endblock %}
 
 {% block body %}
-	{% embed "forms/form-base.html" with {'form_id': controller} %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
@@ -17,7 +17,7 @@
 
 			{% if( expense.id ) %}
 			
-				{% include "forms/elements/text.html" with {
+				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
 					'id': 'id', 
 					'name': "#{controller}[id]", 
@@ -30,7 +30,7 @@
 
 			{% endif %}		
 
-			{% include "forms/elements/text.html" with {
+			{% include "Forms/Elements/text.html" with {
 				'label' : 'Name',
 				'id': 'name', 
 				'name': "#{controller}[name]", 
@@ -38,7 +38,7 @@
 				'value': expense.name
 			}%}			
 
-			{% include "forms/elements/select.html" with {
+			{% include "Forms/Elements/select.html" with {
 				'label' : 'Account',		
 				'id': 'account_id', 
 				'name': "#{controller}[account_id]", 
@@ -49,7 +49,7 @@
 				'options': accounts						
 			}%}
 			
-			{% include "forms/elements/text-date.html" with {
+			{% include "Forms/Elements/text-date.html" with {
 				'label' : 'Date',	
 				'id': 'date', 
 				'name': "#{controller}[date]", 
@@ -59,7 +59,7 @@
 			}%}				
 
 
-			{% include "forms/elements/select-multiple.html" with {
+			{% include "Forms/Elements/select-multiple.html" with {
 				'label' : 'Purchases',		
 				'id': 'purchase_id', 
 				'name': "#{controller}[purchases][]", 
@@ -69,7 +69,7 @@
 				'options': purchases						
 			}%}		
 		
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Amount',			
 				'id': 'amount', 
 				'name': "#{controller}[amount]", 

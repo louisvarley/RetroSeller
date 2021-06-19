@@ -3,7 +3,7 @@
 {% block title %}Expenses{% endblock %}
 
 {% block body %}
-	{% embed "forms/form-base.html" with {'form_id': controller} %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
@@ -17,7 +17,7 @@
 
 			{% if( account.id ) %}
 			
-				{% include "forms/elements/text.html" with {
+				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
 					'id': 'id', 
 					'name': "#{controller}[id]", 
@@ -30,7 +30,7 @@
 
 			{% endif %}		
 
-			{% include "forms/elements/text.html" with {
+			{% include "Forms/Elements/text.html" with {
 				'label' : 'Name',
 				'id': 'name', 
 				'name': "#{controller}[name]", 
@@ -38,7 +38,7 @@
 				'value': account.name
 			}%}		
 
-			{% include "forms/elements/text-colorpicker.html" with {
+			{% include "Forms/Elements/text-colorpicker.html" with {
 				'label' : 'Color',			
 				'id': 'color', 
 				'name': "#{controller}[color]", 

@@ -3,7 +3,7 @@
 {% block title %}Expenses{% endblock %}
 
 {% block body %}
-	{% embed "forms/form-base.html" with {'form_id': controller} %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
@@ -17,7 +17,7 @@
 
 			{% if( paymentVendor.id ) %}
 			
-				{% include "forms/elements/text.html" with {
+				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
 					'id': 'id', 
 					'name': "#{controller}[id]", 
@@ -30,7 +30,7 @@
 
 			{% endif %}		
 
-			{% include "forms/elements/text.html" with {
+			{% include "Forms/Elements/text.html" with {
 				'label' : 'Name',
 				'id': 'name', 
 				'name': "#{controller}[name]", 
@@ -38,7 +38,7 @@
 				'value': paymentVendor.name
 			}%}		
 
-			{% include "forms/elements/text-currency.html" with {
+			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Fixed Fee',			
 				'id': 'fixed_fee', 
 				'name': "#{controller}[fixed_fee]", 
@@ -47,7 +47,7 @@
 				'value': paymentVendor.fixedFee				
 			}%}		
 
-			{% include "forms/elements/text-percentage.html" with {
+			{% include "Forms/Elements/text-percentage.html" with {
 				'label' : 'Percentage Fee',			
 				'id': 'percentage_fee', 
 				'name': "#{controller}[percentage_fee]", 

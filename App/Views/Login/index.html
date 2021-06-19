@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-	{% embed "forms/login-base.html" with {'form_id': controller} %}
+	{% embed "Forms/login-base.html" with {'form_id': controller} %}
 
 		{% block form_title %}
 			{{ title }}
@@ -15,7 +15,7 @@
 		
 		{% block form_body %}
 
-			{% include "forms/elements/text-email.html" with {
+			{% include "Forms/Elements/text-email.html" with {
 				'label' : 'Email Address',
 				'id': 'user_email', 
 				'name': "email", 
@@ -23,7 +23,7 @@
 				'value': user.email
 			}%}		
 
-			{% include "forms/elements/text-password.html" with {
+			{% include "Forms/Elements/text-password.html" with {
 				'label' : 'Password',
 				'id': 'user_password', 
 				'name': "password", 
