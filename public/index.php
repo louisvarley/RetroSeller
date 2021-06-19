@@ -11,7 +11,7 @@ use App\Config;
 /**
  * Globals
  */
-require dirname(__DIR__) . '/Core/Globals.php';
+require dirname(__DIR__) . '/core/Globals.php';
 
 
 /**
