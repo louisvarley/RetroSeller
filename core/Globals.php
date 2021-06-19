@@ -78,18 +78,22 @@ function entityManager(){
 }
 
 function findEntity($model, $id){
+	$model = ucfirst($model);	
 	return \Core\EntityManager::instance()->entityManager->find(_MODELS . $model, $id);	
 }
 
 function findBy($model, $criteria, $orderBy = null, $limit = null, $offset = null){
+	$model = ucfirst($model);
 	return \Core\EntityManager::instance()->entityManager->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
 }
 
 function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = null){
+	$model = ucfirst($model);	
 	return \Core\EntityManager::instance()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
 }
 
 function findAll($model){
+	$model = ucfirst($model);	
 	return \Core\EntityManager::instance()->entityManager->getRepository(_MODELS . $model)->findAll();	
 }
 
