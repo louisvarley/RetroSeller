@@ -29,17 +29,17 @@ class Account
     protected $sales;	
 	
 	/**
-    * @ORM\OneToMany(targetEntity="withdrawal", mappedBy="account")
+    * @ORM\OneToMany(targetEntity="Withdrawal", mappedBy="account")
     */	
     protected $withdrawals;
 	
 	/**
-    * @ORM\OneToMany(targetEntity="expense", mappedBy="account")
+    * @ORM\OneToMany(targetEntity="Expense", mappedBy="account")
     */	
     protected $expenses;	
 	
 	/**
-    * @ORM\OneToMany(targetEntity="buyout", mappedBy="account")
+    * @ORM\OneToMany(targetEntity="Buyout", mappedBy="account")
     */	
     protected $buyout;		
 	
@@ -120,7 +120,7 @@ class Account
 		}
 		
 		/* Handle Buyouts. */
-		foreach(findAll("purchase") as $purchase){
+		foreach(findAll("Purchase") as $purchase){
 			
 			if($purchase->getBuyOut() != null){
 				foreach($purchase->getExpenses() as $expense){

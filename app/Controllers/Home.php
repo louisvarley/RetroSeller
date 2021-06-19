@@ -21,11 +21,11 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
-		$forSaleStatus = findEntity("purchaseStatus", _SALE_STATUS);	
+		$forSaleStatus = findEntity("PurchaseStatus", _SALE_STATUS);	
 
-		$sales = findAll("sale");
-		$accounts = findAll("account");
-		$purchases = findBy("purchase", ["status" => $forSaleStatus ]);
+		$sales = findAll("Sale");
+		$accounts = findAll("Account");
+		$purchases = findBy("Purchase", ["status" => $forSaleStatus ]);
 		
 		$profit = 0;
 		$valuation = 0;

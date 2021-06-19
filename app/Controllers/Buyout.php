@@ -22,8 +22,8 @@ class Buyout extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
-			"purchases" => createOptionSet('purchase', 'id',['id','name','date']),		
-			"accounts" => createOptionSet('account', 'id','name'),				
+			"purchases" => createOptionSet('Purchase', 'id',['id','name','date']),		
+			"accounts" => createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 
@@ -31,7 +31,7 @@ class Buyout extends \App\Controllers\ManagerController
 		
 		$buyout = findEntity($this->route_params['controller'], $id);		
 		$account = findEntity("Account", $data['buyout']['account_id']);
-		$purchase = findEntity("purchase", $data['buyout']['purchase_id']);
+		$purchase = findEntity("Purchase", $data['buyout']['purchase_id']);
 
 		$buyout->setDate(date_create_from_format('d/m/Y', $data['buyout']['date']));			
 		$buyout->setAccount($account);
@@ -47,12 +47,12 @@ class Buyout extends \App\Controllers\ManagerController
 
 		$buyout = new \App\Models\Buyout();
 		$account = findEntity("Account", $data['buyout']['account_id']);
-		$purchase = findEntity("purchase", $data['buyout']['purchase_id']);
+		$purchase = findEntity("Purchase", $data['buyout']['purchase_id']);
 
 		$buyout->setDate(date_create_from_format('d/m/Y', $data['buyout']['date']));			
 		$buyout->setAccount($account);
 		$buyout->setPurchase($purchase);			
-		$buyout->getPurchase()->setStatus(findEntity("purchaseStatus", _BOUGHT_OUT_STATUS));
+		$buyout->getPurchase()->setStatus(findEntity("PurchaseStatus", _BOUGHT_OUT_STATUS));
 		
 		entityManager()->persist($buyout);
 		entityManager()->flush();

@@ -22,7 +22,7 @@ class Withdrawal extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id)	,
-			"accounts" => createOptionSet('account', 'id','name'),				
+			"accounts" => createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 

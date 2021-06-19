@@ -73,7 +73,7 @@ class Purchase
     protected $expenses;
 
 	/**
-    * @ORM\OneToOne(targetEntity="buyout", mappedBy="purchase")
+    * @ORM\OneToOne(targetEntity="Buyout", mappedBy="purchase")
     */	
     protected $buyout;	
 
@@ -203,7 +203,7 @@ class Purchase
 		
 		$accounts = [];
 		
-		foreach(findAll("account") as $account){
+		foreach(findAll("Account") as $account){
 			
 			$accounts[$account->getId()] = [
 			'id' => $account->getId(),

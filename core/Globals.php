@@ -33,8 +33,8 @@ if(php_sapi_name() !== 'cli'){
 
 define('_SHOW_ERRORS', true); 
  
-if(file_exists(dirname(dirname(__FILE__)) . "/app/config.php")){
-	require(dirname(dirname(__FILE__)) . "/app/config.php");
+if(file_exists(dirname(dirname(__FILE__)) . "/app/Config.php")){
+	require(dirname(dirname(__FILE__)) . "/app/Config.php");
 }
 
 /**
@@ -46,6 +46,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
  * First Launch
  */
 if(!defined("_FIRST_LAUNCH")){
+
 	if($_SERVER['REQUEST_URI'] != "/setup"){
 		header('Location: /setup');
 	}

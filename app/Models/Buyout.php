@@ -18,7 +18,7 @@ class Buyout
     protected $id;	
 
 	/**
-    * @ORM\OneToOne(targetEntity="Purchase", inversedBy="buyout")
+    * @ORM\OneToOne(targetEntity="Purchase", inversedBy="Buyout")
     * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
     */	
     protected $purchase;

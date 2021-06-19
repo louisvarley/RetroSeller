@@ -22,8 +22,8 @@ class Expense extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
-			"purchases" => createOptionSet('purchase', 'id',['id','name','date']),	
-			"accounts" => createOptionSet('account', 'id','name'),				
+			"purchases" => createOptionSet('Purchase', 'id',['id','name','date']),	
+			"accounts" => createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 

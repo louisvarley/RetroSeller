@@ -32,7 +32,7 @@ class Sale
     // ...
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="purchase", mappedBy="sale")
+     * @ORM\OneToMany(targetEntity="Purchase", mappedBy="sale")
      */
     protected $purchases;
 	

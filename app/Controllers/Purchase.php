@@ -31,9 +31,9 @@ class Purchase extends \App\Controllers\ManagerController
 	public function updateEntity($id, $data){
 		
 		$purchase = findEntity($this->route_params['controller'], $id);
-		$purchaseVendor = findEntity("purchaseVendor", $data['purchase']['purchase_vendor_id']);
-		$purchaseStatus = findEntity("purchaseStatus", $data['purchase']['status']);
-		$purchaseCategory = findEntity("purchaseCategory", $data['purchase']['category']);
+		$purchaseVendor = findEntity("PurchaseVendor", $data['purchase']['purchase_vendor_id']);
+		$purchaseStatus = findEntity("PurchaseStatus", $data['purchase']['status']);
+		$purchaseCategory = findEntity("PurchaseCategory", $data['purchase']['category']);
 		
 		$purchase->setName($data['purchase']['name']);
 		$purchase->setDescription($data['purchase']['description']);
@@ -41,7 +41,7 @@ class Purchase extends \App\Controllers\ManagerController
 		$purchase->setDate(date_create_from_format('d/m/Y', $data['purchase']['date']));	
 		
 		if($purchase->getBuyOut() != null){
-			$purchase->setStatus(findEntity("purchaseStatus", _BOUGHT_OUT_STATUS));					
+			$purchase->setStatus(findEntity("PurchaseStatus", _BOUGHT_OUT_STATUS));					
 		}else{
 			$purchase->setStatus($purchaseStatus);			
 		}
@@ -56,9 +56,9 @@ class Purchase extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 		
-		$purchaseVendor = findEntity("purchaseVendor", $data['purchase']['purchase_vendor_id']);
-		$purchaseStatus = findEntity("purchaseStatus", $data['purchase']['status']);
-		$purchaseCategory = findEntity("purchaseCategory", $data['purchase']['category']);
+		$purchaseVendor = findEntity("PurchaseVendor", $data['purchase']['purchase_vendor_id']);
+		$purchaseStatus = findEntity("PurchaseStatus", $data['purchase']['status']);
+		$purchaseCategory = findEntity("PurchaseCategory", $data['purchase']['category']);
 		
 		$purchase = new \App\Models\Purchase();
 		$purchase->setName($data['purchase']['name']);

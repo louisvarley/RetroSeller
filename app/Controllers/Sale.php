@@ -32,13 +32,13 @@ class Sale extends \App\Controllers\ManagerController
 	public function updateEntity($id, $data){
 		
 		$sale = findEntity($this->route_params['controller'], $id);
-		$saleVendor = findEntity("saleVendor", $data['sale']['sale_vendor_id']);
-		$paymentVendor = findEntity("paymentVendor", $data['sale']['payment_vendor_id']);
+		$saleVendor = findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
+		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
 		
-		$purchases = findBy("purchase", ['sale' => $sale]);
+		$purchases = findBy("Purchase", ['sale' => $sale]);
 		
-		$soldStatus = findEntity("purchaseStatus", _SOLD_STATUS);	
-		$forSaleStatus = findEntity("purchaseStatus", _SALE_STATUS);			
+		$soldStatus = findEntity("PurchaseStatus", _SOLD_STATUS);	
+		$forSaleStatus = findEntity("PurchaseStatus", _SALE_STATUS);			
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
@@ -47,7 +47,7 @@ class Sale extends \App\Controllers\ManagerController
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
-			$purchase = findEntity("purchase", $purchase_id);
+			$purchase = findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
 			$purchase->setStatus($soldStatus);
 		}
@@ -74,12 +74,12 @@ class Sale extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 		
-		$saleVendor = findEntity("saleVendor", $data['sale']['sale_vendor_id']);
-		$paymentVendor = findEntity("paymentVendor", $data['sale']['payment_vendor_id']);
+		$saleVendor = findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
+		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
 		
 		$sale = new \App\Models\Sale();
-		$soldStatus = findEntity("purchaseStatus", _SOLD_STATUS);	
-		$purchases = findBy("purchase", ['sale' => $sale]);
+		$soldStatus = findEntity("PurchaseStatus", _SOLD_STATUS);	
+		$purchases = findBy("Purchase", ['sale' => $sale]);
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
@@ -87,7 +87,7 @@ class Sale extends \App\Controllers\ManagerController
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
-			$purchase = findEntity("purchase", $purchase_id);
+			$purchase = findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
 			$purchase->setStatus($soldStatus);
 		}
