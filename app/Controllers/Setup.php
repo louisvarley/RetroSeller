@@ -24,7 +24,7 @@ class Setup extends \Core\Controller
 		
 		if(authenticationManager()->loggedIn()){
 			
-			require(DIR_ROOT . 'dump.php');
+			require(DIR_ROOT . '/dump.php');
 			$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(entityManager());
 			$classes = entityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool->updateSchema($classes);	
