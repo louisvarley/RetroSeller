@@ -1,6 +1,7 @@
 vendor
 dumps
-
 composer.lock
 sample_data.php
-App/Config.php
+app/Config.php
+core/proxies
+core/cache
