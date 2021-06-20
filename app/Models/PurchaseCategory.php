@@ -1,15 +1,18 @@
 <?php
 namespace App\Models;
 
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="rs_purchase_categories")
+ * @ORM\Table(name="rs_purchase_categories") 
  */
 class PurchaseCategory
 {
+	
+	
 	/**
     * @ORM\Id
     * @ORM\Column(type="integer", name="id")
@@ -26,17 +29,20 @@ class PurchaseCategory
     * @ORM\Column(type="string", nullable="false")
     */
     protected $color;	
-	
+
+
+	/**
+    * @ORM\Column(type="string", nullable="false", name="path")
+    */
+    protected $path;	
 	
     /**
      * @ORM\ManyToOne(targetEntity="PurchaseCategory")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;	
-	
 
-    protected $view;		
-	
+
     public function getId()
     {
         return $this->id;
@@ -52,7 +58,6 @@ class PurchaseCategory
         $this->name = $name;
     }
 	
-
     public function getColor()
     {
         return $this->color;
@@ -78,4 +83,8 @@ class PurchaseCategory
         $this->parent = $parent;
     }	
 	
+	public function getPath(){
+		$this->path;
+	}
+
 }

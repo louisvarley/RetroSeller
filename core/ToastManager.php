@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Core;
 
 class ToastManager{
@@ -23,10 +22,9 @@ class ToastManager{
 	
 	public function __construct(){
 		
-		if(sessionManager()->load("toasts") !== null){
+		if(sessionManager()->load("toasts") == null){
 			sessionManager()->save("toasts",array());
 		}
-		
 		
 	}
 	

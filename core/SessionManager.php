@@ -13,7 +13,9 @@ class SessionManager{
 	}
 	
 	public static function start(){
-		session_start();	
+		if (session_status() === PHP_SESSION_NONE) {
+			session_start();
+		}	
 	}
 	
 	/**
@@ -52,6 +54,7 @@ class SessionManager{
 		}else{
 			$this->save($key, $value);
 		}
+		
 	}		
 	
 	public function load($key){

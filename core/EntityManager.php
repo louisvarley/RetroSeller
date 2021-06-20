@@ -44,7 +44,7 @@ class EntityManager{
 			'dbname'   => _DB_NAME,
 		);
 		
-		$cacheDir = dirname(__FILE__).'/cache';
+		$cacheDir = dirname(__FILE__).'/proxies';
 		if (!is_dir($cacheDir)) {
 			mkdir($cacheDir);
 		}

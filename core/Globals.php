@@ -3,7 +3,9 @@
 use Core\EntityManager;
 use Core\SessionManager;
 use Core\ToastManager;
-use Core\ActionsManager;
+
+use Doctrine\ORM\Query\ResultSetMapping;
+
 
 /**
  * Config
@@ -25,6 +27,7 @@ define("WWW_CSS", WWW_STATIC  . '/css');
 define("_MODELS", "\\App\\Models\\");
 define("_CONTROLLERS", "\\App\\Controllers\\");
 define("_VIEWS", "\\App\\Views\\");	
+
 
 
 /* Statuses */
@@ -106,7 +109,7 @@ function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = 
 
 function findAll($model){
 	$model = ucfirst($model);	
-	return \Core\EntityManager::instance()->entityManager->getRepository(_MODELS . $model)->findAll();	
+	return entityManager()->getRepository(_MODELS . $model)->findAll();	
 }
 
 function createQuery($query){	
@@ -115,6 +118,10 @@ function createQuery($query){
 
 function createQueryBuilder($fields = null){	
 	return entityManager()->createQueryBuilder($fields);
+}
+
+function CreatedNamedQuery($model, $namedQuery){
+	return entityManager()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
 }
 
 function createOptionSet($model, $valueField, $textField){
@@ -151,12 +158,6 @@ function createOptionSet($model, $valueField, $textField){
 	return $res;
 }
 
-
-if(file_exists(dirname(dirname(__FILE__)) . "/app/actions.php")){
-	require(dirname(dirname(__FILE__)) . "/app/actions.php");
-}
-
-/**
- * Calls
- */
 sessionManager()->start();
+
+

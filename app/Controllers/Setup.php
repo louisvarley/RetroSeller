@@ -24,11 +24,9 @@ class Setup extends \Core\Controller
 		
 		if(authenticationManager()->loggedIn()){
 			
-			require(DIR_ROOT . '/dump.php');
 			$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(entityManager());
 			$classes = entityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool->updateSchema($classes);	
-
 
 			header('Location: /');
 			
@@ -36,15 +34,24 @@ class Setup extends \Core\Controller
 		
 		if($this->isPOST()){
 
-			sessionManager()->start();
 
-			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
-			if ($conn->connect_error) {
-				toastManager()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
+			$connection = @fsockopen($this->post['db_host'], $this->post['db_port']);
+
+			if(!is_resource($connection)){
+				toastManager()->throwError("Error...", ("MySQL Connection failed: Host Server not Found"));
 				View::renderTemplate('Setup/index.html');
-				return;				
 			}
 	
+	
+			try {
+				mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+				$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
+			} catch (mysqli_sql_exception $e) {
+				toastManager()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
+				View::renderTemplate('Setup/index.html');
+				return;			
+			}
+
 			$query = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='" . $this->post['db_name'] . "'");
 			$row = $query->fetch_object();
 
@@ -63,8 +70,7 @@ class Setup extends \Core\Controller
 			unlink(_CONFIG_FILE);
 
 			/* Build New Config */
-			$config = "
-<?php			
+			$config = "<?php			
 
 define('_FIRST_LAUNCH','FALSE');
 
@@ -74,9 +80,7 @@ define('_DB_NAME','" . $this->post['db_name'] . "');
 define('_DB_USER','" . $this->post['db_user'] . "');
 define('_DB_PASSWORD','" . $this->post['db_password'] . "');
 define('_DB_PORT','" . $this->post['db_port'] . "');
-define('_DB_DUMPER','mysqldump');		
-
-?>";
+define('_DB_DUMPER','mysqldump');";
 			
 		file_put_contents(_CONFIG_FILE, $config);
 
@@ -108,57 +112,7 @@ define('_DB_DUMPER','mysqldump');
 		
 		entityManager()->flush();
 		
-		
-		$sql = '	
-				
-			CREATE OR REPLACE VIEW rs_purchase_categories_vw AS
-			SELECT   id,
-					 name,
-					 parent_id,
-					 path,
-					 depth,
-					 color
-			FROM     (
-							SELECT id,
-								   name,
-								   parent_id,
-								   name  AS path,
-								   color AS color,
-								   0     AS depth
-							FROM   rs_purchase_categories
-							WHERE  parent_id IS NULL
-							UNION ALL
-							SELECT    t2.id                                     AS id,
-									  t2.name                                   AS name,
-									  t1.id                                     AS parent_id,
-												concat(t1.name, " > ", t2.name) AS path,
-									  t2.color                                  AS color,
-									  1                                         AS depth
-							FROM      rs_purchase_categories t1
-							LEFT JOIN rs_purchase_categories t2
-							ON        t2.parent_id = t1.id
-							WHERE     t1.parent_id IS NULL
-							UNION ALL
-							SELECT    t3.id                                                     AS id,
-									  t3.name                                                   AS name,
-									  t2.id                                                     AS parent_id,
-												concat(t1.name, " > ", t2.name, " > ", t3.name) AS path,
-									  t3.color                                                  AS color,
-									  2                                                         AS depth
-							FROM      rs_purchase_categories t2
-							LEFT JOIN rs_purchase_categories t3
-							ON        t3.parent_id = t2.id
-							LEFT JOIN rs_purchase_categories t1
-							ON        t2.parent_id = t1.id
-							WHERE     t2.parent_id IS NOT NULL
-							AND       t3.id IS NOT NULL ) a
-			ORDER BY a.path,
-					 a.name ASC ';
-						
-		$connection = entityManager()->getConnection();
-		$statement = $connection->prepare($sql);
-		$statement->execute();		 		
-	
+
 		toastManager()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
 		header('Location: /login');
 		

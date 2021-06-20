@@ -66,8 +66,10 @@ class View
 			return $response;
 		}));
 
+
+
         echo $twig->render($template, $args);
-		
+
 		/* We can clear any toasts now we have rendered */
 		toastManager()->clear();
     }

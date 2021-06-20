@@ -16,15 +16,17 @@ use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 class Purchase extends \App\Controllers\ManagerController
 {
 	
+	
 	public $page_data = ["title" => "Purchases", "description" => "Purchases are one item purchased"];		
 
 	public function getEntity($id = 0){
+		
 		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
 			"purchaseVendors" => createOptionSet('PurchaseVendor', 'id','name'),
 			"purchaseStatuses" => createOptionSet('PurchaseStatus', 'id','name'),
-			"purchaseCategories" => createOptionSet('PurchaseCategoryView', 'id', 'path'),
+			"purchaseCategories" => createOptionSet('purchaseCategory', 'id', 'path'),		
 		);	
 	} 
 
