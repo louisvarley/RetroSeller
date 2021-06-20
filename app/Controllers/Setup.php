@@ -36,6 +36,26 @@ class Setup extends \Core\Controller
 		
 		if($this->isPOST()){
 
+			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
+			if ($conn->connect_error) {
+				toastManager()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
+				View::renderTemplate('Setup/index.html');
+				return;				
+			}
+	
+			$query = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='" . $this->post['db_name'] . "'");
+			$row = $query->fetch_object();
+
+
+			if ($row == null) {	
+				$conn->close();
+				toastManager()->throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
+				View::renderTemplate('Setup/index.html');
+				return;
+			}
+			
+			$conn->close();
+
 			/* Delete Old Config */
 			if(file_exists(_CONFIG_FILE))
 			unlink(_CONFIG_FILE);
@@ -44,15 +64,7 @@ class Setup extends \Core\Controller
 			$config = "
 <?php			
 
-/* General */
-
 define('_FIRST_LAUNCH','FALSE');
-define('_SOLD_STATUS','5');
-define('_SALE_STATUS','1');
-define('_BOUGHT_OUT_STATUS','6');
-
-
-
 
 /* Database Config */
 define('_DB_HOST','" . $this->post['db_host'] . "');
@@ -60,7 +72,7 @@ define('_DB_NAME','" . $this->post['db_name'] . "');
 define('_DB_USER','" . $this->post['db_user'] . "');
 define('_DB_PASSWORD','" . $this->post['db_password'] . "');
 define('_DB_PORT','" . $this->post['db_port'] . "');
-define('_DB_DUMPER','C:\wamp64\bin\mysql\mysql8.0.22\bin\mysqldump.exe');		
+define('_DB_DUMPER','mysqldump');		
 
 ?>";
 			
@@ -68,41 +80,30 @@ define('_DB_DUMPER','C:\wamp64\bin\mysql\mysql8.0.22\bin\mysqldump.exe');
 
 		require(_CONFIG_FILE);
 		
-		/* Create Schema */
-		$conn = new \mysqli(_DB_HOST, _DB_USER, _DB_PASSWORD);
-		if ($conn->connect_error) {
-		  toastManager()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
-		  View::renderTemplate('Setup/index.html');
-		  return;
-		}
+		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(entityManager());
+		$classes = entityManager()->getMetadataFactory()->getAllMetadata();
+		$schemaTool->createSchema($classes);					
+						
 
-		// Create database
-		$sql = "CREATE DATABASE IF NOT EXISTS " . _DB_NAME;
-		if ($conn->query($sql) === TRUE) {
-					
-
-			$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(entityManager());
-			$classes = entityManager()->getMetadataFactory()->getAllMetadata();
-			$schemaTool->createSchema($classes);					
-							
-
-			$proxyFactory = entityManager()->getProxyFactory();
-			$metadatas = entityManager()->getMetadataFactory()->getAllMetadata();
-			$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
-			
-		} else {
-			toastManager()->throwError("Error...", ("Error creating database: " . $conn->error));
-			View::renderTemplate('Setup/index.html');
-			return;
-		}
-
-		$conn->close();
+		$proxyFactory = entityManager()->getProxyFactory();
+		$metadatas = entityManager()->getMetadataFactory()->getAllMetadata();
+		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 		
 
 		$user = new \App\Models\User();
 		$user->setEmail($this->post['user_email']);	
 		$user->setPassword($this->post['user_password']);
 		entityManager()->persist($user);
+		
+		
+		foreach(_PURCHASE_STATUSES as $purchaseStatus){
+			
+			$status = new \App\Models\PurchaseStatus();
+			$status->setname($purchaseStatus['name']);
+			entityManager()->persist($status);
+		}
+		
+		
 		entityManager()->flush();
 		
 		toastManager()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");

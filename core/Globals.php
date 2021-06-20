@@ -26,6 +26,18 @@ define("_MODELS", "\\App\\Models\\");
 define("_CONTROLLERS", "\\App\\Controllers\\");
 define("_VIEWS", "\\App\\Views\\");	
 
+
+/* Statuses */
+define("_PURCHASE_STATUSES", array(
+	'FOR_SALE' => array('id' => 1, 'name' => 'For Sale'),
+	'SOLD' => array('id' => 2, 'name' => 'Sold'),
+	'BOUGHT_OUT' => array('id' => 3, 'name' => 'Bought Out'),
+	'WRITTEN_OFF' => array('id' => 4, 'name' => 'Written Off'),
+	'REQUIRES_REPAIR' => array('id' => 5, 'name' => 'Requires Repair'),
+	'HELD' => array('id' => 6, 'name' => 'Held'),
+	)
+);
+
 /* CLI Mode */
 if(php_sapi_name() !== 'cli'){
 	define("_URL", ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);

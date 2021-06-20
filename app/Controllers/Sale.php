@@ -37,8 +37,8 @@ class Sale extends \App\Controllers\ManagerController
 		
 		$purchases = findBy("Purchase", ['sale' => $sale]);
 		
-		$soldStatus = findEntity("PurchaseStatus", _SOLD_STATUS);	
-		$forSaleStatus = findEntity("PurchaseStatus", _SALE_STATUS);			
+		$soldStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);	
+		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);			
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
