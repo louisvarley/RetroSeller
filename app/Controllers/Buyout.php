@@ -36,7 +36,7 @@ class Buyout extends \App\Controllers\ManagerController
 		$buyout->setDate(date_create_from_format('d/m/Y', $data['buyout']['date']));			
 		$buyout->setAccount($account);
 		$buyout->setPurchase($purchase);		
-		$buyout->getPurchase()->setStatus(findEntity("purchaseStatus", _BOUGHT_OUT_STATUS));
+		$buyout->getPurchase()->setStatus(findEntity("purchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']));
 
 		entityManager()->persist($buyout);
 		entityManager()->flush();
@@ -52,7 +52,7 @@ class Buyout extends \App\Controllers\ManagerController
 		$buyout->setDate(date_create_from_format('d/m/Y', $data['buyout']['date']));			
 		$buyout->setAccount($account);
 		$buyout->setPurchase($purchase);			
-		$buyout->getPurchase()->setStatus(findEntity("PurchaseStatus", _BOUGHT_OUT_STATUS));
+		$buyout->getPurchase()->setStatus(findEntity("PurchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']));
 		
 		entityManager()->persist($buyout);
 		entityManager()->flush();
