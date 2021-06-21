@@ -58,7 +58,7 @@ class Import extends \Core\Controller
 
 		foreach($rows as $key => $value) {
 			
-			if($value[0] == "") exit;
+			if($value[0] == "") break;
 			
 			if($key > 0){
 				$count++;
@@ -81,6 +81,7 @@ class Import extends \Core\Controller
 			}
 		};
 		
+	
 		entityManager()->flush();
 		
 		toastManager()->throwSuccess("Saved...", "Imported " . $count . " New Purchases");
@@ -117,9 +118,6 @@ class Import extends \Core\Controller
 		$statuses = Findall("PurchaseStatus");
 		$categories = FindAll("PurchaseCategory");
 		
-		$validationOptions['categories'] = "";
-		$validationOptions['statuses'] = "";
-		$validationOptions['vendors'] = "";
 		
 		$x = 0;
 		foreach($categories as $category){
@@ -131,14 +129,12 @@ class Import extends \Core\Controller
 		foreach($statuses as $status){
 			$y++;
 			$spreadsheet->getActiveSheet()->setCellValue('Y' . $y,$status->getName());			
-			$validationOptions['statuses'] .= '' . $status->getName() . ',';
 		}			
 		
 		$z = 0;
 		foreach($vendors as $vendor){
 			$z++;
 			$spreadsheet->getActiveSheet()->setCellValue('Z' . $z,$vendor->getName());			
-			$validationOptions['vendors'] .= '' . $vendor->getName() . ',';
 		}	
 				
 
