@@ -19,9 +19,9 @@ define("DIR_PUBLIC", DIR_ROOT . '/public');
 define("DIR_STATIC", DIR_PUBLIC  . '/static');	
 define("DIR_PROXIES", DIR_CORE  . '/proxies');
 
-define("DIR_VIEWS", DIR_APP . '/views');	
-define("DIR_CONTROLLERS", DIR_APP . '/controllers');	
-define("DIR_MODELS", DIR_APP . '/models');	
+define("DIR_VIEWS", DIR_APP . '/Views');	
+define("DIR_CONTROLLERS", DIR_APP . '/Controllers');	
+define("DIR_MODELS", DIR_APP . '/Models');	
 
 define("WWW_STATIC", '/static');	
 define("WWW_JS", WWW_STATIC  . '/js');		
