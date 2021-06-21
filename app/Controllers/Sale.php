@@ -27,7 +27,7 @@ class Sale extends \App\Controllers\ManagerController
 			"saleVendors" => createOptionSet('SaleVendor', 'id','name'),
 			"paymentVendors" => createOptionSet('PaymentVendor', 'id','name'),		
 			"accounts" => createOptionSet('Account', 'id','name'),					
-			"purchases" => createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => $forSaleStatus]]),			
+			"purchases" => ($id > 0 ? createOptionSet('purchase', 'id',['id','name','date']) : createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => $forSaleStatus]])),			
 		);	
 	} 
 
