@@ -28,10 +28,10 @@
             <div class="panel panel-info panel-colorful">
                 <div class="panel-body text-center">
                 	<p class="text-uppercase mar-btm text-sm">{{ account.name }}</p>
-                	<i class="fas fa-piggy-bank"></i>
+                	<i class="fas fa-hand-holding-usd"></i>
                 	<hr>
-                	<p class="h2 text-thin">{{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }} ()</p>
-                	<small><span class="text-semibold">Total Profit</span></small>
+                	<p class="h2 text-thin">{{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</p>
+                	<small><span class="text-semibold">All Time Profit</span></small>
                 </div>
             </div>
         </div>
