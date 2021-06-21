@@ -78,7 +78,7 @@ class Sale extends \App\Controllers\ManagerController
 		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
 		
 		$sale = new \App\Models\Sale();
-		$soldStatus = findEntity("PurchaseStatus", _SOLD_STATUS);	
+		$soldStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);	
 		$purchases = findBy("Purchase", ['sale' => $sale]);
 		
 		foreach($purchases as $purchase){
