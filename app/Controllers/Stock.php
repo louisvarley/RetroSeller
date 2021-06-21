@@ -34,7 +34,7 @@ class Stock extends \App\Controllers\ManagerController
      */
 	public function listAction(){
 		
-		$forSaleStatus = findEntity("PurchaseStatus", _SALE_STATUS);	
+		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);	
 		
 		$stock = findBy("Purchase", ["status" => $forSaleStatus ]);
 		
