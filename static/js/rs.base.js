@@ -112,6 +112,7 @@ rs.init("datatables", function(){
 	
 	jQuery('.list-table').dataTable({
 		"searching": true,
+		"pageLength": 100,
 	});
 	
 });
@@ -140,17 +141,13 @@ rs.init("subtable", function(){
 
 rs.init("tooltips", function(){	
 
-jQuery('[data-tooltip]').each(function(){
-	
-	var t = jQuery(this).data("tooltip");
-	jQuery(this).prop("title", t);
-	jQuery(this).tooltip();
+	jQuery('[data-tooltip]').each(function(){
+		
+		var t = jQuery(this).data("tooltip");
+		jQuery(this).prop("title", t);
+		jQuery(this).tooltip();
 
-	
-});
-
-
-
-
+		
+	});
 	
 });
