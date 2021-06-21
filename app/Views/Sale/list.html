@@ -4,15 +4,15 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date", "Gross", "Net", "Spend", "Profit", "Item/s Sold", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date", "Gross", "Spend", "Net", "Profit", "Item/s Sold", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td>{{ entity.id }}</td>
 			<td>{{ entity.date | date('d/m/Y') }}</td>			
 			<td>{{ entity.grossAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
+			<td>{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td>{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>		
-			<td>{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>			
 			<td>{{ entity.getProfitAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
 			<td>{{ entity.getPurchasesString }}</td>
 			<td>

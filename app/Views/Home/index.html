@@ -9,7 +9,7 @@
 	{% for account in accounts %}
 
         <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="panel panel-info panel-colorful">
+            <div class="panel panel-info panel-colorful" style="background-color:{{ account.color }}">
                 <div class="panel-body text-center">
                 	<p class="text-uppercase mar-btm text-sm">{{ account.name }}</p>
                 	<i class="fas fa-piggy-bank"></i>
