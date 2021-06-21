@@ -20,12 +20,14 @@ class Sale extends \App\Controllers\ManagerController
 
 	public function getEntity($id = 0){
 		
+		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);			
+		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
 			"saleVendors" => createOptionSet('SaleVendor', 'id','name'),
 			"paymentVendors" => createOptionSet('PaymentVendor', 'id','name'),		
 			"accounts" => createOptionSet('Account', 'id','name'),					
-			"purchases" => createOptionSet('purchase', 'id',['id','name','date']),			
+			"purchases" => createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => $forSaleStatus]]),			
 		);	
 	} 
 

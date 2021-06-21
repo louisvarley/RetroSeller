@@ -19,10 +19,12 @@ class Expense extends \App\Controllers\ManagerController
 	public $page_data = ["title" => "Expense", "description" => "Expenses are a spend which is tied to one or more purchases"];	
 
 	public function getEntity($id = 0){
+
+		$soldStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);
 		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
-			"purchases" => createOptionSet('Purchase', 'id',['id','name','date']),	
+			"purchases" => createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '<>', 'match' => $soldStatus]]),				
 			"accounts" => createOptionSet('Account', 'id','name'),				
 		);	
 	} 
