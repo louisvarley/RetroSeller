@@ -84,7 +84,7 @@ class PurchaseCategory
     }	
 	
 	public function getPath(){
-		$this->path;
+		return $this->path;
 	}
 
 }

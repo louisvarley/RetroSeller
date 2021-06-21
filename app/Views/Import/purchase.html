@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Import{% endblock %}
+
+{% block body %}
+	{% embed "Forms/import-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			
+			<h4>Bulk Import Purchases Data</h4>
+			
+	
+			<hr class="my-4">		
+			<a href="/import/purchase?download=true">Download Template</a>
+			
+			{% include "Forms/Elements/xlsx-uploader.html" with {
+				'label' : 'Bulk Import Purchases',
+				'id': 'imported', 
+				'name': "imported", 
+				'required': 'required',
+				'description': 'Import Data'
+			}%}		
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
