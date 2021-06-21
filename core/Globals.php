@@ -96,44 +96,51 @@ function entityManager(){
 	return \Core\EntityManager::instance()->entityManager;
 }
 
+/* Find a Single Entity by ID */
 function findEntity($model, $id){
 	$model = ucfirst($model);	
 	return \Core\EntityManager::instance()->entityManager->find(_MODELS . $model, $id);	
 }
 
+/* Find Multiple Entities By a Matching Criteria */
 function findBy($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 	$model = ucfirst($model);
 	return \Core\EntityManager::instance()->entityManager->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
 }
 
+/* Find Multiple Entities By a Not Matching Criteria */
 function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 	$model = ucfirst($model);	
 	return \Core\EntityManager::instance()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
 }
 
+/* Find All Entities */
 function findAll($model){
 	$model = ucfirst($model);	
 	return entityManager()->getRepository(_MODELS . $model)->findAll();	
 }
 
+/* Create a Query from Scratch */
 function createQuery($query){	
 	return entityManager()->createQuery($query);
 }
 
+/* Create Query Builder From Scratch */
 function createQueryBuilder($fields = null){	
 	return entityManager()->createQueryBuilder($fields);
 }
 
-function CreatedNamedQuery($model, $namedQuery){
+/* Create a Named Query */
+function createdNamedQuery($model, $namedQuery){
 	return entityManager()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
 }
 
-function createOptionSet($model, $valueField, $textField){
+/* Create an Optionset */
+function createOptionSet($model, $valueField, $textField, $criteria = null){
 	
 	$qb = entityManager()->createQueryBuilder($model);
 	$qb->from(_MODELS . $model, "u");
 	$qb->addSelect("u" . '.' . $valueField . ' AS value');
-
 
 	if(!is_array($textField)){
 		$qb->addSelect("u" . '.' . $textField . ' AS text');
@@ -151,10 +158,19 @@ function createOptionSet($model, $valueField, $textField){
 	
 		$qb->addSelect($c);
 		$qb->orderBy("u" . '.' . $textField[0], 'ASC');
-		
+
 	}
 	
+	if($criteria != null){
 	
+		foreach($criteria as $key => $value){
+			$qb->Where('u.' . $key . ' ' . $value['comparison'] . ' :value');
+			$qb->setParameter('value', $value['match']);
+			
+		}
+
+	}
+		
 	$query = $qb->getQuery();
 	
 	$res = $query->getResult();
