@@ -39,7 +39,7 @@ class Account extends \App\Controllers\ManagerController
 	public function insertEntity($data){
 
 		$account = new \App\Models\Account();
-		$account->setName($data['account']['name']);
+		$account->setName($data[$this->route_params['controller']]['name']);
 		$account->setColor($data[$this->route_params['controller']]['color']);		
 		
 		entityManager()->persist($account);

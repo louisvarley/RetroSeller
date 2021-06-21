@@ -45,9 +45,19 @@ class View
     public static function renderTemplate($template, $args = [])
     {
         static $twig = null;
+		
+		/* Searches and finds the template case in-sensitive */
+		$di = new \RecursiveDirectoryIterator(DIR_VIEWS);
+		foreach (new \RecursiveIteratorIterator($di) as $filename => $file) {
+			$f = str_replace("\\","/", $filename);
+			if (strpos(strtolower($f), strtolower($template)) !== false) {
+				$template = ltrim(str_replace(DIR_VIEWS, "", $filename),"\\");
+				continue;
+			}
+		}
 
         if ($twig === null) {
-            $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/app/Views');
+            $loader = new \Twig\Loader\FilesystemLoader(DIR_VIEWS);
 			$twig = new \Twig\Environment($loader, [
 				'debug' => true,
 			]);

@@ -113,10 +113,7 @@ class Router
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
             $controller = $this->getNamespace() . $controller;
-			
-			$this->params['controller'] = $this->convertToStudlyCaps($this->params['controller']);
-			
-
+		
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
 
