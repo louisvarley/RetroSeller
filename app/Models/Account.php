@@ -95,6 +95,22 @@ class Account
         $this->color = $color;
     }		
 	
+	public function getMyProfit(){
+		
+		$balance = 0;
+		
+		/* Handle Sales */
+		foreach($this->getSales() as $sale){
+			
+			/* get profit shares */
+			$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
+			
+		}
+		
+		return $balance;
+		
+	}
+	
 	public function getBalance(){
 		
 		$balance = 0;
