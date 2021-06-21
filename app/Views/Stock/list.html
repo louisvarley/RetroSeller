@@ -8,7 +8,7 @@
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr style="background-color:{{ entity.category.color}}">		
-				<td>{{ entity.category.view.path }}</td>					
+				<td>{{ entity.path }}</td>					
 				<td>{{ entity.name }}</td>	
 				<td>{{ entity.description }}</td>					
 				<td>{{ entity.valuation  | format_currency('GBP', {rounding_mode: 'floor'})  }}</td>				
