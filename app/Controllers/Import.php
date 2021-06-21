@@ -121,43 +121,47 @@ class Import extends \Core\Controller
 		$validationOptions['statuses'] = "";
 		$validationOptions['vendors'] = "";
 		
+		$x = 0;
 		foreach($categories as $category){
-			$validationOptions['categories'] = $validationOptions['categories'] . ',' . $category->getPath();
+			$x++;
+			$spreadsheet->getActiveSheet()->setCellValue('X' . $x,$category->getPath());
 		}
 		
-		foreach($vendors as $vendor){
-			$validationOptions['vendors'] = $validationOptions['vendors'] . ',' . $vendor->getName();
-		}	
-		
+		$y = 0;
 		foreach($statuses as $status){
-			$validationOptions['statuses'] = $validationOptions['statuses'] . ',' . $status->getName();
+			$y++;
+			$spreadsheet->getActiveSheet()->setCellValue('Y' . $y,$status->getName());			
+			$validationOptions['statuses'] .= '' . $status->getName() . ',';
 		}			
 		
-		$validationOptions['categories'] = ltrim($validationOptions['categories'],",");
-		$validationOptions['statuses'] = ltrim($validationOptions['statuses'],",");
-		$validationOptions['vendors'] = ltrim($validationOptions['vendors'],",");
+		$z = 0;
+		foreach($vendors as $vendor){
+			$z++;
+			$spreadsheet->getActiveSheet()->setCellValue('Z' . $z,$vendor->getName());			
+			$validationOptions['vendors'] .= '' . $vendor->getName() . ',';
+		}	
 				
-		
+
 		$validation = $spreadsheet->getActiveSheet()->getCell('C2')->getDataValidation();
 		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
-		$validation->setFormula1('"' . $validationOptions['categories'] . '"');
+		$validation->setFormula1('Worksheet!$X$1:$X$' . $x);
 		$validation->setAllowBlank(true);		
 		$validation->setShowDropDown(true);
 		
 		$validation = $spreadsheet->getActiveSheet()->getCell('D2')->getDataValidation();
-		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
-		$validation->setFormula1('"' . $validationOptions['statuses'] . '"');
+		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);	
+		$validation->setFormula1('Worksheet!$Y$1:$Y$' . $y);		
 		$validation->setAllowBlank(true);		
 		$validation->setShowDropDown(true);		
 		
 		$validation = $spreadsheet->getActiveSheet()->getCell('E2')->getDataValidation();
-		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
-		$validation->setFormula1('"' . $validationOptions['vendors'] . '"');
+		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);	
+		$validation->setFormula1('Worksheet!ZX$1:$Z$' . $z);
 		$validation->setAllowBlank(true);		
 		$validation->setShowDropDown(true);			
 		
 		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-
+		ob_end_clean();
 		$writer->save('php://output');
 		
 		die();
