@@ -67,6 +67,8 @@ class View
 		
 		$twig->addGlobal('session', $_SESSION);
 
+		/* Move these filters to their own class file */
+
 		$twig->addFilter( new \Twig\TwigFilter('to_array', function ($stdClassObject) {
 			$response = array();
 			foreach ((array) $stdClassObject as $key => $value) {
@@ -75,6 +77,20 @@ class View
 			
 			return $response;
 		}));
+		
+		$twig->addFilter( new \Twig\TwigFilter('rag', function ($ogFloat) {
+			
+			$num = floatval($ogFloat);
+			
+			if($num < 0){
+				return "rag-red";
+			}elseif($num ==0){
+				return "rag-orange";
+			}else{
+				return "rag-green";
+			}
+			
+		}));		
 
 
 

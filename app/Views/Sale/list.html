@@ -12,8 +12,8 @@
 			<td>{{ entity.date | date('d/m/Y') }}</td>			
 			<td>{{ entity.grossAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td>{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
-			<td>{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>		
-			<td>{{ entity.getProfitAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
+			<td class="{{ entity.netAmount | rag }}">{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>		
+			<td class="{{ entity.getProfitAmount | rag }}">{{ entity.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
 			<td>{{ entity.getPurchasesString }}</td>
 			<td>
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}

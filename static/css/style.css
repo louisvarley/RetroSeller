@@ -369,6 +369,21 @@ table.dataTable thead th, table.dataTable thead td {
   max-width: 300px;
 }
 
+/* line 36, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+.rag-orange {
+  color: #d98d0b;
+}
+
+/* line 40, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+.rag-green {
+  color: #28a745;
+}
+
+/* line 44, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+.rag-red {
+  color: #dc3545;
+}
+
 /* line 1, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
