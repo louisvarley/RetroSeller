@@ -188,7 +188,7 @@ class Sale
 			array_push($nameArr, $purchase->getName());
 		}
 		
-		return implode(",",$nameArr);
+		return implode(",\\n",$nameArr);
 	}
 	
 }
