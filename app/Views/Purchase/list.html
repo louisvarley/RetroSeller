@@ -50,7 +50,7 @@
 								<td>{{ expense.account.name }}</td>
 								<td>{{ expense.date | date('d/m/Y') }}</td>
 								<td>{{ expense.name }}</td>				
-								<td>{{ expense.ProporationAmount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
+								<td>{{ expense.proporationAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} / {{ expense.amount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
 								<td>{% include '/Buttons/edit-button.html' with {'model': "expense", 'id': expense.id} %}</td>
 							</tr>
 							{% endfor %}
