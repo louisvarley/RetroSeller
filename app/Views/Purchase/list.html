@@ -4,11 +4,10 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Expenses","Id","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
-				<tr>
-				<td>{% include '/Buttons/sub-table-button.html' with {'id': entity.id} %}</td>
+				<tr>			
 				<td>{{ entity.id }}</td>
 				<td><span class="badge badge-{{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>			
 				<td>{{ entity.name }}</td>	
@@ -24,33 +23,51 @@
 				<td>
 				{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 				{% include '/Buttons/buy-button.html' with {'model': controller, 'id': entity.id} %}				
+				{% include '/Buttons/modal-button.html' with {'modal': entity.id, 'id': entity.id} %}
 				{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
-				</td>				
-				</tr>
-				<tr data-id="{{entity.id}}" class="sub-table">
-					<td colspan="99">
+
+				<div class="modal" id="modal-{{entity.id}}" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<h5 class="modal-title">{{ entity.name }} Expenses</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+					  </div>
+					  <div class="modal-body">
 						<table>
-						<tr>
-							<th>Account</th>
-							<th>Date</th>							
-							<th>Expense</th>				
-							<th>Amount</th>
-							<th></th>
-						</tr>
-						{% for expense in entity.expenses %}
-						
-						<tr {% if( entity.buyout != null and entity.buyout.account.id != expense.account.id ) %}class="buyout"{% endif %}>
-							<td>{{ expense.account.name }}</td>
-							<td>{{ expense.date | date('d/m/Y') }}</td>
-							<td>{{ expense.name }}</td>				
-							<td>{{ expense.ProporationAmount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
-							<td>{% include '/Buttons/edit-button.html' with {'model': "expense", 'id': expense.id} %}</td>
-						</tr>
-						{% endfor %}
+							<tr>
+								<th>Account</th>
+								<th>Date</th>							
+								<th>Expense</th>				
+								<th>Amount</th>
+								<th></th>
+							</tr>
+							{% for expense in entity.expenses %}
+							
+							<tr {% if( entity.buyout != null and entity.buyout.account.id != expense.account.id ) %}class="buyout"{% endif %}>
+								<td>{{ expense.account.name }}</td>
+								<td>{{ expense.date | date('d/m/Y') }}</td>
+								<td>{{ expense.name }}</td>				
+								<td>{{ expense.ProporationAmount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
+								<td>{% include '/Buttons/edit-button.html' with {'model': "expense", 'id': expense.id} %}</td>
+							</tr>
+							{% endfor %}
 						</table>
-					
-					</td>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				
+
+				
+				</td>
 				</tr>
+				
 			{% endfor %}
 		{% endblock %}
 	{% endembed %}
