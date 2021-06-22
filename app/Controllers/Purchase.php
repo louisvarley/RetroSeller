@@ -26,7 +26,8 @@ class Purchase extends \App\Controllers\ManagerController
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
 			"purchaseVendors" => createOptionSet('PurchaseVendor', 'id','name'),
 			"purchaseStatuses" => createOptionSet('PurchaseStatus', 'id','name'),
-			"purchaseCategories" => createOptionSet('purchaseCategory', 'id', 'path'),		
+			"purchaseCategories" => createOptionSet('purchaseCategory', 'id', 'path'),
+			"accounts" => createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 
@@ -71,7 +72,22 @@ class Purchase extends \App\Controllers\ManagerController
 		$purchase->setValuation($data['purchase']['valuation']);
 		$purchase->setCategory($purchaseCategory);	
 			
-		entityManager()->persist($purchase);
+		entityManager()->persist($purchase);	
+			
+		if(isset($data['purchase']['account_id'])){
+			
+			$account = findEntity("Account", $data['purchase']['account_id']);
+			
+			$expense = new \App\Models\Expense();
+			$expense->setName($data['purchase']['name']);
+			$expense->setAmount($data['purchase']['amount']);
+			$expense->setDate(date_create_from_format('d/m/Y', $data['purchase']['date']));		
+			$expense->setAccount($account);
+			$expense->getPurchases()->add($purchase);
+			entityManager()->persist($expense);
+			
+		}	
+		
 		entityManager()->flush();
 		
 		return $purchase->getId();

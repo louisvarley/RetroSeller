@@ -14,7 +14,7 @@
 		{% endblock %}
 		
 		{% block form_body %}
-
+		
 			{% if( purchase.id ) %}
 			
 				{% include "Forms/Elements/text.html" with {
@@ -95,6 +95,33 @@
 				'required': 'required',
 				'value' : purchase.date				
 			}%}		
+			
+			{% if( not purchase.id ) %}
+
+
+
+			{% include "Forms/Elements/header.html" with {
+				'title': 'Expense',
+				'subtitle': 'Optional expense details'
+			}%}			
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Account',		
+				'id': 'account_id', 
+				'name': "#{controller}[account_id]", 
+				'description': 'Account who made this purchase?',
+				'options': accounts						
+			}%}
+			
+			{% include "Forms/Elements/text-currency.html" with {
+				'label' : 'Amount',			
+				'id': 'amount', 
+				'name': "#{controller}[amount]", 
+				'description': 'Price paid for this expense',			
+			}%}			
+
+			{% endif %}					
+			
 
 		{% endblock %}
 	{% endembed %}
