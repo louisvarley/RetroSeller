@@ -1,27 +1,21 @@
 
 rs.init("datatables", function(){
 	
-	jQuery('.list-table').dataTable({
-		"searching": true,
-		"pageLength": 100,
-	});
-	
-});
+	order = rs.urlParams.get('order');
+	orderBy = rs.urlParams.get('orderby');
+	search = rs.urlParams.get('search');	
 
-rs.init("subtable", function(){
-	jQuery('.btn-sub-table').click(function(){
-		
-		T = $("tr[data-id='" + $(this).data("id") +"']");
-		
-		if(T.is(":visible")){
-			jQuery(this).html('<i class="fas fa-plus"></i>');
-			T.hide();
-		}else{
-			jQuery(this).html('<i class="fas fa-minus"></i>');
-			T.show();			
-		}
-		
-	});
+    var table = $('.list-table').DataTable( {
+		"searching": true,
+		"pageLength": 100	
+    } );	
 	
+	if(order && orderBy){
+		table.order([ orderBy, order ]).draw();
+	}
+	
+	if(search){
+		table.search(search).draw();
+	}
 	
 });

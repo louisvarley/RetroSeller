@@ -11,4 +11,12 @@
 </thead>
 
 {% block table_body %}{% endblock %}
+
+
+<tfoot>
+{% for header in headers %}  
+	<th> {{ header }} </th>
+{% endfor %} 
+</tfoot>
+
 </table>
