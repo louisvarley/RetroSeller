@@ -74,7 +74,7 @@ class Purchase extends \App\Controllers\ManagerController
 			
 		entityManager()->persist($purchase);	
 			
-		if(isset($data['purchase']['account_id'])){
+		if(isset($data['purchase']['account_id']) && !empty($data['purchase']['account_id']) && !empty($data['purchase']['amount'])){
 			
 			$account = findEntity("Account", $data['purchase']['account_id']);
 			
