@@ -105,7 +105,7 @@ class ManagerController extends \Core\Controller
 		/* ON GET */
 		if($this->isGET()){
 			
-			$entity = entityManager()->findEntity($this->route_params['controller'], $this->route_params['id']);
+			$entity = findEntity($this->route_params['controller'], $this->route_params['id']);
 			$this->deleteEntity($entity);
 			header('Location: /'. $this->route_params['controller'] . '/list');
 			die();
