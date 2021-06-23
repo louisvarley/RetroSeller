@@ -41,7 +41,7 @@ class Purchase extends \App\Controllers\ManagerController
 		$purchase->setName($data['purchase']['name']);
 		$purchase->setDescription($data['purchase']['description']);
 		$purchase->setPurchaseVendor($purchaseVendor);
-		$purchase->setDate(date_create_from_format('d/m/Y', $data['purchase']['date']));	
+		$purchase->setDate(date_create_from_format('d/m/Y', $data['purchase']['date']));
 		
 		if($purchase->getBuyOut() != null){
 			$purchase->setStatus(findEntity("PurchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']));					

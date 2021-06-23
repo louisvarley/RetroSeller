@@ -372,6 +372,39 @@
   padding-left: 21px;
 }
 
+/* line 123, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.form-images-preview {
+  display: inline-flex;
+}
+
+/* line 127, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.preview-image {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+}
+
+/* line 133, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.preview-image img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+/* line 140, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.preview-image .badge {
+  cursor: pointer;
+  top: -115px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* line 149, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.image-upload {
+  display: none;
+}
+
 /* line 4, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .dataTable .btn {
   margin-left: 5px;

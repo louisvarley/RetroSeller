@@ -30,6 +30,20 @@
 
 			{% endif %}			
 
+			{% if( purchase.id ) %}
+			
+			{% include "Forms/Elements/images-editor.html" with {
+				'images': purchase.images,
+				'label': 'Images',
+				'description': 'Optional Images for this purchase'
+			}%}		
+
+			<hr class="my-4">	
+				
+			{% endif %}		
+
+
+
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'Title',
 				'id': 'title', 

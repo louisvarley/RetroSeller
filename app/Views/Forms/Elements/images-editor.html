@@ -1,0 +1,18 @@
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+<div class="form-images-preview" style="width:100%; margin-bottom:20px;">
+{% for image in images %}
+	<div class="preview-image">
+		<img src="data:image/jpg;base64,{{ image.base64 }}">
+		<span data-id="{{ image.id }}" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span>
+	</div>
+
+
+{% endfor %}
+</div>
+<div class="form-images-uploader">
+<button class="btn btn-sm btn-image-new btn-success">Add Image</button>
+
+</div>
+{% endblock %}
+{% endembed %}

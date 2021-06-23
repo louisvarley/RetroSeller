@@ -119,3 +119,33 @@
 	padding-left:21px;
 
 }
+
+.form-images-preview{
+	display: inline-flex;
+}
+
+.preview-image{
+
+	width: 100px;
+	height: 100px;
+	margin: 20px;
+
+	img{
+		width: 100px;
+		height: 100px;
+		cursor: pointer;
+		object-fit: cover;
+	}
+
+	.badge{
+		cursor: pointer;
+		top: -115px;
+		height: 20px;
+		line-height: 20px;
+	}
+}
+
+
+.image-upload{
+	display:none;
+}

@@ -47,6 +47,15 @@ class Purchase
     protected $notes;	
 
 	/**
+    * @ORM\ManyToMany(targetEntity="Blob")
+	* @ORM\JoinTable(name="rs_purchase_images",
+    *      joinColumns={@ORM\JoinColumn(name="purchase_id", referencedColumnName="id")},
+    *      inverseJoinColumns={@ORM\JoinColumn(name="blob_id", referencedColumnName="id", unique=true)}
+    *      )
+    */
+    protected $images;
+
+	/**
     * @ORM\ManyToOne(targetEntity="PurchaseStatus")
     * @ORM\JoinColumn(name="purchase_status_id", referencedColumnName="id")
     */	
@@ -84,6 +93,7 @@ class Purchase
     {
         $this->expenses = new ArrayCollection();	
 		$this->notes = new ArrayCollection();
+		$this->images = new ArrayCollection();
     }
 
 
@@ -140,6 +150,11 @@ class Purchase
 	public function getNotes()
 	{
 		return $this->notes;
+	}	
+
+	public function getImages()
+	{
+		return $this->images;
 	}	
 	
     public function getDate()

@@ -467,3 +467,111 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };	
 
+
+rs.init("image_upload_button", function(){
+
+	jQuery('.btn-image-new').click(function(){
+
+		var input = jQuery('<input class="image-upload" name="images[]" type="file" accept="image/*" capture="camera" />');
+
+		jQuery(this).parent().append(input);
+		jQuery(input).click().on("change", function(event){
+			rs.purchase_image_upload(jQuery('#id').val(), this); 
+		})
+
+		return false;
+	});
+
+	$('body').on('click', '.preview-image img', function() {
+		let data = jQuery(this).attr('src');
+		let w = window.open('about:blank');
+		let image = new Image();
+		image.src = data;
+		setTimeout(function(){
+		  w.document.write(image.outerHTML);
+		}, 0);
+	});
+
+
+	$('body').on('click', '.delete-purchase-image', function() {
+	
+		var blobId = jQuery(this).data("id");
+		var purchaseId = jQuery('#id').val();
+
+
+		jQuery(this).parent().hide();
+
+		jQuery.ajax({
+			url: '/ajax?action=PurchaseImage&blobId=' + blobId + '&purchaseId=' + purchaseId,
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'DELETE',
+			type: 'DELETE',
+			success: function(data){
+				console.log(data);
+			}
+		});
+
+		rs.throwSuccess("Saved...", "Image Deleted");
+
+	});
+
+
+
+
+
+})
+
+rs.image_preview = function(input, placeToInsertImagePreview, blobId) {
+
+	if (input.files) {
+		var filesAmount = input.files.length;
+
+		for (i = 0; i < filesAmount; i++) {
+			var reader = new FileReader();
+
+			reader.onload = function(event) {
+
+				var container = jQuery('<div class="preview-image"><span style="top:-50px; left: -85px;" data-id="' + blobId + '" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span></div>');
+				var image = jQuery('<img src="" />');
+				jQuery(image).attr('src', event.target.result);
+				jQuery(image).prependTo(container);
+				jQuery(container).appendTo(placeToInsertImagePreview);
+			}
+
+			reader.readAsDataURL(input.files[i]);
+		}
+	}
+
+};
+
+rs.purchase_image_upload = function(id, input){
+
+	jQuery.each(jQuery(input)[0].files, function(i, file) {
+
+		var data = new FormData();
+		data.append('image', file);
+
+		jQuery.ajax({
+			url: '/ajax?action=PurchaseImage&purchaseId=' + id,
+			data: data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'POST',
+			type: 'POST',
+			success: function(data){
+				console.log(data);
+			}
+		});
+		
+	});
+
+	var blobId = 1;
+
+	rs.image_preview(input, jQuery('.form-images-preview'), blobId);
+
+	rs.throwSuccess("Saved...", "New Image Saved");
+
+}
