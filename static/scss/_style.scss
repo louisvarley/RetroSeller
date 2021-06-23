@@ -74,6 +74,17 @@
 }
 
 
+.badge-float{
+position: relative;
+top: -15px;
+left: 6px;
+z-index: 2;
+padding: 1px 7px;
+margin-left: -23px;
+font-size: 11px;
+color: #fff;
+border-radius: 10em;
+}
 
 .btn-sub-table{
 	width: 17px;

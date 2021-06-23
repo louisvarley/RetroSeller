@@ -21,8 +21,7 @@
 					</div>
 				</td>
 				<td>
-				{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
-				{% include '/Buttons/buy-button.html' with {'model': controller, 'id': entity.id} %}				
+				{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}			
 				{% include '/Buttons/expenses-button.html' with {'modal': entity.id, 'id': entity.id} %}
 				{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}				
 				{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
