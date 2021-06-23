@@ -14,7 +14,7 @@
 		{% endblock %}
 		
 		{% block form_body %}
-		
+
 			{% if( purchase.id ) %}
 			
 				{% include "Forms/Elements/text.html" with {
@@ -118,9 +118,16 @@
 				'id': 'amount', 
 				'name': "#{controller}[amount]", 
 				'description': 'Price paid for this expense',			
-			}%}			
+			}%}		
 
-			{% endif %}					
+			{% endif %}		
+	
+
+			{% include "Notes/list.html" with {
+				'notes': purchase.notes,
+				'type': "purchase",
+				'id': purchase.id
+			}%}				
 			
 
 		{% endblock %}

@@ -206,6 +206,27 @@
   width: 30px;
 }
 
+/* line 131, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.nav-mobile-logout {
+  position: absolute;
+  float: right;
+  top: 10px;
+  right: 20px;
+  display: none;
+}
+
+/* line 139, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.back-button {
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+/* line 144, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.add-note-button {
+  margin-bottom: 10px;
+  text-align: right;
+}
+
 /* line 1, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .select2-container {
   height: calc(2.25rem + 2px) !important;
@@ -459,6 +480,80 @@ table.dataTable thead th, table.dataTable thead td {
   background-color: #ffc107;
   border-color: #ffc107;
   color: #fff;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  /* line 5, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .content {
+    margin: 10px 5% 10px 5%;
+  }
+  /* line 10, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .login {
+    margin-top: 10px;
+  }
+  /* line 14, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .form-group label {
+    width: 100%;
+  }
+  /* line 18, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .col-select2, .col-select2-header {
+    display: inline;
+    width: 33%;
+  }
+  /* line 23, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .nav-logout {
+    display: none;
+  }
+  /* line 27, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .nav-mobile-logout {
+    display: block;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 800px) {
+  /* line 35, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .content {
+    margin: 10px 5% 10px 5%;
+  }
+  /* line 40, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .login {
+    margin-top: 10px;
+  }
+  /* line 44, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .form-group label {
+    width: 100%;
+    width: 33%;
+  }
+  /* line 49, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .col-select2, .col-select2-header {
+    width: 33%;
+  }
+  /* line 54, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .nav-logout {
+    display: none;
+  }
+  /* line 58, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .nav-mobile-logout {
+    display: block;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  /* line 66, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .content {
+    margin: 10px 5% 10px 5%;
+  }
+  /* line 70, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .login {
+    margin-top: 10px;
+  }
+  /* line 74, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .form-group label {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

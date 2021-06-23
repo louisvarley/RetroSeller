@@ -70,6 +70,19 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));
 		
 		entityManager()->persist($sale);
+		
+
+		if(isset($data['note']) &&  $data['note'] != ""){
+
+			$note = new \App\Models\SaleNote();
+			$note->setSale($sale);
+			$note->setNote($data['note']);
+			$note->setDate(new \DateTime('now'));
+			$note->setUser();
+			entityManager()->persist($note);
+
+		}
+
 		entityManager()->flush();
 		
 	}

@@ -53,8 +53,21 @@ class Purchase extends \App\Controllers\ManagerController
 		$purchase->setCategory($purchaseCategory);		
 		
 		entityManager()->persist($purchase);
+
+
+		if(isset($data['note']) &&  $data['note'] != ""){
+
+			$note = new \App\Models\PurchaseNote();
+			$note->setPurchase($purchase);
+			$note->setNote($data['note']);
+			$note->setDate(new \DateTime('now'));
+			$note->setUser();
+			entityManager()->persist($note);
+
+		}
+
 		entityManager()->flush();
-		
+
 	}
 	
 	public function insertEntity($data){

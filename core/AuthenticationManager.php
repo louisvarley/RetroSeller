@@ -44,4 +44,14 @@ class AuthenticationManager{
 	public function logout(){
 		sessionManager()->destroy();
 	}
+
+	public function me(){
+
+		if($this->loggedIn()){
+			
+
+			return findEntity("user",sessionManager()->load("user")->getId());
+		}
+
+	}
 }

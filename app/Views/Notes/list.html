@@ -1,0 +1,51 @@
+
+
+<div class="offset-lg-4 offset-s-0 col-lg-8 col-s-12">
+  <a class="btn btn-primary btn-lg w-100" data-toggle="collapse" href="#notesCollapse" role="button" aria-expanded="false" aria-controls="notesCollapse">
+    Notes
+  </a>
+</div>
+
+<div class="collapse" id="notesCollapse">
+  <div class="card card-body">
+
+{% block body %}
+
+	<div class="add-note-button">
+	  <a data-toggle="collapse" href="#addNoteCollapse">
+		<button class="w-30 btn btn-success btn-md">
+			Add Note
+		</button>
+	  </a>
+	</div>
+
+	<div class="collapse" id="addNoteCollapse">
+			{% include "Forms/Elements/textarea.html" with {
+				'label' : 'Note',
+				'id': 'note', 
+				'name': "note"
+			}%}		
+	</div>
+
+	<div class="row">
+		<div class="col-lg col-s"> <b>User</b></div>
+		<div class="col-lg col-s"> <b>Date</b></div>
+		<div class="col-lg col-s"> <b>Note</b></div>
+	</div>
+			
+	{% for note in notes %}
+			
+		<div class="row">
+				<div class="col-lg col-s">{{ note.user.email }}</div>
+				<div class="col-lg col-s">{{ note.date | date('d/m/Y') }}</div>
+				<div class="col-lg col-s">{{ note.note }}</div>				
+		</div>
+		<hr class="my-4">
+
+	{% endfor %}
+{% endblock %}
+
+  </div>
+</div>
+
+

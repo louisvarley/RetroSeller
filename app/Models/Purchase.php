@@ -42,12 +42,15 @@ class Purchase
     protected $category;		
 
 	/**
+    * @ORM\OneToMany(targetEntity="PurchaseNote", mappedBy="purchase")
+    */	
+    protected $notes;	
+
+	/**
     * @ORM\ManyToOne(targetEntity="PurchaseStatus")
     * @ORM\JoinColumn(name="purchase_status_id", referencedColumnName="id")
     */	
     protected $status;
-	
-
 	
     /**
      * Many features have one product. This is the owning side.
@@ -79,7 +82,8 @@ class Purchase
 
 	public function __construct()
     {
-        $this->expenses = new ArrayCollection();		
+        $this->expenses = new ArrayCollection();	
+		$this->notes = new ArrayCollection();
     }
 
 
@@ -131,7 +135,12 @@ class Purchase
     public function setStatus($status)
     {
         $this->status = $status;
-    }		
+    }	
+
+	public function getNotes()
+	{
+		return $this->notes;
+	}	
 	
     public function getDate()
     {

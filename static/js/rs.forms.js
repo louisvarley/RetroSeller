@@ -415,7 +415,7 @@ rs.init("select2", function(){
 					d = JSON.parse(data.text);
 					var c = jQuery('<div class="row row-select2-header"></div>');
 					$.each(d, function(key,value){
-						jQuery(c).append('<div class="col-md-2 col-select2-header"> <b>' + key.toProperCase() + '</b></div>');
+						jQuery(c).append('<div class="col-lg col-s col-select2-header"> <b>' + key.toProperCase() + '</b></div>');
 					})
 						jQuery('#select2-' + data.element.offsetParent.id + '-results').prepend(c);
 					}
@@ -427,7 +427,7 @@ rs.init("select2", function(){
 					d = JSON.parse(data.text);
 					var c = jQuery('<div class="row row-select2"></div>');
 					$.each(d, function(key,value){
-						jQuery(c).append('<div class="col-md-2 col-select2">' + value + '</div>');
+						jQuery(c).append('<div class="col-lg col-s col-select2">' + value + '</div>');
 					})
 					return c;
 				}else{

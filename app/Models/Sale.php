@@ -37,6 +37,11 @@ class Sale
     protected $purchases;
 	
 	/**
+    * @ORM\OneToMany(targetEntity="SaleNote", mappedBy="sale")
+    */	
+    protected $notes;	
+	
+	/**
     * @ORM\Column(type="date")
     */
     protected $date;	
@@ -71,7 +76,8 @@ class Sale
 	public function __construct()
     {
         $this->purchases = new ArrayCollection();
-        $this->accounts = new ArrayCollection();		
+        $this->accounts = new ArrayCollection();
+		$this->notes = new ArrayCollection();
     }
 
     public function getId()
@@ -153,6 +159,11 @@ class Sale
     {
         return $this->date;
     }	
+	
+	public function getNotes()
+	{
+		return $this->notes;
+	}
 	
     public function setDate($date)
     {

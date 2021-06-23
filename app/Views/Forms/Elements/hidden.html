@@ -1,0 +1,4 @@
+{% block element %}
+<input autocomplete="off" {% if readonly %}readonly="readonly"{% endif %} {% if disabled %}disabled="disabled"{% endif %} id="{{ id }}" name="{{ name }}" type="hidden" value="{{ value }}" class="form-control {{classes}}">
+{% endblock %}
+{% endembed %}
