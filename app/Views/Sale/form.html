@@ -129,11 +129,16 @@
 			
 			{% endif %}
 
-			{% include "Notes/list.html" with {
-				'notes': sale.notes,
-				'type': "sale",
-				'id': sale.id
-			}%}	
+
+			{% if( sale.id ) %}
+
+				{% include "Notes/list.html" with {
+					'notes': sale.notes,
+					'type': "sale",
+					'id': sale.id
+				}%}	
+
+			{% endif %}		
 		
 		{% endblock %}
 	{% endembed %}

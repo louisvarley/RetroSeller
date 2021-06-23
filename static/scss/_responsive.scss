@@ -28,6 +28,10 @@
 		display: block;
 	}
 
+	.form-group label{
+		width: 100% !important;
+	}
+
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -36,6 +40,9 @@
 		margin: 10px 5% 10px 5%;
 	}
 	
+	.form-group label{
+		width: 100% !important;
+	}
 	
 	.login {
 		margin-top: 10px;

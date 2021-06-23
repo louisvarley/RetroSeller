@@ -555,32 +555,40 @@ table.dataTable thead th, table.dataTable thead td {
   .nav-mobile-logout {
     display: block;
   }
+  /* line 31, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .form-group label {
+    width: 100% !important;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 800px) {
-  /* line 35, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 39, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .content {
     margin: 10px 5% 10px 5%;
   }
-  /* line 40, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 43, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  .form-group label {
+    width: 100% !important;
+  }
+  /* line 47, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .login {
     margin-top: 10px;
   }
-  /* line 44, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 51, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .form-group label {
     width: 100%;
     width: 33%;
   }
-  /* line 49, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 56, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .col-select2, .col-select2-header {
     width: 33%;
   }
-  /* line 54, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 61, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .nav-logout {
     display: none;
   }
-  /* line 58, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 65, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .nav-mobile-logout {
     display: block;
   }
@@ -588,15 +596,15 @@ table.dataTable thead th, table.dataTable thead td {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  /* line 66, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 73, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .content {
     margin: 10px 5% 10px 5%;
   }
-  /* line 70, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 77, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .login {
     margin-top: 10px;
   }
-  /* line 74, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 81, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .form-group label {
     width: 100%;
   }

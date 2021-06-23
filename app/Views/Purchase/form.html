@@ -135,14 +135,16 @@
 			}%}		
 
 			{% endif %}		
-	
 
-			{% include "Notes/list.html" with {
-				'notes': purchase.notes,
-				'type': "purchase",
-				'id': purchase.id
-			}%}				
-			
+			{% if( purchase.id ) %}
+		
+				{% include "Notes/list.html" with {
+					'notes': purchase.notes,
+					'type': "purchase",
+					'id': purchase.id
+				}%}				
+	
+			{% endif %}		
 
 		{% endblock %}
 	{% endembed %}
