@@ -57,9 +57,8 @@ class ManagerController extends \Core\Controller
      *
      * @return void
      */		
-	public function deleteEntity($id){
+	public function deleteEntity($entity){
 		
-		$entity = entityManager()->findEntity($this->route_params['controller'], $this->route_params['id']);
 		entityManager()->remove($entity);
 		entityManager()->flush();
 		
