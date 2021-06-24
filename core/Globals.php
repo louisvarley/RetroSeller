@@ -18,7 +18,7 @@ define("DIR_APP", DIR_ROOT . '/app');
 define("DIR_CORE", DIR_ROOT . '/core');	
 define("DIR_PUBLIC", DIR_ROOT . '/public');
 define("DIR_STATIC", DIR_PUBLIC  . '/static');	
-define("DIR_PROXIES", DIR_CORE  . '/proxies');
+define("DIR_PROXIES", DIR_CORE  . '/Proxies');
 
 define("DIR_VIEWS", DIR_APP . '/Views');	
 define("DIR_CONTROLLERS", DIR_APP . '/Controllers');	
