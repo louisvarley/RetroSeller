@@ -143,4 +143,9 @@ abstract class Controller
 			return true;		
 	}	
 
+	public function requestMethod(){
+
+		return $_SERVER['REQUEST_METHOD'];
+	}
+
 }

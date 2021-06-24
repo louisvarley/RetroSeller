@@ -509,11 +509,14 @@ rs.init("image_upload_button", function(){
 			method: 'DELETE',
 			type: 'DELETE',
 			success: function(data){
-				console.log(data);
+				rs.throwSuccess("Saved...", data['response']['message']);
+			},
+			fail: function(data){
+				rs.throwSuccess("Error...", data['response']['error']);
 			}
 		});
 
-		rs.throwSuccess("Saved...", "Image Deleted");
+		
 
 	});
 
@@ -562,16 +565,17 @@ rs.purchase_image_upload = function(id, input){
 			method: 'POST',
 			type: 'POST',
 			success: function(data){
-				console.log(data);
+				rs.image_preview(input, jQuery('.form-images-preview'), data['response']['blobId']);
+				rs.throwSuccess("Saved...", data['response']['message']);
+
+			},
+			fail: function(data){
+				rs.throwSuccess("Error...", data['response']['error']);
 			}
 		});
 		
 	});
 
-	var blobId = 1;
-
-	rs.image_preview(input, jQuery('.form-images-preview'), blobId);
-
-	rs.throwSuccess("Saved...", "New Image Saved");
+	
 
 }

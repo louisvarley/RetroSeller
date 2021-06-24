@@ -90,7 +90,12 @@ class View
 				return "rag-green";
 			}
 			
-		}));		
+		}));	
+
+		$twig->addFilter( new \Twig\TwigFilter('as_thumbnail', function ($image) {
+			return '<div class="image-thumbnail"><img src="' . $image . '"></div>';
+		}));
+			
 
 
 

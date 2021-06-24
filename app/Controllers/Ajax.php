@@ -17,7 +17,7 @@ class Ajax extends \Core\Controller
 
 	protected function before()
 	{
-		//header('Content-type: application/json');
+		header('Content-type: application/json');
 	}
 
 	protected function indexAction(){
@@ -27,65 +27,98 @@ class Ajax extends \Core\Controller
 
 			$this->get['action'] = ucfirst($this->get['action']);
 
-			if($this->isPOST()){
-				call_user_func(array(__CLASS__, 'post' . $this->get['action']), $this->get, $this->post);
-			}
+			$method = strtolower($this->requestMethod()) . $this->get['action'];
 
-			if($this->isGET()){
-				call_user_func(array(__CLASS__, 'get' . $this->get['action']), $this->get);
-			}
+			if(!method_exists(__CLASS__, strtolower($this->requestMethod()) . $this->get['action'])){
 
-			if($this->isPUT()){
-				call_user_func(array(__CLASS__, 'put' . $this->get['action']), $this->get, $this->post);
+				$response = new \Core\Classes\AjaxResponse(500, 0, "Unknown Ajax Action " . $method);
+				echo $response->asJson();
+
+			}else{
+
+				if($this->isPOST()){
+					call_user_func(array(__CLASS__, $method), $this->get, $this->post);
+				}
+
+				if($this->isGET()){
+					call_user_func(array(__CLASS__, $method), $this->get);
+				}
+
+				if($this->isPUT()){
+					call_user_func(array(__CLASS__, $method), $this->get, $this->put);
+				}		
+
+				if($this->isDELETE()){
+					call_user_func(array(__CLASS__, $method), $this->get);
+				}	
+
 			}		
-
-			if($this->isDELETE()){
-				call_user_func(array(__CLASS__, 'delete' . $this->get['action']), $this->get, $this->post);
-			}			
 
 		}
 
 	}
 
 
-	protected function getHelloAction($data){
+	protected function getHello($data){
 
-		echo "hello";
-		die();
+		$response = new \Core\Classes\AjaxResponse(200, 0, ['message' => 'Hello World']);
+		echo $response->asJson();
 
 	}
 
 
 	protected function postPurchaseImage($data){
 
-		$imageLocation = ($_FILES['image']['tmp_name']);
-		$imageData = file_get_contents($imageLocation);
-		$imageBase64 = base64_encode($imageData);
+		try{
 
-		$purchase = findEntity("purchase",$data['purchaseId']);
+			$imageLocation = ($_FILES['image']['tmp_name']);
+			$imageData = file_get_contents($imageLocation);
+			$imageBase64 = base64_encode($imageData);
 
-		$image = new \App\Models\Blob();
-		$image->setData($imageBase64);
-		entityManager()->persist($image);
+			$purchase = findEntity("purchase",$data['purchaseId']);
 
-		$purchase->getImages()->add($image);
+			$image = new \App\Models\Blob();
+			$image->setData($imageBase64);
+			entityManager()->persist($image);
 
-		entityManager()->flush();
+			$purchase->getImages()->add($image);
 
+			entityManager()->flush();
+
+			$response = new \Core\Classes\AjaxResponse(200, 0, ['blobId' => $image->getId(), 'message' => 'Image Saved']);
+			echo $response->asJson();
+	
+		}
+		catch (Exception $e) {
+			$response = new \Core\Classes\AjaxResponse(500, 0, ['error' => $e->getMessage()]);
+			echo $response->asJson();
+
+		}
 	}
 
 
 	protected function deletePurchaseImage($data){
 
+		try{
 
-		$purchase = findEntity("purchase", $data['purchaseId']);
-		$image = findEntity("blob", $data['blobId']);
+			$purchase = findEntity("purchase", $data['purchaseId']);
+			$image = findEntity("blob", $data['blobId']);
 
-		$purchase->getImages()->removeElement($image);
+			$purchase->getImages()->removeElement($image);
 
-		entityManager()->remove($image);
-		entityManager()->flush();
+			entityManager()->remove($image);
+			entityManager()->flush();
 
+			
+			$response = new \Core\Classes\AjaxResponse(200, 0, ['message' => 'Image deleted']);
+			echo $response->asJson();
+
+		}
+		catch (Exception $e) {
+			$response = new \Core\Classes\AjaxResponse(500, 0, ['error' => $e->getMessage()]);
+			echo $response->asJson();
+
+		}
 	}
 
 }

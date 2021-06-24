@@ -183,6 +183,19 @@ class Purchase
 		return $this->expenses;
 		
 	}
+
+	public function getThumbnail()
+	{
+
+		if($this->getImages()->count() == 0){
+
+			return "/static/img/place-holder.jpg";
+		}else{
+			
+			return "data:image/jpg;base64," . $this->getImages()->first()->getBase64();
+		}
+
+	}
 	
     public function setSale($sale)
     {

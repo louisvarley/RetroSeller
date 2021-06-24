@@ -240,6 +240,13 @@
   text-align: right;
 }
 
+/* line 164, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.image-thumbnail img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
 /* line 1, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .select2-container {
   height: calc(2.25rem + 2px) !important;
@@ -410,19 +417,13 @@
   margin-left: 5px;
 }
 
-/* line 8, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
-.dataTable img {
-  width: 100px;
-  height: 100px;
-}
-
-/* line 15, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 9, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .btn-datatable-new {
   margin-top: 20px;
   margin-bottom: 40px;
 }
 
-/* line 22, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 16, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .datatable-loading {
   width: 100%;
   height: 600px;
@@ -431,22 +432,22 @@
   font-weight: bold;
 }
 
-/* line 31, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 25, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 table.dataTable thead th, table.dataTable thead td {
   max-width: 300px;
 }
 
-/* line 36, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 30, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .rag-orange {
   color: #d98d0b;
 }
 
-/* line 40, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 34, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .rag-green {
   color: #28a745;
 }
 
-/* line 44, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 38, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .rag-red {
   color: #dc3545;
 }

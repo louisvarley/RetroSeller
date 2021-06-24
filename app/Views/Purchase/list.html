@@ -4,11 +4,12 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Status", "Name", "Date", "Total Spend","Share", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr>			
 				<td>{{ entity.id }}</td>
+				<td>{{ entity.thumbnail | as_thumbnail | raw }}</td>
 				<td><span class="badge badge-{{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>			
 				<td>{{ entity.name }}</td>	
 				<td>{{ entity.date | date('d/m/Y') }}</td>
