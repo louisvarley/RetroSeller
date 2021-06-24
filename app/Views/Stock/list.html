@@ -4,11 +4,12 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Category", "Name", "Description", "Price"]	} %}
+	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Category","Image", "Name", "Description", "Price"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr style="background-color:{{ entity.category.color}}">		
-				<td>{{ entity.category.path }}</td>					
+				<td>{{ entity.category.path }}</td>
+				<td><a target="_blank" href="{{ entity.getThumbnail() }}">{{ entity.thumbnail | as_thumbnail | raw }}</a></td>
 				<td>{{ entity.name }}</td>	
 				<td>{{ entity.description }}</td>					
 				<td>{{ entity.valuation  | format_currency('GBP', {rounding_mode: 'floor'})  }}</td>				
