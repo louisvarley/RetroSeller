@@ -27,6 +27,9 @@ set_exception_handler('Core\Error::exceptionHandler');
  */
 $router = new Core\Router();
 
+/* Controller Action With ID and File */
+$router->add('{controller}/{id:\d+}.jpg', ['action' => 'index']);  
+
 /* Controller Plural 1 */
 $router->add('{controller}s', ['controller' => '{controller}', 'action' => 'list']);
 
@@ -44,6 +47,7 @@ $router->add('{controller}/{action}');
 
 /* Controller Action With ID */
 $router->add('{controller}/{action}/{id:\d+}');   
+
 
 /* Controller Index With ID */
 $router->add('{controller}/{id:\d+}', ['controller' => '{controller}', 'action' => 'index']);

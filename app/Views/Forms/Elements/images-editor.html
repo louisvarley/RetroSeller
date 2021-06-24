@@ -3,8 +3,10 @@
 <div class="form-images-preview" style="width:100%; margin-bottom:20px;">
 {% for image in images %}
 	<div class="preview-image">
-		<img src="data:image/jpg;base64,{{ image.base64 }}">
+		<a target="_blank" href="{{ image.url }}">
+		<img src="{{ image.url }}">
 		<span data-id="{{ image.id }}" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span>
+		</a>
 	</div>
 
 

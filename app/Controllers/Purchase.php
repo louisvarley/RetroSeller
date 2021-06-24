@@ -106,5 +106,6 @@ class Purchase extends \App\Controllers\ManagerController
 		return $purchase->getId();
 		
 	}	
+
 	
 }

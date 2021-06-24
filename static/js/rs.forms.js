@@ -482,17 +482,6 @@ rs.init("image_upload_button", function(){
 		return false;
 	});
 
-	$('body').on('click', '.preview-image img', function() {
-		let data = jQuery(this).attr('src');
-		let w = window.open('about:blank');
-		let image = new Image();
-		image.src = data;
-		setTimeout(function(){
-		  w.document.write(image.outerHTML);
-		}, 0);
-	});
-
-
 	$('body').on('click', '.delete-purchase-image', function() {
 	
 		var blobId = jQuery(this).data("id");

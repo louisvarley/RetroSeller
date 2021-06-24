@@ -192,11 +192,11 @@ class Purchase
 			return "/static/img/place-holder.jpg";
 		}else{
 			
-			return "data:image/jpg;base64," . $this->getImages()->first()->getBase64();
+			return $this->getImages()->first()->getUrl();
 		}
 
 	}
-	
+
     public function setSale($sale)
     {
         $this->sale = $sale;

@@ -43,4 +43,9 @@ class Blob
 
 	}
 
+	public function getUrl(){
+		return "/blob/" . $this->getId() . ".jpg";
+
+	}
+
 }
