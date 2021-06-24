@@ -2,6 +2,7 @@
     "require": {
         "twig/twig": "~3.0",
 		"doctrine/orm": "*",
+		"doctrine/cache": "*", 
         "vaibhavpandeyvpz/doctrine-datatables": "^1.3",
         "twig/intl-extra": "^3.3",
         "phpoffice/phpspreadsheet": "^1.18",
