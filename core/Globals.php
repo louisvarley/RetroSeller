@@ -89,10 +89,6 @@ function authenticationManager(){
 	return \Core\AuthenticationManager::instance();
 }
 
-function jobManager(){	
-	return \Core\JobManager::instance();
-}
-
 function entityManager(){	
 	return \Core\EntityManager::instance()->entityManager;
 }

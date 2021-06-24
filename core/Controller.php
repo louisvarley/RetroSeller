@@ -78,9 +78,6 @@ abstract class Controller
 			/* Update Last Activity Time */
 			sessionManager()->activity();
 			
-			/* Any Actions */
-			jobManager()->execute();
-			
             if ($this->before() !== false) {
                 call_user_func_array([$this, $method], $args);
                 $this->after();
