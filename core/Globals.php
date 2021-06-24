@@ -215,7 +215,7 @@ function setMetadata($key, $value){
 }
 
 function eBayService(){	
-	return \Core\Services\eBayService::instance();
+	return \Core\Services\ebayService::instance();
 }
 
 sessionManager()->start();
