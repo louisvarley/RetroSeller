@@ -95,6 +95,23 @@ class View
 		$twig->addFilter( new \Twig\TwigFilter('as_thumbnail', function ($image) {
 			return '<div class="image-thumbnail"><img src="' . $image . '"></div>';
 		}));
+
+		$twig->addFilter( new \Twig\TwigFilter('item_links', function ($customSKUs) {
+			
+			$str = "";
+
+			foreach(explode(',',$customSKUs) as $customSKU){				
+				if(findEntity("purchase", $customSKU)){
+					$purchase = findEntity("purchase",$customSKU);
+					$str .= '<a href="/purchase/edit/' . $purchase->getId() . '">' . $purchase->getName() . '</a>';
+				}
+			}
+
+			return $str;
+		}));
+
+
+
 			
 
 

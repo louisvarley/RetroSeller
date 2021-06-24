@@ -4,7 +4,8 @@
 		"doctrine/orm": "*",
         "vaibhavpandeyvpz/doctrine-datatables": "^1.3",
         "twig/intl-extra": "^3.3",
-        "phpoffice/phpspreadsheet": "^1.18"
+        "phpoffice/phpspreadsheet": "^1.18",
+        "benmorel/ebay-sdk-php": "^19.0"
     },
     "autoload": {
         "psr-4": {

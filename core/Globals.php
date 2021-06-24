@@ -3,6 +3,7 @@
 use Core\EntityManager;
 use Core\SessionManager;
 use Core\ToastManager;
+use Core\Services\eBayService;
 
 use Doctrine\ORM\Query\ResultSetMapping;
 
@@ -176,6 +177,45 @@ function createOptionSet($model, $valueField, $textField, $criteria = null){
 	$res = $query->getResult();
 	
 	return $res;
+}
+
+function getMetadata($key){
+
+	$meta = findBy("metadata",["key" => $key]);
+
+	if($meta){
+		return $meta[0]->getValue();
+	}else{
+		return null;
+	}
+
+}
+
+function setMetadata($key, $value){
+
+	if(findBy("metadata",["key" => $key])){
+
+		$meta = findBy("metadata",["key" => $key])[0];
+		$meta->setValue($value);
+	
+
+	}else{
+
+		$meta = new \App\Models\Metadata();
+		$meta->setValue($value);
+		$meta->setKey($key);
+
+
+	}
+
+	entityManager()->persist($meta);
+	entityManager()->flush();
+
+
+}
+
+function eBayService(){	
+	return \Core\Services\eBayService::instance();
 }
 
 sessionManager()->start();
