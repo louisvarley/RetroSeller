@@ -4,17 +4,17 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Item Number", "Name", "Price", "", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Item Number", "Name", "Price", "", "", ""]	} %}
 		{% block table_body %}
 			{% for item in activeList.ItemArray.Item %}
 				<tr>			
-				<td><a target="_blank" href="https://www.ebay.co.uk/itm/{{ item.ItemID }}">{{ item.ItemID }}</a></td>						
+				<td><a target="_blank" href="{{ item.ListingDetails.ViewItemURL }}">{{ item.ItemID }}</a></td>						
 				<td>{{ item.Title }}</td>	
 				<td>{{ item.SellingStatus.CurrentPrice.value  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
 				<td>{{ item.SKU | item_links | raw }}</td>
+				<td>{{ item.TimeLeft }}</td>
 				<td>{% include '/eBay/listing-type-badge.html' with {'type': item.ListingType } %}</td>
-								
-
+							
 				</tr>
 				
 			{% endfor %}

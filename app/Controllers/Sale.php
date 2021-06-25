@@ -59,7 +59,6 @@ class Sale extends \App\Controllers\ManagerController
 			$sale->getAccounts()->add(findEntity("Account", $account_id));
 		}				
 		
-		$sale->setEbayItemNo($data['sale']['ebay_item_no']);
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
 		$sale->setPostageCost($data['sale']['postage_cost']);		
 		$sale->setFeeCost($data['sale']['fee_cost']);		
@@ -112,7 +111,6 @@ class Sale extends \App\Controllers\ManagerController
 			$sale->getAccounts()->add(findEntity("Account", $account_id));
 		}				
 		
-		$sale->setEbayItemNo($data['sale']['ebay_item_no']);
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
 		$sale->setPostageCost($data['sale']['postage_cost']);	
 

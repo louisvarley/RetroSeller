@@ -29,6 +29,8 @@ class Sale
     */	
     protected $payment_vendor;	
 	 
+ 
+	 
     // ...
     /**
      * One product has many features. This is the inverse side.
@@ -62,9 +64,9 @@ class Sale
     protected $fee_cost = 0;	
 	
 	/**
-    * @ORM\Column(type="integer", nullable="true")
+    * @ORM\Column(type="string")
     */
-    protected $ebay_item_no;	
+    protected $ebay_order_id;	
 	
     /**
      * Many Sales have Many Accounts.
@@ -85,14 +87,14 @@ class Sale
         return $this->id;
     }
 
-    public function getEbayItemNo()
+    public function geteBayOrderId()
     {
-        return $this->ebay_item_no;
+        return $this->ebay_order_id;
     }
 
-    public function setEbayItemNo($ebay_item_no)
+    public function seteBayOrderId($ebay_order_id)
     {
-        $this->ebay_item_no = $ebay_item_no;
+        $this->ebay_order_id = $ebay_order_id;
     }
 	
     public function getGrossAmount()

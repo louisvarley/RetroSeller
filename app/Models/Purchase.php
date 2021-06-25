@@ -87,7 +87,12 @@ class Purchase
 	/**
     * @ORM\OneToOne(targetEntity="Buyout", mappedBy="purchase")
     */	
-    protected $buyout;	
+    protected $buyout;
+
+	/**
+    * @ORM\Column(type="string", nullable="true")
+    */
+    protected $ebay_item_id;	
 
 	public function __construct()
     {
@@ -166,6 +171,16 @@ class Purchase
     {
         $this->date = $date;
     }		
+
+    public function seteBayItemId()
+    {
+        return $this->ebay_item_id;
+    }	
+	
+    public function geteBayItemId($ebay_item_id)
+    {
+        $this->ebay_item_id = $ebay_item_id;
+    }	
 
     public function getCategory()
     {

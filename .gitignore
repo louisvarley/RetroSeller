@@ -5,3 +5,5 @@ sample_data.php
 app/Config.php
 core/proxies
 core/cache
+.idea
+.vs
