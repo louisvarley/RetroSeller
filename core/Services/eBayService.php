@@ -209,7 +209,7 @@ class ebayService
 
                 foreach($skuArray as $sku){
                     $purchase = findEntity("purchase", $sku);
-                    if($purchase) $sale->getPurchases()->add();
+                    if($purchase) $sale->getPurchases()->add($purchase);
                 }
 
                 if($sale->getPurchases()->count() == 0) continue;
