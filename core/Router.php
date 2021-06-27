@@ -108,6 +108,8 @@ class Router
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {
+			
+			$this->params['controller'] = str_ireplace("ebay","eBay", $this->params['controller']);
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
 			
@@ -116,8 +118,6 @@ class Router
 			
             $controller = $this->getNamespace() . $controller;
 
-			$controller = str_ireplace("ebay","eBay",$controller);
-			
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
 
