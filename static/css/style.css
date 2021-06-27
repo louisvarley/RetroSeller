@@ -113,43 +113,61 @@
   height: 25px;
 }
 
-/* line 46, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
-.badge-forsale {
+/* line 48, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-purchase.forsale {
   background-color: #007bff;
   color: #fff;
 }
 
-/* line 51, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
-.badge-sold {
+/* line 53, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-purchase.sold {
   background-color: #28a745;
   color: #fff;
 }
 
-/* line 56, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
-.badge-held {
+/* line 58, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-purchase.held {
   background-color: #999;
   color: #fff;
 }
 
-/* line 61, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
-.badge-requiresrepair {
+/* line 63, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-purchase.requiresrepair {
   background-color: #dd4b39;
   color: #fff;
 }
 
-/* line 66, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
-.badge-writtenoff {
+/* line 68, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-purchase.writtenoff {
   background-color: #666;
   color: #fff;
 }
 
-/* line 71, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
-.badge-boughtout {
+/* line 73, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-purchase.boughtout {
   background-color: #810696;
   color: #fff;
 }
 
-/* line 77, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 82, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-sale.in-complete {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* line 87, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-sale.complete {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* line 92, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.badge-sale.cancelled {
+  background-color: #666;
+  color: #fff;
+}
+
+/* line 100, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .badge-float {
   position: relative;
   top: -15px;
@@ -162,7 +180,7 @@
   border-radius: 10em;
 }
 
-/* line 89, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 112, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .btn-sub-table {
   width: 17px;
   height: 17px;
@@ -170,24 +188,24 @@
   padding: 0px 0px;
 }
 
-/* line 97, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 120, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table {
   background-color: #fff !important;
   display: none;
   font-size: 12px;
 }
 
-/* line 103, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 126, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table .badge-boughtout {
   display: none;
 }
 
-/* line 107, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 130, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table table {
   width: 100%;
 }
 
-/* line 111, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 134, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table .btn {
   width: 17px;
   height: 17px;
@@ -195,31 +213,31 @@
   padding: 0px 0px;
 }
 
-/* line 118, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 141, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table td {
   background-color: #fff !important;
   padding: 4px 5px;
 }
 
-/* line 123, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 146, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table .buyout {
   color: red;
   text-decoration: line-through;
 }
 
-/* line 128, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 151, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .sub-table .buyout .badge-boughtout {
   display: block;
   text-decoration: none;
 }
 
-/* line 137, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 160, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .colorbox {
   height: 30px;
   width: 30px;
 }
 
-/* line 142, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 165, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .nav-mobile-logout {
   position: absolute;
   float: right;
@@ -228,19 +246,19 @@
   display: none;
 }
 
-/* line 150, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 173, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .back-button {
   margin-bottom: 10px;
   text-align: right;
 }
 
-/* line 155, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 178, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .add-note-button {
   margin-bottom: 10px;
   text-align: right;
 }
 
-/* line 164, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 187, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .image-thumbnail img {
   width: 50px;
   height: 50px;

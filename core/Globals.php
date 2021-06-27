@@ -35,7 +35,7 @@ define("_VIEWS", "\\App\\Views\\");
 
 
 
-/* Statuses */
+/* Purchase Statuses */
 define("_PURCHASE_STATUSES", array(
 	'FOR_SALE' => array('id' => 1, 'name' => 'For Sale'),
 	'SOLD' => array('id' => 2, 'name' => 'Sold'),
@@ -43,6 +43,14 @@ define("_PURCHASE_STATUSES", array(
 	'WRITTEN_OFF' => array('id' => 4, 'name' => 'Written Off'),
 	'REQUIRES_REPAIR' => array('id' => 5, 'name' => 'Requires Repair'),
 	'HELD' => array('id' => 6, 'name' => 'Held'),
+	)
+);
+
+/* Sale Statuses */
+define("_SALE_STATUSES", array(
+	'INCOMPLETE' => array('id' => 1, 'name' => 'In-Complete'),
+	'COMPLETE' => array('id' => 2, 'name' => 'Complete'),
+	'CANCELLED' => array('id' => 3, 'name' => 'Cancelled')
 	)
 );
 
@@ -210,8 +218,8 @@ function setMetadata($key, $value){
 
 }
 
-function eBayService(){	
-	return \Core\Services\ebayService::instance();
+function eBayService($intergrationId){	
+	return \Core\Services\ebayService::instance($intergrationId);
 }
 
 sessionManager()->start();

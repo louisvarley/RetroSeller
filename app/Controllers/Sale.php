@@ -20,14 +20,13 @@ class Sale extends \App\Controllers\ManagerController
 
 	public function getEntity($id = 0){
 		
-		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);			
-		
 		return array(
 			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
 			"saleVendors" => createOptionSet('SaleVendor', 'id','name'),
+			"saleStatuses" => createOptionSet('SaleStatus', 'id','name'),
 			"paymentVendors" => createOptionSet('PaymentVendor', 'id','name'),		
 			"accounts" => createOptionSet('Account', 'id','name'),					
-			"purchases" => ($id > 0 ? createOptionSet('purchase', 'id',['id','name','date']) : createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => $forSaleStatus]])),			
+			"purchases" => ($id > 0 ? createOptionSet('purchase', 'id',['id','name','date']) : createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => \app\Models\PurchaseStatus::ForSale()->getId()]])),			
 		);	
 	} 
 
@@ -36,22 +35,22 @@ class Sale extends \App\Controllers\ManagerController
 		$sale = findEntity($this->route_params['controller'], $id);
 		$saleVendor = findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
 		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
-		
 		$purchases = findBy("Purchase", ['sale' => $sale]);
 		
-		$soldStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);	
-		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);			
+		$sale->setStatus(findEntity("SaleStatus", $data['sale']['status']));	
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
-			$purchase->setStatus($forSaleStatus);
+			$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
 			entityManager()->persist($purchase);
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
 			$purchase = findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
-			$purchase->setStatus($soldStatus);
+			if($sale->isComplete()){
+				$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
+			}
 		}
 		
 		$sale->getAccounts()->clear();	
@@ -62,15 +61,13 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
 		$sale->setPostageCost($data['sale']['postage_cost']);		
 		$sale->setFeeCost($data['sale']['fee_cost']);		
-		
 		$sale->setPaymentVendor($paymentVendor);		
 		$sale->setSaleVendor($saleVendor);
-
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));
+
 		
 		entityManager()->persist($sale);
 		
-
 		if(isset($data['note']) &&  $data['note'] != ""){
 
 			$note = new \App\Models\SaleNote();
@@ -89,10 +86,11 @@ class Sale extends \App\Controllers\ManagerController
 	public function insertEntity($data){
 		
 		$saleVendor = findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
-		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
-		
+		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);	
 		$sale = new \App\Models\Sale();
-		$soldStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);	
+		
+		$sale->setStatus(findEntity("SaleStatus", $data['sale']['status']));	
+		
 		$purchases = findBy("Purchase", ['sale' => $sale]);
 		
 		foreach($purchases as $purchase){
@@ -103,7 +101,11 @@ class Sale extends \App\Controllers\ManagerController
 		foreach($data['sale']['purchases'] as $purchase_id){
 			$purchase = findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
-			$purchase->setStatus($soldStatus);
+			
+			if($sale->isComplete()){
+				$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
+			}		
+			
 		}
 		
 		$sale->getAccounts()->clear();	

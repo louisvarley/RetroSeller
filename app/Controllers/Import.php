@@ -25,6 +25,21 @@ class Import extends \Core\Controller
 
     }
 	
+	public function eBayOrdersAction(){
+		
+		$imports = 0;
+		
+		foreach(findAll("ebayIntergration") as $eBayIntergration){
+			
+			$imports = $imports + ebayService($eBayIntergration->getId())->CreateSalesFromOrders();
+		}
+			
+		toastManager()->throwSuccess("Saved...", "Imported " . $imports . " New Sales");
+		header('Location: /');
+
+		
+	}
+	
 	public function purchaseAction()
 	{
 		

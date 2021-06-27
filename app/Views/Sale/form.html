@@ -28,7 +28,19 @@
 				
 				<hr class="my-4">		
 
-			{% endif %}		
+			{% endif %}	
+
+			{% if( sale.id ) %}
+
+				{% include "Notes/list.html" with {
+					'notes': sale.notes,
+					'type': "sale",
+					'id': sale.id
+				}%}	
+				
+				<hr class="my-4">	
+
+			{% endif %}				
 
 			{% include "Forms/Elements/text-ebay.html" with {
 				'label' : 'Auction Item Number',			
@@ -36,7 +48,17 @@
 				'name': "#{controller}[ebay_item_no]", 
 				'description': 'If listed on eBay, enter the Item Number',
 				'value': sale.ebayItemNo				
-			}%}			
+			}%}		
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Status',		
+				'id': 'status', 
+				'name': "#{controller}[status]", 
+				'description': 'Status of this Sale?',
+				'required': 'required',
+				'value': sale.status.Id,
+				'options': saleStatuses			
+			}%}					
 
 			{% include "Forms/Elements/text-date.html" with {
 				'label' : 'Date',	
@@ -127,18 +149,7 @@
 				'value': sale.netAmount				
 			}%}				
 			
-			{% endif %}
-
-
-			{% if( sale.id ) %}
-
-				{% include "Notes/list.html" with {
-					'notes': sale.notes,
-					'type': "sale",
-					'id': sale.id
-				}%}	
-
-			{% endif %}		
+			{% endif %}	
 		
 		{% endblock %}
 	{% endembed %}

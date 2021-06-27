@@ -102,9 +102,10 @@ class Account
 		/* Handle Sales */
 		foreach($this->getSales() as $sale){
 			
-			/* get profit shares */
-			$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
-			
+			if($sale->isComplete()){
+				/* get profit shares */
+				$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
+			}
 		}
 		
 		return $balance;
@@ -118,20 +119,24 @@ class Account
 		/* Handle Sales */
 		foreach($this->getSales() as $sale){
 			
-			/* get profit shares */
-			$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
+			if($sale->isComplete()){
 			
-			/* get expenses */
-			foreach($sale->getPurchases() as $purchase){
-				foreach($purchase->getExpenses() as $expense){
-					
-					/* Exclude expenses from bought out items */
-					if($expense->getAccount()->getId() == $this->getId()){
-						if($purchase->getBuyOut() == null){
-							$balance = $balance + ($expense->getAmount() / $expense->getPurchases()->count());
+				/* get profit shares */
+				$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
+				
+				/* get expenses */
+				foreach($sale->getPurchases() as $purchase){
+					foreach($purchase->getExpenses() as $expense){
+						
+						/* Exclude expenses from bought out items */
+						if($expense->getAccount()->getId() == $this->getId()){
+							if($purchase->getBuyOut() == null){
+								$balance = $balance + ($expense->getAmount() / $expense->getPurchases()->count());
+							}
 						}
 					}
 				}
+			
 			}
 		}
 		

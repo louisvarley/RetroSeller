@@ -7,7 +7,7 @@ namespace Core\Classes;
  *
  * PHP version 7.0
  */
-class AjaxResponse
+class ApiResponse
 {
 
 	public function __construct($responseCode, $code, $response){

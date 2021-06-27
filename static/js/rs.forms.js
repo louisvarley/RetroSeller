@@ -491,7 +491,7 @@ rs.init("image_upload_button", function(){
 		jQuery(this).parent().hide();
 
 		jQuery.ajax({
-			url: '/ajax?action=PurchaseImage&blobId=' + blobId + '&purchaseId=' + purchaseId,
+			url: '/api/purchase/purchaseImage?blobId=' + blobId + '&purchaseId=' + purchaseId,
 			cache: false,
 			contentType: false,
 			processData: false,
@@ -546,7 +546,7 @@ rs.purchase_image_upload = function(id, input){
 		data.append('image', file);
 
 		jQuery.ajax({
-			url: '/ajax?action=PurchaseImage&purchaseId=' + id,
+			url: '/api/purchase/purchaseImage?purchaseId=' + id,
 			data: data,
 			cache: false,
 			contentType: false,

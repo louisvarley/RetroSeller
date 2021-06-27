@@ -286,11 +286,8 @@ class Purchase
 			
 		}			
 		
-		
 		return $accounts;
 		
 	}
-	
-	
 	
 }

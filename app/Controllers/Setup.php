@@ -34,7 +34,6 @@ class Setup extends \Core\Controller
 		
 		if($this->isPOST()){
 
-
 			$connection = @fsockopen($this->post['db_host'], $this->post['db_port']);
 
 			if(!is_resource($connection)){
@@ -109,10 +108,17 @@ define('_DB_DUMPER','mysqldump');";
 			entityManager()->persist($status);
 		}
 		
+		foreach(_SALE_STATUSES as $saleStatus){
+			
+
+			$status = new \App\Models\SaleStatus();
+			$status->setname($saleStatus['name']);
+			entityManager()->persist($status);
+			
+		}
 		
 		entityManager()->flush();
 		
-
 		toastManager()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
 		header('Location: /login');
 		
@@ -120,4 +126,6 @@ define('_DB_DUMPER','mysqldump');";
 
         View::renderTemplate('Setup/index.html');
     }
+	
+
 }

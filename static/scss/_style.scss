@@ -43,34 +43,57 @@
 }
 
 
-.badge-forsale{
-	background-color:#007bff;
-    color:#fff;
+.badge-purchase{
+
+	&.forsale{
+		background-color:#007bff;
+		color:#fff;
+	}
+
+	&.sold{
+		background-color:#28a745;
+		color:#fff;
+	}
+
+	&.held{
+		background-color:#999;
+		color:#fff;
+	}
+
+	&.requiresrepair{
+		background-color:#dd4b39;
+		color:#fff;
+	}
+
+	&.writtenoff{
+		background-color:#666;
+		color:#fff;
+	}
+
+	&.boughtout{
+		background-color:#810696;
+		color:#fff;
+	}
+
 }
 
-.badge-sold{
-	background-color:#28a745;
-    color:#fff;
-}
+.badge-sale{
 
-.badge-held{
-	background-color:#999;
-    color:#fff;
-}
+	&.in-complete{
+		background-color:#007bff;
+		color:#fff;
+	}
+	
+	&.complete{
+		background-color:#28a745;
+		color:#fff;
+	}
 
-.badge-requiresrepair{
-	background-color:#dd4b39;
-    color:#fff;
-}
+	&.cancelled{
+		background-color:#666;
+		color:#fff;
+	}	
 
-.badge-writtenoff{
-	background-color:#666;
-    color:#fff;
-}
-
-.badge-boughtout{
-	background-color:#810696;
-    color:#fff;
 }
 
 

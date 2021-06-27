@@ -27,6 +27,9 @@ set_exception_handler('Core\Error::exceptionHandler');
  */
 $router = new Core\Router();
 
+/* ajax */
+$router->add('api/{controller}/{action}', ['namespace' => 'Api']);
+
 /* Controller Action With ID and File */
 $router->add('{controller}/{id:\d+}.jpg', ['action' => 'index']);  
 

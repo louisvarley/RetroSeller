@@ -25,8 +25,14 @@ class User
 	/**
     * @ORM\Column(type="string", nullable="false")
     */
+    protected $apikey;	
+	
+	/**
+    * @ORM\Column(type="string", nullable="false")
+    */
     private $password_hash;		
-
+	
+	
     public function getId()
     {
         return $this->id;
@@ -46,6 +52,16 @@ class User
     {
 		$this->password_hash = \password_hash ($password,   PASSWORD_DEFAULT  );
     }
+	
+    public function getApiKey()
+    {
+        return $this->apikey;
+    }
+
+    public function generateApiKey()
+    {
+        $this->apikey = implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999))), 0, 30), 6));
+    }	
 
 	public function validatePassword($password){
 		

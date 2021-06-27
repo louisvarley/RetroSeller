@@ -20,6 +20,18 @@ class AuthenticationManager{
         return static::$instance;
     }	
 	
+	public function validApiKey(){
+			
+		if(!isset($_GET['apikey'])) return false;
+		
+		if(count(findBy("user", ["apikey" => $_GET['apikey']])) > 0){
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
 	public function loggedIn(){
 		
 		

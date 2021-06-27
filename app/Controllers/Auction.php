@@ -19,17 +19,22 @@ class Auction extends \Core\Controller
 	protected $authentication = true;	
 	public $page_data = ["title" => "Settings", "description" => "Config Settings"];	
 	
+
+	
 	public function sellingAction(){
 
-        ebayService()->CreateAuctionsFromActiveAuctions();
-        die();
+		$auctions = [];
+		
+		foreach(findAll("ebayIntergration") as $eBayIntergration){
+				
+			$auctions[$eBayIntergration->getUserId()] = eBayService($eBayIntergration->getId())->getMyActiveAuctions();
+		}
 
-
-
+		
 		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
 			$this->route_params, 
 			$this->page_data,
-			array("activeList" => eBayService()->getMyActiveAuctions()),
+			array("activeList" => $auctions),
 		));
 
 	} 

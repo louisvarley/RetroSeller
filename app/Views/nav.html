@@ -20,16 +20,9 @@
 		  <div class="dropdown-divider"></div>
 		  <a class="dropdown-item" href="/sale/list?orderby=0&&order=desc">All Sales</a>
 		  <a class="dropdown-item" href="/sale/list?orderby=5&&order=desc">By Profit</a>
-		  <a class="dropdown-item" href="/sale/list?orderby=2&&order=desc">By Gross</a>		  
-		</div>
-	  </li>
-
- <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  eBay Auctions
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  <a class="dropdown-item" href="/auction/selling">All Selling</a>		  
+		  <a class="dropdown-item" href="/sale/list?orderby=2&&order=desc">By Gross</a>	
+		  <div class="dropdown-divider"></div>
+		<a class="dropdown-item" href="/auction/selling">Active eBay Listings</a>		  
 		</div>
 	  </li>
 
@@ -47,7 +40,9 @@
 		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc&search=%22held%22">Purchases Held</a>
 		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc&search=%22requires%20repair%22">Purchases Needing Repair</a>		  
 		  <div class="dropdown-divider"></div>		  
-		  <a class="dropdown-item" href="/purchaseCategory/list">All Purchase Categories</a>		  
+		  <a class="dropdown-item" href="/purchaseCategory/list">All Purchase Categories</a>	
+		  <div class="dropdown-divider"></div>	
+		  <a class="dropdown-item" target="_blank" href="/stock/list">Stock List</a>					  
 		</div>
 	  </li>
 	  
@@ -85,15 +80,6 @@
 	  
 	  <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Stock
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  <a class="dropdown-item" target="_blank" href="/stock/list">Public Stock List</a>				
-		</div>
-	  </li>	  	  
-
-	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  Configuration
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -104,6 +90,7 @@
 		  <a class="dropdown-item" href="/purchaseVendor/list">Purchase Vendors</a>
 		  <div class="dropdown-divider"></div>		  
 		  <a class="dropdown-item" href="/user/list">User Management</a>
+		  <a class="dropdown-item" href="/eBayIntergration/list">eBay Intergrations</a>		  
 		  <div class="dropdown-divider"></div>		
 		  <a class="dropdown-item" href="/settings/edit">Settings</a>
 		</div>
@@ -115,9 +102,18 @@
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		  <a class="dropdown-item" href="/import/purchase">Import Purchases</a>	
-		  <a class="dropdown-item" href="/import/purchase">Import eBay Sales Report</a>			  
+		  <a data-confirmation="This will import any new sales across all eBay Intergrations?" class="dropdown-item" href="/import/eBayOrders">Import All eBay Sales</a>			  
 		</div>
-	  </li>	  	  	  
+	  </li>	
+
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  Help
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" target="_blank" href="https://github.com/louisvarley/RetroSeller/wiki">Wiki</a>			  
+		</div>
+	  </li>		  
 	</ul>
   </div>
 

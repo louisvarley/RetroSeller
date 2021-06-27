@@ -14,61 +14,7 @@
 		{% endblock %}
 		
 		{% block form_body %}
-
-
-			{% include "Forms/Elements/header.html" with {
-				'title': 'eBay Settings',
-				'subtitle': 'ebay Intergration Keys'
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'eBay dev Id',
-				'id': 'name', 
-				'name': "#{controller}[ebayDevId]", 
-				'description': 'eBay Dev ID',
-				'value': settings.ebayDevId
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'eBay App Id',
-				'id': 'name', 
-				'name': "#{controller}[ebayAppId]", 
-				'description': 'eBay App ID',
-				'value': settings.ebayAppId
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'eBay Cert Id',
-				'id': 'name', 
-				'name': "#{controller}[ebayCertId]", 
-				'description': 'eBay Cert ID',
-				'value': settings.ebayCertId
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'eBay Auth Token',
-				'id': 'name', 
-				'name': "#{controller}[ebayAuthToken]", 
-				'description': 'eBay Auth Token',
-				'value': settings.ebayAuthToken
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'eBay User Auth Token',
-				'id': 'name', 
-				'name': "#{controller}[ebayUserToken]", 
-				'description': 'eBay Dev ID',
-				'value': settings.ebayUserToken
-			}%}	
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'ebay RU Name',
-				'id': 'name', 
-				'name': "#{controller}[ebayRuName]", 
-				'description': 'eBay RU Name',
-				'value': settings.ebayRuName
-			}%}				
-					
+		
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

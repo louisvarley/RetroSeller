@@ -57,6 +57,7 @@ class User extends \App\Controllers\ManagerController
 		}
 		
 		$user->setPassword($data['user']['password']);
+		$user->generateApiKey();
 		
 		entityManager()->persist($user);
 		entityManager()->flush();

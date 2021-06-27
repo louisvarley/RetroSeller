@@ -4,12 +4,13 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date", "Gross", "Net", "Spend", "Profit", "Item/s Sold", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","status","Gross", "Net", "Spend", "Profit", "Item/s Sold", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td>{{ entity.id }}</td>
 			<td>{{ entity.date | date('d/m/Y') }}</td>			
+			<td><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>
 			<td>{{ entity.grossAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td class="{{ entity.netAmount | rag }}">{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td>{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	

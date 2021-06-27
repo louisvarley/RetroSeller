@@ -15,7 +15,7 @@
 		
 		{% block form_body %}
 
-			{% if( account.id ) %}
+			{% if( user.id ) %}
 			
 				{% include "Forms/Elements/text.html" with {
 					'label' : 'ID',
@@ -28,7 +28,21 @@
 				
 				<hr class="my-4">		
 
-			{% endif %}		
+			{% endif %}	
+
+			{% if( user.id ) %}
+			
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'API Key',
+					'id': 'id', 
+					'name': "#{controller}[apikey]", 
+					'description': 'Used for calling API Actions',
+					'readonly': 'readonly',
+					'value': user.apikey
+				}%}
+				
+			{% endif %}	
+		
 
 			{% include "Forms/Elements/text-email.html" with {
 				'label' : 'Email Address',
@@ -53,7 +67,7 @@
 				'id': 'password-confirm', 
 				'name': "#{controller}[password_confirm]", 
 				'description': 'Confirm your password',
-			}%}				
+			}%}					
 					
 		{% endblock %}
 	{% endembed %}

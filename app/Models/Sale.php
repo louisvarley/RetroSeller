@@ -29,9 +29,12 @@ class Sale
     */	
     protected $payment_vendor;	
 	 
- 
-	 
-    // ...
+	/**
+    * @ORM\ManyToOne(targetEntity="SaleStatus")
+    * @ORM\JoinColumn(name="sale_status_id", referencedColumnName="id")
+    */	
+    protected $status;	 
+	  
     /**
      * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="Purchase", mappedBy="sale")
@@ -64,7 +67,7 @@ class Sale
     protected $fee_cost = 0;	
 	
 	/**
-    * @ORM\Column(type="string")
+    * @ORM\Column(type="string", nullable="true")
     */
     protected $ebay_order_id;	
 	
@@ -170,10 +173,22 @@ class Sale
     public function setDate($date)
     {
         $this->date = $date;
+    }	
+
+	public function getStatus()
+	{
+		return $this->status;
+	}
+	
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }		
 
 	/* Gross Minus Fees Minus Postage Cost */
 	public function getNetAmount(){
+		
+		if($this->isCancelled()) return 0;
 		
 		return $this->getGrossAmount() - ($this->getFeeCost() + $this->getPostageCost());
 	}
@@ -203,5 +218,21 @@ class Sale
 		
 		return implode(",",$nameArr);
 	}
+	
+	public function isComplete(){
+		
+		if($this->getStatus() == \app\Models\SaleStatus::Complete()){
+			return true;
+		};
+		
+	}
+	
+	public function isCancelled(){
+		
+		if($this->getStatus() == \app\Models\SaleStatus::Cancelled()){
+			return true;
+		};
+		
+	}	
 	
 }

@@ -13,39 +13,49 @@ namespace Core\Services;
 class ebayService
 {
 
-    public $ebay;
+    protected static $instance = [];
 
-    protected static $instance = null;
 
+	public $intergrationId = 0;
 
     /**
      *
      * @return CLASS INSTANCE
      */
-    public static function instance()
+    public static function instance($intergrationId)
     {
 
-        if (null == static::$instance) {
-            static::$instance = new static();
+        if (!isset(static::$instance[$intergrationId])) {
+            static::$instance[$intergrationId] = new static($intergrationId);
         }
 
-        return static::$instance;
+        return static::$instance[$intergrationId];
     }
+
+	public function __construct($intergrationId){
+		
+		$this->intergrationId = $intergrationId;
+	}
 
     public function config()
     {
 
-        return [
 
-            'credentials' => [
-                'devId' => getMetadata("ebayDevId"),
-                'appId' => getMetadata("ebayAppId"),
-                'certId' => getMetadata("ebayCertId"),
-            ],
-            'authToken' => getMetadata("ebayAuthToken"),
-            'oauthUserToken' => getMetadata("ebayUserToken"),
-            'ruName' => getMetadata("ebayRuName")
-        ];
+		if(findEntity("eBayIntergration", $this->intergrationId)){
+			$intergration = findEntity("eBayIntergration", $this->intergrationId);
+
+			return [
+
+				'credentials' => [
+					'devId' => $intergration->getDevId(),
+					'appId' => $intergration->getAppId(),
+					'certId' => $intergration->getCertId(),
+				],
+				'oauthUserToken' => $intergration->getAuthToken(),
+			];
+			
+		}
+
 
     }
 
@@ -91,6 +101,7 @@ class ebayService
                 );
             }
         }
+
 
         if ($response->Ack !== 'Failure' && isset($response->ActiveList)) {
             return $response->ActiveList;
@@ -168,10 +179,12 @@ class ebayService
     }
 
 
-    public function CreateAuctionsFromActiveAuctions()
+    public function CreateSalesFromOrders()
     {
 
-        /* Loop active auctions, set the item ID for each purchase */
+        $imports = 0;
+
+        /* Loop active auctions, set the item ID to each purchase */
         foreach ($this->getMyActiveAuctions()->ItemArray->Item as $activeAuction) {
 
             foreach (explode(",", $activeAuction->SKU) as $sku) {
@@ -187,7 +200,7 @@ class ebayService
         }
 
         /* Now Loop for any sales that need creating */
-        foreach (eBayService()->getMyOrders()->Order as $order) {
+        foreach ($this->getMyOrders()->Order as $order) {
 
             $finalValueFee = 0;
             $skus = "";
@@ -206,27 +219,63 @@ class ebayService
             if(empty($sale)){
 
                 $sale = new \App\Models\Sale();
+				
+				if($order->OrderStatus == "Completed"){
+					$sale->setStatus(\app\Models\SaleStatus::Complete());
+				}
+				elseif($order->OrderStatus == "Cancelled"){
+					$sale->setStatus(\app\Models\SaleStatus::Cancelled());
+				}
+				else{
+					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
+				}						
 
                 foreach($skuArray as $sku){
                     $purchase = findEntity("purchase", $sku);
-                    if($purchase) $sale->getPurchases()->add($purchase);
+                    if($purchase) {
+                        $purchase->setSale($sale);
+                    }
                 }
 
                 if($sale->getPurchases()->count() == 0) continue;
+
+                $imports++;
 
                 $sale->setFeeCost($finalValueFee);
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setPostageCost(0);
-                $sale->setDate(new \Datetime('NOW'));
+                $sale->setDate($order->CreatedTime->date);
 
                 entityManager()->persist($sale);
                 entityManager()->flush();
 
-            }
+            }else{
+				
+				if($order->OrderStatus == "Completed"){
+					$sale->setStatus(\app\Models\SaleStatus::Complete());
+				}
+				elseif($order->OrderStatus == "Cancelled"){
+					$sale->setStatus(\app\Models\SaleStatus::Cancelled());
+				}
+				else{
+					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
+				}					
+
+				$sale->setFeeCost($finalValueFee);
+                $sale->setGrossAmount($order->AmountPaid->value);
+                $sale->seteBayOrderId($order->OrderID);
+                $sale->setPostageCost(0);
+                $sale->setDate($order->CreatedTime->date);
+				entityManager()->persist($sale);
+                entityManager()->flush();
+			}
+
 
 
         }
+
+        return $imports;
 
     }
 

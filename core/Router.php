@@ -107,13 +107,17 @@ class Router
     {
         $url = $this->removeQueryStringVariables($url);
 
-
-
         if ($this->match($url)) {
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
+			
+			if(isset($this->params['namespace']))
+				$controller = $controller . $this->params['namespace'];
+			
             $controller = $this->getNamespace() . $controller;
-		
+
+			$controller = str_replace("Ebay","eBay",$controller);
+
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
 

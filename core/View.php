@@ -111,7 +111,19 @@ class View
 		}));
 
 
+		$twig->addFilter( new \Twig\TwigFilter('format_duration', function ($dts) {
+			
+			$dt = new \DateTime();
+			$dt->add(new \DateInterval($dts));
+			$interval = $dt->diff(new \DateTime());
 
+			return  $interval->format('%d Day %H Hour %I Minutes');
+		}));
+		
+		
+		
+		
+		
 			
 
 
