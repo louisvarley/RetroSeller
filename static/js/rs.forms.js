@@ -517,35 +517,26 @@ rs.init("image_upload_button", function(){
 
 rs.image_preview = function(input, placeToInsertImagePreview, blobId) {
 
-	if (input.files) {
-		var filesAmount = input.files.length;
-
-		for (i = 0; i < filesAmount; i++) {
-			var reader = new FileReader();
-			var blobUrl = '/blob/' + blobId + ".jpg";
-
-			reader.onload = function(event) {
-
-				var container = jQuery('<div class="preview-image"><span style="top:-50px; left: -85px;" data-id="' + blobId + '" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span></div>');
-				var image = jQuery('<img src="" />');
-				jQuery(image).attr('src', blobUrl);
-				
-				var link = jQuery('<a target="_blank" href="' + blobUrl + '"></a>');
-				
-				jQuery(link).html(image);				
-				jQuery(link).prependTo(container);
-				jQuery(container).appendTo(placeToInsertImagePreview);
-			}
-
-			reader.readAsDataURL(input.files[i]);
-		}
-	}
+	var blobUrl = '/blob/' + blobId + ".jpg";
+	
+	var container = jQuery('<div class="preview-image"><span style="top:-50px; left: -85px;" data-id="' + blobId + '" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span></div>');
+	var image = jQuery('<img src="" />');
+	jQuery(image).attr('src', blobUrl);
+	
+	var link = jQuery('<a target="_blank" href="' + blobUrl + '"></a>');
+	
+	jQuery(link).html(image);				
+	jQuery(link).prependTo(container);
+	jQuery(container).appendTo(placeToInsertImagePreview);	
 
 };
 
 rs.purchase_image_upload = function(id, input){
 
 	jQuery.each(jQuery(input)[0].files, function(i, file) {
+
+
+		alert("uploading..");
 
 		var data = new FormData();
 		data.append('image', file);
@@ -559,12 +550,13 @@ rs.purchase_image_upload = function(id, input){
 			method: 'POST',
 			type: 'POST',
 			success: function(data){
+				alert("yes");
 				rs.image_preview(input, jQuery('.form-images-preview'), data['response']['blobId']);
 				rs.throwSuccess("Saved...", data['response']['message']);
 
 			},
 			fail: function(data){
-				rs.throwSuccess("Error...", data['response']['error']);
+				rs.thowError("Error...", data['response']['error']);
 			}
 		});
 		
