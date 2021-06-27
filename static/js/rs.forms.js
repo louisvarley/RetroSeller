@@ -535,13 +535,12 @@ rs.purchase_image_upload = function(id, input){
 
 	jQuery.each(jQuery(input)[0].files, function(i, file) {
 
-
-		alert("uploading..");
-
 		var data = new FormData();
 		data.append('image', file);
 
-		alert("got data");
+		
+		
+		try {
 
 		jQuery.ajax({
 			url: '/api/purchase/purchaseImage?purchaseId=' + id,
@@ -559,12 +558,17 @@ rs.purchase_image_upload = function(id, input){
 			},
 			fail: function(data){
 				rs.thowError("Error...", data['response']['error']);
-			},
-			always: function(){
-				
-				alert("meh");
 			}
+			
+			
+			
+			
+
 		});
+}
+catch(err) {
+  alert(err.message);
+}
 		
 	});
 
