@@ -172,12 +172,12 @@ class Purchase
         $this->date = $date;
     }		
 
-    public function seteBayItemId()
+    public function geteBayItemId()
     {
         return $this->ebay_item_id;
     }	
 	
-    public function geteBayItemId($ebay_item_id)
+    public function seteBayItemId($ebay_item_id)
     {
         $this->ebay_item_id = $ebay_item_id;
     }	
