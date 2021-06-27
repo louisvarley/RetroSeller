@@ -541,6 +541,8 @@ rs.purchase_image_upload = function(id, input){
 		var data = new FormData();
 		data.append('image', file);
 
+		alert("got data");
+
 		jQuery.ajax({
 			url: '/api/purchase/purchaseImage?purchaseId=' + id,
 			data: data,
