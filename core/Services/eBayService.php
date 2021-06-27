@@ -264,10 +264,8 @@ class ebayService
 					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
 				}					
 
-				$sale->setFeeCost($finalValueFee);
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
-                $sale->setPostageCost(0);
                 $sale->setDate($order->CreatedTime->date);
 				entityManager()->persist($sale);
                 entityManager()->flush();
