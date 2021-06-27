@@ -6,9 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="rs_intergrations")
+ * @ORM\Table(name="rs_integrations")
  */
-class Intergration
+class Integration
 {
 	/**
     * @ORM\Id

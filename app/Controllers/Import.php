@@ -29,9 +29,9 @@ class Import extends \Core\Controller
 		
 		$imports = 0;
 		
-		foreach(findAll("Intergration") as $intergration){
+		foreach(findAll("Integration") as $integration){
 			
-			$imports = $imports + ebayService($intergration->getId())->CreateSalesFromOrders();
+			$imports = $imports + ebayService($integration->getId())->CreateSalesFromOrders();
 		}
 			
 		toastManager()->throwSuccess("Saved...", "Imported " . $imports . " New Sales");

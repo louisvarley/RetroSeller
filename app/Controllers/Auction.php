@@ -25,9 +25,9 @@ class Auction extends \Core\Controller
 
 		$auctions = [];
 		
-		foreach(findAll("ebayIntergration") as $eBayIntergration){
+		foreach(findAll("integration") as $integration){
 				
-			$auctions[$eBayIntergration->getUserId()] = eBayService($eBayIntergration->getId())->getMyActiveAuctions();
+			$auctions[$integration->getUserId()] = eBayService($integration->getId())->getMyActiveAuctions();
 		}
 
 		

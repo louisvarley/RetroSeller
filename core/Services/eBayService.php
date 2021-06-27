@@ -16,42 +16,42 @@ class ebayService
     protected static $instance = [];
 
 
-	public $intergrationId = 0;
+	public $integrationId = 0;
 
     /**
      *
      * @return CLASS INSTANCE
      */
-    public static function instance($intergrationId)
+    public static function instance($integrationId)
     {
 
-        if (!isset(static::$instance[$intergrationId])) {
-            static::$instance[$intergrationId] = new static($intergrationId);
+        if (!isset(static::$instance[$integrationId])) {
+            static::$instance[$integrationId] = new static($integrationId);
         }
 
-        return static::$instance[$intergrationId];
+        return static::$instance[$integrationId];
     }
 
-	public function __construct($intergrationId){
+	public function __construct($integrationId){
 		
-		$this->intergrationId = $intergrationId;
+		$this->integrationId = $integrationId;
 	}
 
     public function config()
     {
 
 
-		if(findEntity("eBayIntergration", $this->intergrationId)){
-			$intergration = findEntity("eBayIntergration", $this->intergrationId);
+		if(findEntity("integration", $this->integrationId)){
+			$integration = findEntity("integration", $this->integrationId);
 
 			return [
 
 				'credentials' => [
-					'devId' => $intergration->getDevId(),
-					'appId' => $intergration->getAppId(),
-					'certId' => $intergration->getCertId(),
+					'devId' => $integration->getDevId(),
+					'appId' => $integration->getAppId(),
+					'certId' => $integration->getCertId(),
 				],
-				'oauthUserToken' => $intergration->getAuthToken(),
+				'oauthUserToken' => $integration->getAuthToken(),
 			];
 			
 		}
