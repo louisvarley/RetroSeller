@@ -16,18 +16,28 @@ class eBayApi extends \App\Controllers\Api\ApiController
 	protected function getSalesGetAction(){
 
 		try{
-			$imports = 0;
 			
+			$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0];
+		
 			foreach(findAll("Integration") as $integration){
 				
-				$imports = $imports + ebayService($integration->getId())->CreateSalesFromOrders();
+				$result['updated_purchases'] = $result['updated_purchases'] + ebayService($integration->getId())->updatePurchasesWithAuctions();
 			}
 			
-			return new \Core\Classes\ApiResponse(200, 0, ['message' => "Imported $imports new sales"]);
+		
+			foreach(findAll("Integration") as $integration){
+				
+				$r = ebayService($integration->getId())->CreateSalesFromOrders();
+				$result['new_sales'] = $result['new_sales'] + $r['imports'];
+				$result['updated_sales'] = $result['updated_sales'] + $r['updates'];			
+			}
+
+			
+			return new \Core\Classes\ApiResponse(200, 0, ['message' => "Completed", 'result' => $result]);
 	
 		}
 		catch (Exception $e) {
-			return new \Core\Classes\ApiResponse(500, 0, ['error' => $e->getMessage()]);
+			return new \Core\Classes\ApiResponse(500, 0, ['message' => $e->getMessage()]);
 		}
 	}
 

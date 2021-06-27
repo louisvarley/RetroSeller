@@ -179,12 +179,12 @@ class ebayService
     }
 
 
-    public function CreateSalesFromOrders()
-    {
-
-        $imports = 0;
-
-        /* Loop active auctions, set the item ID to each purchase */
+	public function updatePurchasesWithAuctions()
+	{
+		
+		$updates = 0;
+		
+		/* Loop active auctions, set the item ID to each purchase */
         foreach ($this->getMyActiveAuctions()->ItemArray->Item as $activeAuction) {
 
             foreach (explode(",", $activeAuction->SKU) as $sku) {
@@ -194,17 +194,28 @@ class ebayService
                 if ($purchase) {
                     $purchase->seteBayItemId($activeAuction->ItemID);
                     entityManager()->persist($purchase);
+					$updates++;
                     entityManager()->flush();
                 }
             }
         }
+		
+		return $updates;
+		
+	}
+
+    public function CreateSalesFromOrders()
+    {
+
+        $imports = 0;
+		$updates = 0;
 
         /* Now Loop for any sales that need creating */
         foreach ($this->getMyOrders()->Order as $order) {
 
             $finalValueFee = 0;
             $skus = "";
-
+			
             foreach ($order->TransactionArray->Transaction as $transaction) {
 
                 $finalValueFee = $finalValueFee + $transaction->FinalValueFee->value;
@@ -218,7 +229,7 @@ class ebayService
 			
 			/* if still empty try find by SKUs */
 			if(empty($sale)){
-				foreach($skyArray as $sku){
+				foreach($skuArray as $sku){
 				$purchase = findEntity("purchase",$sku);					
 					if(!empty($purchase)){
 						if(!empty($purchase->getSale())){
@@ -250,9 +261,8 @@ class ebayService
                     }
                 }
 
+				/* We didnt find any SKUs to Purchases so Bail */
                 if($sale->getPurchases()->count() == 0) continue;
-				
-                $imports++;
 				
                 $sale->setFeeCost($finalValueFee);
                 $sale->setGrossAmount($order->AmountPaid->value);
@@ -262,7 +272,9 @@ class ebayService
 
                 entityManager()->persist($sale);
                 entityManager()->flush();
-
+				
+                $imports++;
+				
             }else{
 				
 				$sale = $sale[0];
@@ -282,13 +294,15 @@ class ebayService
                 $sale->setDate($order->CreatedTime);
 				entityManager()->persist($sale);
                 entityManager()->flush();
+				
+				$updates++;
 			}
 
 
 
         }
 
-        return $imports;
+        return ["imports" => $imports, "updates" => $updates];
 
     }
 

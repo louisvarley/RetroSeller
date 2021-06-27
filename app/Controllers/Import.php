@@ -24,22 +24,35 @@ class Import extends \Core\Controller
 
 
     }
+		
+	/* Updating or Importing new Sales */
+	public function ebayImportsAction(){
+		
+		
+		$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0];
 	
-	public function eBayOrdersAction(){
-		
-		$imports = 0;
-		
 		foreach(findAll("Integration") as $integration){
 			
-			$imports = $imports + ebayService($integration->getId())->CreateSalesFromOrders();
+			$result['updated_purchases'] = $result['updated_purchases'] + ebayService($integration->getId())->updatePurchasesWithAuctions();
+		}
+		
+	
+		foreach(findAll("Integration") as $integration){
+			
+			$r = ebayService($integration->getId())->CreateSalesFromOrders();
+			$result['new_sales'] = $result['new_sales'] + $r['imports'];
+			$result['updated_sales'] = $result['updated_sales'] + $r['updates'];			
 		}
 			
-		toastManager()->throwSuccess("Saved...", "Imported " . $imports . " New Sales");
+		toastManager()->throwSuccess("Saved...", "Imported " . $result['new_sales'] . " New Sales from eBay");
+		toastManager()->throwSuccess("Saved...", "Updated " . $result['updated_sales'] . " Sales from eBay");
+		toastManager()->throwSuccess("Saved...", "Updated " . $result['updated_purchases'] . " Purchases from eBay");		
 		header('Location: /');
 
 		
 	}
 	
+	/* Uploading an Excel of Purchases */
 	public function purchaseAction()
 	{
 		
