@@ -538,37 +538,30 @@ rs.purchase_image_upload = function(id, input){
 		var data = new FormData();
 		data.append('image', file);
 
-		
-		
 		try {
 
-		jQuery.ajax({
-			url: '/api/purchase/purchaseImage?purchaseId=' + id,
-			data: data,
-			cache: false,
-			contentType: false,
-			processData: false,
-			method: 'POST',
-			type: 'POST',
-			success: function(data){
-				alert("yes");
-				rs.image_preview(input, jQuery('.form-images-preview'), data['response']['blobId']);
-				rs.throwSuccess("Saved...", data['response']['message']);
+			jQuery.ajax({
+				url: '/api/purchase/purchaseImage?purchaseId=' + id,
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				method: 'POST',
+				type: 'POST',
+				success: function(data){
+					rs.image_preview(input, jQuery('.form-images-preview'), data['response']['blobId']);
+					rs.throwSuccess("Saved...", data['response']['message']);
 
-			},
-			fail: function(data){
-				rs.thowError("Error...", data['response']['error']);
-			}
-			
-			
-			
-			
-
-		});
-}
-catch(err) {
-  alert(err.message);
-}
+				},
+				fail: function(data){
+					rs.thowError("Error...", data['response']['error']);
+				}
+				
+			});
+		}
+		catch(err) {
+		  alert(err.message);
+		}
 		
 	});
 
