@@ -238,9 +238,9 @@ class ebayService
                 }
 
                 if($sale->getPurchases()->count() == 0) continue;
-
+				
                 $imports++;
-
+				
                 $sale->setFeeCost($finalValueFee);
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
@@ -251,6 +251,8 @@ class ebayService
                 entityManager()->flush();
 
             }else{
+				
+				$sale = $sale[0];
 				
 				if($order->OrderStatus == "Completed"){
 					$sale->setStatus(\app\Models\SaleStatus::Complete());
