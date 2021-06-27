@@ -42,7 +42,7 @@ class integration extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 
-		$integration = new \App\Models\integration();
+		$integration = new \App\Models\Integration();
 
 		$integration->setUserId($data['integration']['userId']);
 		$integration->setDevId($data['integration']['devId']);
