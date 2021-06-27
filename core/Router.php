@@ -117,7 +117,8 @@ class Router
             $controller = $this->getNamespace() . $controller;
 
 			$controller = str_replace("Ebay","eBay",$controller);
-
+			$controller = str_replace("EBay","eBay",$controller);
+			
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
 
