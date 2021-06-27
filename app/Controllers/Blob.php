@@ -15,7 +15,8 @@ use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 
 class Blob extends \App\Controllers\ManagerController
 {
-	
+
+	protected $authentication = false;	
 
 	public function indexAction(){
 		
