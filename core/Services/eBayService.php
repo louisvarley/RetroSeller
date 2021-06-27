@@ -215,6 +215,19 @@ class ebayService
             $skuArray = explode(",",rtrim(ltrim($skus,","),","));
 
             $sale = findBy("sale", ["ebay_order_id" => $order->OrderID]);
+			
+			/* if still empty try find by SKUs */
+			if(empty($sale)){
+				foreach($skyArray as $sku){
+				$purchase = findEntity("purchase",$sku);					
+					if(!empty($purchase)){
+						if(!empty($purchase->getSale())){
+							$sale = $purchase->getSale();
+							continue;
+						}
+					}
+				}
+			}
 
             if(empty($sale)){
 
