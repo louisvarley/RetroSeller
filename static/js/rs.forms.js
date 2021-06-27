@@ -522,13 +522,18 @@ rs.image_preview = function(input, placeToInsertImagePreview, blobId) {
 
 		for (i = 0; i < filesAmount; i++) {
 			var reader = new FileReader();
+			var blobUrl = '/blob/' + blobId + ".jpg";
 
 			reader.onload = function(event) {
 
 				var container = jQuery('<div class="preview-image"><span style="top:-50px; left: -85px;" data-id="' + blobId + '" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span></div>');
 				var image = jQuery('<img src="" />');
-				jQuery(image).attr('src', event.target.result);
-				jQuery(image).prependTo(container);
+				jQuery(image).attr('src', blobUrl);
+				
+				var link = jQuery('<a target="_blank" href="' + blobUrl + '"></a>');
+				
+				jQuery(link).html(image);				
+				jQuery(link).prependTo(container);
 				jQuery(container).appendTo(placeToInsertImagePreview);
 			}
 
