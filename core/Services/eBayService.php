@@ -245,7 +245,7 @@ class ebayService
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setPostageCost(0);
-                $sale->setDate($order->CreatedTime->date);
+                $sale->setDate($order->CreatedTime);
 
                 entityManager()->persist($sale);
                 entityManager()->flush();
