@@ -18,9 +18,9 @@ class eBayApi extends \App\Controllers\Api\ApiController
 		try{
 			$imports = 0;
 			
-			foreach(findAll("ebayIntergration") as $eBayIntergration){
+			foreach(findAll("Intergration") as $intergration){
 				
-				$imports = $imports + ebayService($eBayIntergration->getId())->CreateSalesFromOrders();
+				$imports = $imports + ebayService($intergration->getId())->CreateSalesFromOrders();
 			}
 			
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => "Imported $imports new sales"]);
