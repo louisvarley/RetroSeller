@@ -113,6 +113,8 @@ class Router
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
 			
+			$controller = str_ireplace("ebay","eBay", $controller);
+			
 			if(isset($this->params['namespace']))
 				$controller = $controller . $this->params['namespace'];
 			
