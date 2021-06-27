@@ -559,6 +559,10 @@ rs.purchase_image_upload = function(id, input){
 			},
 			fail: function(data){
 				rs.thowError("Error...", data['response']['error']);
+			},
+			always: function(){
+				
+				alert("meh");
 			}
 		});
 		
