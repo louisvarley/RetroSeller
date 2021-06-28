@@ -326,18 +326,18 @@
 
 /* line 57, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .preview-image-holder .preview-image {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 }
 
-/* line 66, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 64, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 #rs-meter-wrapper {
   width: 70px;
   border-radius: 0px 10px 10px 0px;
   border: 1px solid #ced4da;
 }
 
-/* line 72, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 70, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 #meter_weak,
 #meter_good,
 #meter_strong {
@@ -357,67 +357,67 @@
   transition: all 0.2s ease-in-out;
 }
 
-/* line 88, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 86, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 #meter_strong {
   border-right: none;
 }
 
-/* line 92, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 90, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 #rs-pass_type {
   text-align: right;
   display: block;
   width: 320px;
 }
 
-/* line 97, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 95, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 #rs-pass_type p.pass--strong {
   color: #5b6906;
 }
 
-/* line 103, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 101, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .col-select2 {
   padding-left: 18px;
 }
 
-/* line 107, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 105, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .row-select2 {
   padding: 5px 0px 5px;
   font-size: 12px;
 }
 
-/* line 112, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 110, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .row-select2-header {
   background-color: #e4e4e4;
   padding: 5px 0px 5px;
   font-size: 12px;
 }
 
-/* line 118, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 116, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .col-select2-header {
   padding-left: 21px;
 }
 
-/* line 123, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 121, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .form-images-preview {
   display: inline-flex;
 }
 
-/* line 127, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 125, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .preview-image {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   margin: 20px;
 }
 
-/* line 133, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 131, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .preview-image img {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   cursor: pointer;
   object-fit: cover;
 }
 
-/* line 140, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 138, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .preview-image .badge {
   cursor: pointer;
   top: -115px;
@@ -425,7 +425,7 @@
   line-height: 20px;
 }
 
-/* line 149, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+/* line 147, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
 .image-upload {
   display: none;
 }

@@ -467,28 +467,35 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };	
 
-
 rs.init("image_upload_button", function(){
 
-	jQuery('.btn-image-new').click(function(){
-
-		var input = jQuery('<input class="image-upload" name="images[]" type="file" accept="image/*" capture="camera" />');
-
-		jQuery(this).parent().append(input);
-		jQuery(input).click().on("change", function(event){
-			rs.purchase_image_upload(jQuery('#id').val(), this); 
-		})
-
+	/* Handle Clicked Upload */
+	jQuery('.btn-image-new').click(function(){	
+		var input = jQuery(this).next();
+		jQuery(input).click()
 		return false;
 	});
-
-	$('body').on('click', '.delete-purchase-image', function() {
+	
+	/* Handle Image Upload Ajax */
+	$('.image-upload').ajaxfileupload({
+		action: '/api/purchase/purchaseImage?purchaseId=' + id,
+		valid_extensions : ['jpg','png'],
+		onComplete: function(data) {
+			location.reload(); 
+		},
+		onStart: function() {
+			rs.throwSuccess("Uploading...","Started Upload...");
+		},
+		onCancel: function() {
+			console.log('no file selected');
+		}
+	});		
+	
+	/* Handle Delete Clicked*/
+	$('body').on('click', '.form-image-delete', function() {
 	
 		var blobId = jQuery(this).data("id");
 		var purchaseId = jQuery('#id').val();
-
-
-		jQuery(this).parent().hide();
 
 		jQuery.ajax({
 			url: '/api/purchase/purchaseImage?blobId=' + blobId + '&purchaseId=' + purchaseId,
@@ -498,73 +505,52 @@ rs.init("image_upload_button", function(){
 			method: 'DELETE',
 			type: 'DELETE',
 			success: function(data){
-				rs.throwSuccess("Saved...", data['response']['message']);
+				
+				jQuery('.form-image-' + blobId).fadeOut();
+				return false;
 			},
 			fail: function(data){
 				rs.throwSuccess("Error...", data['response']['error']);
 			}
 		});
 
-		
-
 	});
-
-
-
-
-
-})
-
-rs.image_preview = function(input, placeToInsertImagePreview, blobId) {
-
-	var blobUrl = '/blob/' + blobId + ".jpg";
 	
-	var container = jQuery('<div class="preview-image"><span style="top:-50px; left: -85px;" data-id="' + blobId + '" class="delete-purchase-image badge badge-float badge-danger"><i class="fas fa-times"></i></span></div>');
-	var image = jQuery('<img src="" />');
-	jQuery(image).attr('src', blobUrl);
+	/* Handle Rotate Clicked*/
+	jQuery('.form-image-rotate').click(function() {
 	
-	var link = jQuery('<a target="_blank" href="' + blobUrl + '"></a>');
-	
-	jQuery(link).html(image);				
-	jQuery(link).prependTo(container);
-	jQuery(container).appendTo(placeToInsertImagePreview);	
+		var blobId = jQuery(this).data("id");
 
-};
-
-rs.purchase_image_upload = function(id, input){
-
-	jQuery.each(jQuery(input)[0].files, function(i, file) {
-
-		var data = new FormData();
-		data.append('image', file);
-
-		try {
-
-			jQuery.ajax({
-				url: '/api/purchase/purchaseImage?purchaseId=' + id,
-				data: data,
-				cache: false,
-				contentType: false,
-				processData: false,
-				method: 'POST',
-				type: 'POST',
-				success: function(data){
-					rs.image_preview(input, jQuery('.form-images-preview'), data['response']['blobId']);
-					rs.throwSuccess("Saved...", data['response']['message']);
-
-				},
-				fail: function(data){
-					rs.thowError("Error...", data['response']['error']);
-				}
+		jQuery.ajax({
+			url: '/api/purchase/purchaseImageRotate?blobId=' + blobId,
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'GET',
+			type: 'GET',
+			success: function(data){
+				var img = jQuery('.preview-image-' + blobId);
+				var angle = ($(img).data('angle') + 90) || 90;
+				$(img).css({'transform': 'rotate(' + angle + 'deg)'});
+				$(img).data('angle', angle);
 				
-			});
-		}
-		catch(err) {
-		  alert(err.message);
-		}
-		
-	});
+				
+				return false;
+				
+			},
+			fail: function(data){
+				rs.throwSuccess("Error...", data['response']['error']);
+			}
+		});
 
+	});	
 	
-
-}
+	/* Handle Preview Clicked*/
+	$('body').on('click', '.form-image-view', function() {
+		
+		var blobId = jQuery(this).data("id");
+		
+		window.open("/blob/" + blobId + '.jpg'); 
+	});		
+	
+})

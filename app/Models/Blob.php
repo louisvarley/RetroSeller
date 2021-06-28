@@ -39,12 +39,38 @@ class Blob
 
 	public function getBase64(){
 
-		return stream_get_contents($this->data);
+		if(is_resource($this->data)){
+			rewind($this->data);			
+			return stream_get_contents($this->data);			
+		}
+		
+		return $this->data;
 
 	}
 
 	public function getUrl(){
 		return "/blob/" . $this->getId() . ".jpg";
+
+	}
+	
+	public function rotate(){
+		
+
+		$imageBase64 = $this->getBase64();
+
+		$res = imagecreatefromstring(base64_decode($imageBase64));
+
+		if ($res === false) exit;
+		$rotated = imagerotate($res, -90, 0);
+	
+		ob_start(); 
+			imagejpeg($rotated); 
+			$imageBase64 = base64_encode(ob_get_contents()); 
+		ob_end_clean(); 	
+		
+		$this->setData($imageBase64);
+		entityManager()->persist($this);
+		entityManager()->flush();
 
 	}
 

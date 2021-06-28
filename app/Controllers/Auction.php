@@ -30,7 +30,8 @@ class Auction extends \Core\Controller
 			$auctions[$integration->getUserId()] = eBayService($integration->getId())->getMyActiveAuctions();
 		}
 
-		
+
+
 		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
 			$this->route_params, 
 			$this->page_data,

@@ -55,10 +55,8 @@
 	padding-top:50px;
 
 	.preview-image{
-	width:400px;
-	height: 400px;
-
-
+		width: 500px;
+		height: 500px;
 	}
 
 }
@@ -126,13 +124,13 @@
 
 .preview-image{
 
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 200px;
 	margin: 20px;
 
 	img{
-		width: 100px;
-		height: 100px;
+		width: 200px;
+		height: 200px;
 		cursor: pointer;
 		object-fit: cover;
 	}
@@ -148,4 +146,9 @@
 
 .image-upload{
 	display:none;
+}
+
+.form-images-toolbar a{
+
+
 }

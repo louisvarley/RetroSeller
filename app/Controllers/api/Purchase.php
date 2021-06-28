@@ -17,7 +17,8 @@ class PurchaseApi extends \App\Controllers\Api\ApiController
 
 		try{
 
-			$imageLocation = ($_FILES['image']['tmp_name']);
+
+			$imageLocation = ($_FILES['images']['tmp_name'][0]);
 			$imageData = file_get_contents($imageLocation);
 			$imageBase64 = base64_encode($imageData);
 
@@ -60,6 +61,19 @@ class PurchaseApi extends \App\Controllers\Api\ApiController
 			return new \Core\Classes\ApiResponse(500, 0, ['error' => $e->getMessage()]);
 
 		}
+	}
+
+
+	protected function purchaseImageRotateGetAction(){
+		
+
+		
+		$blobId = $this->get['blobId'];
+		$image = findEntity("blob", $blobId);
+		$image->rotate();
+	
+		return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Image Saved']);
+		
 	}
 
 }
