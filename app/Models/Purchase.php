@@ -207,7 +207,7 @@ class Purchase
 			return "/static/img/place-holder.jpg";
 		}else{
 			
-			return $this->getImages()->first()->getUrl();
+			return $this->getImages()->first()->getThumbnailUrl();
 		}
 
 	}
