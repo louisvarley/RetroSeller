@@ -43,7 +43,11 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 800px) {
 	.content {
-		margin: 10px 5% 10px 5%;
+		margin: 10px 2% 10px 2%;
+	}
+	
+	.card-body{
+			padding: 0.9rem;
 	}
 	
 	.form-group label{
@@ -52,6 +56,10 @@
 	
 	.login {
 		margin-top: 10px;
+	}
+	
+	.login .login-logo{
+		margin-top: 20px;
 	}
 	
 	.form-group label{
