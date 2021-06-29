@@ -559,39 +559,35 @@ table.dataTable > tbody > tr.child ul.dtr-details {
     margin: 10px 2% 10px 2%;
   }
   /* line 49, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
-  .card-body {
-    padding: 0.9rem;
-  }
-  /* line 53, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .form-group label {
     width: 100% !important;
   }
-  /* line 57, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 53, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .login {
     margin-top: 10px;
   }
-  /* line 61, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 57, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .login .login-logo {
     margin-top: 20px;
   }
-  /* line 65, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 61, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .form-group label {
     width: 100%;
     width: 33%;
   }
-  /* line 70, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 66, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .col-select2, .col-select2-header {
     width: 33%;
   }
-  /* line 75, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 71, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .nav-logout {
     display: none;
   }
-  /* line 79, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 75, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .nav-mobile-logout {
     display: block;
   }
-  /* line 83, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 79, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .btn-datatable-new {
     width: 100%;
   }
@@ -599,21 +595,21 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  /* line 91, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 87, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .content {
     margin: 10px 5% 10px 5%;
   }
-  /* line 95, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 91, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .login {
     margin-top: 10px;
   }
-  /* line 99, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 95, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .form-group label {
     width: 100%;
   }
 }
 
-/* line 105, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+/* line 101, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
 table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before, table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control::before {
   border: 0px !important;
   box-shadow: none !important;
