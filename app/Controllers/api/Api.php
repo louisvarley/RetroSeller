@@ -63,7 +63,13 @@ class ApiController extends \Core\Controller
 		}
 		
 		if ($this->before() !== false) {
-			echo $response->asJson();
+			
+			if(method_exists($response,"as_json")){
+				echo $response->asJson();
+			}else{
+				echo json_encode($response);
+			}
+		
 			$this->after();
 		}		
 			

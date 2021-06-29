@@ -33,6 +33,12 @@ $router->add('api/{controller}/{action}', ['namespace' => 'Api']);
 /* Controller Action With ID and File */
 $router->add('{controller}/{id:\d+}.jpg', ['action' => 'index']);  
 
+/* Controller Action With ID and File */
+$router->add('{controller}/{size}/{id:\d+}.jpg', ['action' => 'index']);  
+
+/* Fetching a Purchase first Blob Image */
+$router->add('{controller}/purchase/{size}/{id:\d+}.jpg', ['action' => 'purchase']);  
+
 /* Controller Plural 1 */
 $router->add('{controller}s', ['controller' => '{controller}', 'action' => 'list']);
 

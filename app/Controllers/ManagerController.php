@@ -144,10 +144,13 @@ class ManagerController extends \Core\Controller
      */
 	public function listAction(){
 
+		$orderBy = isset($_GET['orderby']) ? $_GET['orderby'] : "id";
+		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
+
 		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
 			$this->route_params, 
 			$this->page_data,
-			array("entities" => findAll($this->route_params['controller'])),
+			array("entities" => findAll($this->route_params['controller'], $orderBy, $order)),
 		));
 
 	}	

@@ -16,7 +16,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 define("DIR_ROOT", dirname(dirname(__FILE__)));
 define("DIR_APP", DIR_ROOT . '/app');	
 define("DIR_CORE", DIR_ROOT . '/core');	
-define("DIR_PUBLIC", DIR_ROOT . '/public');
+define("DIR_PUBLIC", DIR_ROOT . '/');
 define("DIR_STATIC", DIR_PUBLIC  . '/static');	
 define("DIR_PROXIES", DIR_CORE  . '/Proxies');
 
@@ -27,13 +27,21 @@ define("DIR_MODELS", DIR_APP . '/Models');
 define("WWW_STATIC", '/static');	
 define("WWW_JS", WWW_STATIC  . '/js');		
 define("WWW_CSS", WWW_STATIC  . '/css');	
+define("WWW_IMG", WWW_STATIC  . '/img');	
 
 /* Name Spaces */
 define("_MODELS", "\\App\\Models\\");
 define("_CONTROLLERS", "\\App\\Controllers\\");
 define("_VIEWS", "\\App\\Views\\");	
 
-
+/* Global Image Sizes */
+define("_IMAGE_SIZES",[
+	"thumbnail" => ["width" => 300, "height" => 300],
+	"small" => ["width" => 600, "height" => 600],	
+	"medium" => ["width" => 1000, "height" => 1000],	
+	"large" => ["width" => 1500, "height" => 1500],
+	]
+);
 
 /* Purchase Statuses */
 define("_PURCHASE_STATUSES", array(
@@ -120,9 +128,15 @@ function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = 
 }
 
 /* Find All Entities */
-function findAll($model){
+function findAll($model, $orderBy = null, $order = "ASC" ){
 	$model = ucfirst($model);	
-	return entityManager()->getRepository(_MODELS . $model)->findAll();	
+	
+	if(!empty($orderBy)){
+		return entityManager()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
+	}else{
+		return entityManager()->getRepository(_MODELS . $model)->findAll();	
+	}
+	
 }
 
 /* Create a Query from Scratch */

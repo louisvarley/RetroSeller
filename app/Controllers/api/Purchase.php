@@ -76,4 +76,34 @@ class PurchaseApi extends \App\Controllers\Api\ApiController
 		
 	}
 
+
+	protected function datatableGetAction(){
+		
+	foreach($_GET['columns'] as $key => $column){
+		$_GET['columns'][$key]['data'] = substr($_GET['columns'][$key]['data'], 2);
+	}
+
+	$datatables = (new \Doctrine\DataTables\Builder())
+    ->withColumnAliases([
+        'id' => 'u.id',
+		'name' => 'u.name',
+		'status' => 'u.status',
+		'category' => 'u.category',
+    ])
+    ->withIndexColumn('u.id')
+    ->withQueryBuilder(
+        entityManager()->createQueryBuilder()
+            ->select('u')
+            ->from(_MODELS . "purchase", 'u')
+			->join('u.status', 's')
+			->join('u.category', 'c')
+			->addSelect('s,c')
+		)
+    ->withRequestParams($_GET);
+
+	return ($datatables->getResponse());		
+	
+
+	}
+
 }

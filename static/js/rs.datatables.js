@@ -1,18 +1,13 @@
 
 rs.init("datatables", function(){
 	
-	order = rs.urlParams.get('order');
-	orderBy = rs.urlParams.get('orderby');
 	search = rs.urlParams.get('search');	
 
     var table = $('.list-table').DataTable( {
 		"searching": true,
-		"pageLength": 100	
+		"pageLength": 25,
+		"order": []		
     } );	
-	
-	if(order && orderBy){
-		table.order([ orderBy, order ]).draw();
-	}
 	
 	if(search){
 		table.search(search).draw();
@@ -76,9 +71,6 @@ rs.rgba2hex = function (rgba) {
 
 rs.init("auto-color",function(){
 
-
-
-	
 	$('.list-table').find("tr").each(function(){
 		
 		var rgbString = jQuery(this).css("background-color");
@@ -91,7 +83,6 @@ rs.init("auto-color",function(){
 		
 	})
 	
-
 })
 	
 	

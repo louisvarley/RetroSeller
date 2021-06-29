@@ -50,8 +50,15 @@ class Blob
 
 	public function getUrl(){
 		return "/blob/" . $this->getId() . ".jpg";
-
 	}
+	
+	public function getThumbnailUrl(){
+		return "/blob/thumbnail/" . $this->getId() . ".jpg";
+	}	
+	
+	public function getSmallUrl(){
+		return "/blob/small/" . $this->getId() . ".jpg";
+	}	
 	
 	public function rotate(){
 		
