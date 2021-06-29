@@ -1,22 +1,24 @@
 <a href="{{ controller }}">
 {% include '/Buttons/add-button.html' with {'model': controller} %}
 </a>
+<div class="row">
+	<div class="table-responsive"> 
+		<table id="{{ table_id }}" class="list-table table table-striped {{ classes }} responsive nowrap" cellspacing="0" width="100%" >
+			<thead>
+			{% for header in headers %}  
+				<th> {{ header }} </th>
+			{% endfor %} 
+			</thead>
 
-<table id="{{ table_id }}" class="list-table table table-striped {{ classes }}" style="width:100%">
-
-<thead>
-{% for header in headers %}  
-	<th> {{ header }} </th>
-{% endfor %} 
-</thead>
-
-{% block table_body %}{% endblock %}
+			{% block table_body %}{% endblock %}
 
 
-<tfoot>
-{% for header in headers %}  
-	<th> {{ header }} </th>
-{% endfor %} 
-</tfoot>
+			<tfoot>
+			{% for header in headers %}  
+				<th> {{ header }} </th>
+			{% endfor %} 
+			</tfoot>
 
-</table>
+		</table>
+	</div>
+</div>

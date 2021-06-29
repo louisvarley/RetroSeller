@@ -38,3 +38,8 @@ table.dataTable thead th, table.dataTable thead td{
 .rag-red{
 	color:#dc3545;
 }
+
+
+table.dataTable > tbody > tr.child ul.dtr-details {
+    width: 100%;
+}

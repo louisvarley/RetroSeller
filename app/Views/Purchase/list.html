@@ -4,15 +4,15 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Status", "Category", "Name", "Date", "Total Spend","Share", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Status", "Name", "Category", "Date", "Total Spend","Share", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr>			
 				<td>{{ entity.id }}</td>
 				<td><a target="_blank" href="{{ entity.getThumbnail() }}">{{ entity.thumbnail | as_thumbnail | raw }}</a></td>
-				<td><span class="badge badge-purchase {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>		
+				<td><span class="badge badge-purchase {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>						
+				<td><a href="/purchase/edit/{{ entity.id }}">{{ entity.name }}</a></td>	
 				<td>{{ entity.category.path }}</td>
-				<td>{{ entity.name }}</td>	
 				<td>{{ entity.date | date('d/m/Y') }}</td>
 				<td>{{ entity.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
 				<td>

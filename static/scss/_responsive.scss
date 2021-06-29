@@ -31,6 +31,12 @@
 	.form-group label{
 		width: 100% !important;
 	}
+	
+	.btn-datatable-new{
+		width: 100%;
+	}
+	
+
 
 }
 
@@ -65,6 +71,10 @@
 	.nav-mobile-logout{
 		display: block;
 	}
+	
+	.btn-datatable-new{
+		width: 100%;
+	}
 
 }
 
@@ -83,3 +93,10 @@
 	}
 	
 } 
+
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before, table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control::before {
+    border: 0px !important;
+    box-shadow: none !important;
+    background-color: #28a745;
+	border-radius: 0.3rem !important;
+}

@@ -6,6 +6,7 @@ rs.init("datatables", function(){
     var table = $('.list-table').DataTable( {
 		"searching": true,
 		"pageLength": 25,
+		"responsive": true,
 		"order": []		
     } );	
 	
