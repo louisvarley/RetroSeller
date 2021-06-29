@@ -18,9 +18,8 @@
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		  <a class="dropdown-item" href="/sale/new">New Sale</a>
 		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/sale/list?orderby=0&&order=desc">All Sales</a>
-		  <a class="dropdown-item" href="/sale/list?orderby=5&&order=desc">By Profit</a>
-		  <a class="dropdown-item" href="/sale/list?orderby=2&&order=desc">By Gross</a>	
+		  <a class="dropdown-item" href="/sale/list?orderby=id&&order=desc">All Sales</a>
+		  <a class="dropdown-item" href="/sale/list?orderby=gross_amount&&order=desc">Highiest Sale Price</a>	
 		  <div class="dropdown-divider"></div>
 		<a class="dropdown-item" href="/auction/selling">Active eBay Listings</a>		  
 		</div>
@@ -33,12 +32,16 @@
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		  <a class="dropdown-item" href="/purchase/new">New Purchase</a>	  
 		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc">All Purchases</a>		
+		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc">All Purchases</a>		
 		  <div class="dropdown-divider"></div>		  
-		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc&search=%22for%20sale%22">Purchases For Sale</a>
-		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc&search=%22sold%22">Purchases Sold</a>	
-		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc&search=%22held%22">Purchases Held</a>
-		  <a class="dropdown-item" href="/purchase/list?orderby=0&order=desc&search=%22requires%20repair%22">Purchases Needing Repair</a>		  
+		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22for%20sale%22">Purchases For Sale</a>
+		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22sold%22">Purchases Sold</a>	
+		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22held%22">Purchases Held</a>
+		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22requires%20repair%22">Purchases Needing Repair</a>	
+		  <a class="dropdown-item" href="/purchase/list?orderby=valuation&order=desc">Highiest Valued</a>
+
+
+		  
 		  <div class="dropdown-divider"></div>		  
 		  <a class="dropdown-item" href="/purchaseCategory/list">All Purchase Categories</a>	
 		  <div class="dropdown-divider"></div>	
@@ -53,7 +56,7 @@
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		  <a class="dropdown-item" href="/expense/new">New Expense</a>
 		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/expense/list?orderby=0&order=desc">All Expenses</a>
+		  <a class="dropdown-item" href="/expense/list?orderby=id&order=desc">All Expenses</a>
 		</div>
 	  </li>	  
 	  
