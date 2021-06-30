@@ -26,7 +26,7 @@ class Sale extends \App\Controllers\ManagerController
 			"saleStatuses" => createOptionSet('SaleStatus', 'id','name'),
 			"paymentVendors" => createOptionSet('PaymentVendor', 'id','name'),		
 			"accounts" => createOptionSet('Account', 'id','name'),					
-			"purchases" => ($id > 0 ? createOptionSet('purchase', 'id',['id','name','date']) : createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => \app\Models\PurchaseStatus::ForSale()->getId()]])),			
+			"purchases" => ($id > 0 ? createOptionSet('purchase', 'id',['id','name','date']) : createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => \App\Models\PurchaseStatus::ForSale()->getId()]])),			
 		);	
 	} 
 

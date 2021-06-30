@@ -40,15 +40,7 @@
 				
 				<hr class="my-4">	
 
-			{% endif %}				
-
-			{% include "Forms/Elements/text-ebay.html" with {
-				'label' : 'Auction Item Number',			
-				'id': 'amount', 
-				'name': "#{controller}[ebay_item_no]", 
-				'description': 'If listed on eBay, enter the Item Number',
-				'value': sale.ebayItemNo				
-			}%}		
+			{% endif %}					
 
 			{% include "Forms/Elements/select.html" with {
 				'label' : 'Status',		
