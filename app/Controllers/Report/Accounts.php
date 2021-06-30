@@ -39,8 +39,8 @@ class Accounts extends \App\Controllers\Report
 
 		$account = findEntity("account", $this->post['account_id']);
 
-		header('Content-disposition: attachment; filename="' . $account->getName() . ' Statement' . '.xlsx"');
-		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		//header('Content-disposition: attachment; filename="' . $account->getName() . ' Statement' . '.xlsx"');
+		//header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 		
@@ -95,9 +95,9 @@ class Accounts extends \App\Controllers\Report
 
 		usort($arr, function($a, $b){
 			
-			$t1 = strtotime($a['date']);
-			$t2 = strtotime($b['date']);
-			return $t1 - $t2;
+			$t1 = ($a['date']);
+			$t2 = ($b['date']);
+			return $t1->diff($t2);
 		});
 			
 		foreach($arr as $entry){
