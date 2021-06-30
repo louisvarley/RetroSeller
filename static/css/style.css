@@ -533,7 +533,7 @@ table tr {
 table th,
 table td {
   padding: .625em;
-  text-align: center;
+  text-align: left;
 }
 
 /* line 76, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
