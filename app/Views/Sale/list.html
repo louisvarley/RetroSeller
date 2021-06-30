@@ -11,7 +11,7 @@
 			<td>{{ entity.id }}</td>
 			<td>{{ entity.date | date('d/m/Y') }}</td>			
 			<td><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>
-			<td>{{ entity.getPurchasesString }}</td>	
+			<td width="10%">{{ entity.getPurchasesString }}</td>	
 			<td>
 			{% for account in entity.accounts %}
 			<span class="badge badge-primary badge-account" style="background-color:{{ account.color }}">{{ account.name }}</span>
