@@ -317,12 +317,9 @@ class ebayService
 					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
 				}						
 
-				$f = 0;
                 foreach($skuArray as $sku){
                     $purchase = findEntity("purchase", $sku);
                     if($purchase) {
-						$f++;
-						if($f >= $qty) continue;
                         $purchase->setSale($sale);
 						$sale->getPurchases()->add($purchase);
                     }
