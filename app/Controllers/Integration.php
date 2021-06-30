@@ -13,7 +13,7 @@ use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
  */
  
 
-class integration extends \App\Controllers\ManagerController
+class Integration extends \App\Controllers\ManagerController
 {
 	
 	public $page_data = ["title" => "eBay integration", "description" => "eBay integration Settings"];	

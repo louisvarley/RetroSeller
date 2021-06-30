@@ -31,12 +31,7 @@ class Auction extends \Core\Controller
 		}
 
 
-
-		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
-			$this->route_params, 
-			$this->page_data,
-			array("activeList" => $auctions),
-		));
+		$this->render($this->route_params['controller'] . '/list.html', array("activeList" => $auctions),);
 
 	} 
 	

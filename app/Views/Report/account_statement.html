@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+	{% embed "Forms/report-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			Generate an Account Statement
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Account',		
+				'id': 'account_id', 
+				'name': "account_id", 
+				'description': 'Account you wish to generate?',
+				'required': 'required',
+				'value': expense.account.id,
+
+				'options': accounts						
+			}%}
+				
+					
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

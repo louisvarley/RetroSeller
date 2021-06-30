@@ -163,6 +163,29 @@ border-radius: 10em;
 	text-align:right;
 }
 
+.btn-no{
+	display: inline-block;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #444;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	padding: .8rem 1rem;
+	font-size: 1rem;
+	border-radius: .25rem;
+}
+
+
+.panel-colorful{
+
+background-image: var(--bs-gradient);
+}
 
 
 .purchase-image{

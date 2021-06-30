@@ -115,9 +115,6 @@ class Router
 			
 			$controller = str_ireplace("ebay","eBay", $controller);
 			
-			if(isset($this->params['namespace']))
-				$controller = $controller . $this->params['namespace'];
-			
             $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {

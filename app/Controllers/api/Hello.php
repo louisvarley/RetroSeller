@@ -10,7 +10,7 @@ use \App\Models\Purchase;
  *
  * PHP version 7.0
  */
-class HelloApi extends \App\Controllers\Api\ApiController
+class Hello extends \App\Controllers\Api
 {
 
 	public function helloGetAction(){

@@ -233,7 +233,7 @@ function setMetadata($key, $value){
 }
 
 function eBayService($intergrationId){	
-	return \Core\Services\ebayService::instance($intergrationId);
+	return \Core\Services\eBayService::instance($intergrationId);
 }
 
 sessionManager()->start();

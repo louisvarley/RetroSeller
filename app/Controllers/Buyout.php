@@ -37,9 +37,6 @@ class Buyout extends \App\Controllers\ManagerController
 		$buyout->setAccount($account);
 		$buyout->setPurchase($purchase);		
 		
-		var_dump(_PURCHASE_STATUSES['BOUGHT_OUT']['id']);
-		die();
-		
 		$buyout->getPurchase()->setStatus(findEntity("purchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']));
 
 		entityManager()->persist($buyout);

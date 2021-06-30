@@ -1,0 +1,21 @@
+{% include '/Buttons/back-button.html' %}
+
+<h3>{% block form_title %}{% endblock %}</h3>
+<h5>{% block form_subtitle %}{% endblock %}</h5>
+
+<form method="POST" action="" id="{{ form_id }}">
+<hr class="my-4">	
+
+	{% block form_body %}{% endblock %}
+	<hr class="my-4">		
+	
+	<div class="form-group row">
+		<div class="offset-lg-4 offset-s-0 col-lg-8 col-s-12">
+			<button type="submit" class="w-100 btn btn-success btn-lg">Generate</button>
+		</div>
+	</div>
+	
+	<hr class="my-4">	
+</form>
+
+

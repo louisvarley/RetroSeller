@@ -478,7 +478,7 @@ rs.init("image_upload_button", function(){
 	
 	/* Handle Image Upload Ajax */
 	$('.image-upload').ajaxfileupload({
-		action: '/api/purchase/purchaseImage?purchaseId=' + id,
+		action: '/api/purchases/purchaseImage?purchaseId=' + id,
 		valid_extensions : ['jpg','png'],
 		onComplete: function(data) {
 			location.reload(); 
@@ -498,7 +498,7 @@ rs.init("image_upload_button", function(){
 		var purchaseId = jQuery('#id').val();
 
 		jQuery.ajax({
-			url: '/api/purchase/purchaseImage?blobId=' + blobId + '&purchaseId=' + purchaseId,
+			url: '/api/purchases/purchaseImage?blobId=' + blobId + '&purchaseId=' + purchaseId,
 			cache: false,
 			contentType: false,
 			processData: false,
@@ -522,7 +522,7 @@ rs.init("image_upload_button", function(){
 		var blobId = jQuery(this).data("id");
 
 		jQuery.ajax({
-			url: '/api/purchase/purchaseImageRotate?blobId=' + blobId,
+			url: '/api/purchases/purchaseImageRotate?blobId=' + blobId,
 			cache: false,
 			contentType: false,
 			processData: false,

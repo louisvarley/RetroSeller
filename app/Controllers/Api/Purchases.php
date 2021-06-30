@@ -10,7 +10,7 @@ use \App\Models\Purchase;
  *
  * PHP version 7.0
  */
-class PurchaseApi extends \App\Controllers\Api\ApiController
+class Purchases extends \App\Controllers\Api
 {
 	
 	protected function purchaseImagePostAction(){

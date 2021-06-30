@@ -176,20 +176,44 @@ hr {
   text-align: right;
 }
 
-/* line 170, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 166, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.btn-no {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: .8rem 1rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+}
+
+/* line 185, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.panel-colorful {
+  background-image: var(--bs-gradient);
+}
+
+/* line 193, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .purchase-image img {
   border-radius: 5px;
   border: 3px solid #e5e5e5;
 }
 
-/* line 177, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 200, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .purchase-image.thumbnail img {
   width: 50px;
   height: 50px;
   object-fit: cover;
 }
 
-/* line 187, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+/* line 210, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .purchase-image.small img {
   width: 150px;
   height: 150px;

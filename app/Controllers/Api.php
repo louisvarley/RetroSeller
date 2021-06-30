@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controllers\Api;
+namespace App\Controllers;
 
 /**
  * Home controller
  *
  * PHP version 7.0
  */
-class ApiController extends \Core\Controller
+class Api extends \Core\Controller
 {
 
 	protected function before()

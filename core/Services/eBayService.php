@@ -10,7 +10,7 @@ use \DTS\eBaySDK\Trading\Enums;
 
 namespace Core\Services;
 
-class ebayService
+class eBayService
 {
 
     protected static $instance = [];
