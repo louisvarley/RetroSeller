@@ -553,6 +553,11 @@ table th {
   height: 1rem;
 }
 
+/* line 90, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+table.dataTable tbody th, table.dataTable tbody td {
+  max-width: 400px;
+}
+
 /* line 1, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
