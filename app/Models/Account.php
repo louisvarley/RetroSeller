@@ -25,21 +25,25 @@ class Account
     /**
      * Many Accounts have Many Sales.
      * @ORM\ManyToMany(targetEntity="Sale", mappedBy="accounts")
+	* @ORM\OrderBy({"date" = "DESC"})	 
      */ 
     protected $sales;	
 	
 	/**
     * @ORM\OneToMany(targetEntity="Withdrawal", mappedBy="account")
+	* @ORM\OrderBy({"date" = "DESC"})	
     */	
     protected $withdrawals;
 	
 	/**
     * @ORM\OneToMany(targetEntity="Expense", mappedBy="account")
+	* @ORM\OrderBy({"date" = "DESC"})	
     */	
     protected $expenses;	
 	
 	/**
     * @ORM\OneToMany(targetEntity="Buyout", mappedBy="account")
+	* @ORM\OrderBy({"date" = "DESC"})
     */	
     protected $buyout;		
 	
