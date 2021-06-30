@@ -134,6 +134,38 @@ class ebayService
         return $response->SaleRecord;
     }
 
+
+	public function getItem($itemId){
+		
+		
+		$request = new \DTS\eBaySDK\Trading\Types\GetItemRequestType();
+
+        $request->RequesterCredentials = new \DTS\eBaySDK\Trading\Types\CustomSecurityHeaderType();
+        $request->RequesterCredentials->eBayAuthToken = $this->config()['oauthUserToken'];
+
+        $request->ItemID = $itemId;
+
+        $response = $this->service()->getItem($request);
+
+        if (isset($response->Errors)) {
+            foreach ($response->Errors as $error) {
+                printf(
+                    "%s: %s\n%s\n\n",
+                    $error->SeverityCode === \DTS\eBaySDK\Trading\Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
+                    $error->ShortMessage,
+                    $error->LongMessage
+                );
+            }
+        }
+
+        if ($response->Ack !== 'Failure' && isset($response->Item)) {
+            return $response->Item;
+        }
+
+
+
+    }
+
     public function getMyOrders($pageNum = 1)
     {
 
@@ -204,6 +236,17 @@ class ebayService
 		
 	}
 
+	/*
+	
+	1. Loop all orders (service checks last 5 days)
+	2. Loop all transactions in these orders
+	3. Get Transaction Value and SKU/S from this transaction
+	4. If Multiple SKUs and qty for sale > 1 then pick only SKUs for quantity purchased with no sale already
+	5. If Single SKU or qty for sale == 1 then just get all SKUs
+	6. Check if a sale exists (for updating instead)
+	7. Create a sale, attach purchases, fees and gross amount
+	*/
+	
     public function CreateSalesFromOrders()
     {
 
@@ -216,11 +259,31 @@ class ebayService
             $finalValueFee = 0;
             $skus = "";
 			
+			
             foreach ($order->TransactionArray->Transaction as $transaction) {
 
                 $finalValueFee = $finalValueFee + $transaction->FinalValueFee->value;
-                $skus .= ',' . $transaction->Item->SKU;
+				$qty = $transaction->QuantityPurchased;
+				$fulfilled = 0; 
+				$item = $this->getItem($transaction->Item->ItemID);
 
+				/* If Quantity Available was more than 1 we will only pick SKUs up to the quantity purchased from SKUs without a SALE*/
+				if($item->Quantity > 1){
+					
+					foreach(explode(",",$transaction->Item->SKU) as $sku){
+						 $purchase = findEntity("purchase", $sku);
+						 if($purchase){
+							 if(empty($purchase->getSale())){
+								 if($fulfilled == $qty) continue;
+								 $fulfilled++;
+								 $skus .= ',' . $sku;
+							 }
+						 }
+					}
+					
+				}else{
+					$skus .= ',' . $transaction->Item->SKU;
+				}
             }
 
             $skuArray = explode(",",rtrim(ltrim($skus,","),","));
@@ -254,11 +317,16 @@ class ebayService
 					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
 				}						
 
+				$f = 0;
                 foreach($skuArray as $sku){
                     $purchase = findEntity("purchase", $sku);
                     if($purchase) {
+						$f++;
+						if($f >= $qty) continue;
                         $purchase->setSale($sale);
+						$sale->getPurchases()->add($purchase);
                     }
+					
                 }
 
 				/* We didnt find any SKUs to Purchases so Bail */
