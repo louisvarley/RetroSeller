@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","Status","Accounts","Gross", "Net", "Spend", "Profit", "Item/s Sold", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","Status","Accounts","Gross", "Net", "Profit", "Item/s Sold", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
@@ -19,7 +19,6 @@
 			</td>
 			<td>{{ entity.grossAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td class="{{ entity.netAmount | rag }}">{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
-			<td>{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td class="{{ entity.getProfitAmount | rag }}">{{ entity.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
 			<td>{{ entity.getPurchasesString }}</td>
 			<td>
