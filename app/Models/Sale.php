@@ -216,7 +216,9 @@ class Sale
 			array_push($nameArr, $purchase->getName());
 		}
 		
-		return implode(",",$nameArr);
+		$str = implode(",",$nameArr);
+		
+		return substr($str,0,45) . (strlen($str) > 45 ? '...' : '');
 	}
 	
 	public function isComplete(){
