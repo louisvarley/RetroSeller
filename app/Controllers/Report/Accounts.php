@@ -95,14 +95,14 @@ class Accounts extends \App\Controllers\Report
 
 		usort($arr, function($a, $b){
 			
-			$t1 = strtotime($a['datetime']);
-			$t2 = strtotime($b['datetime']);
+			$t1 = strtotime($a['date']);
+			$t2 = strtotime($b['date']);
 			return $t1 - $t2;
 		});
 			
-			foreach($arr as $entry){
-				
-				$x++;
+		foreach($arr as $entry){
+			
+			$x++;
 			
 			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $entry['date']);
 			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $entry['type']);
