@@ -47,6 +47,7 @@ class Home extends \Core\Controller
 			
 		);
 
-        View::renderTemplate('Home/index.html', $dashboard_data);
+
+		$this->render('Home/index.html', $dashboard_data);	
     }
 }

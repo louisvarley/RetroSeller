@@ -3,32 +3,44 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-	{% embed "Forms/login-base.html" with {'form_id': controller} %}
+	 
 
-		{% block form_title %}
-			{{ title }}
-		{% endblock %}
+<div>
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card">
+				<div class="card-header">Register</div>
+				<div class="row justify-content-center login-logo">
+					<img src="/static/img/logo.png">
+				</div>
+				<div class="card-body">
+					<form action="" method="POST">
+					   
+						{% include "Forms/Elements/text-email.html" with {
+							'label' : 'Email Address',
+							'id': 'user_email', 
+							'name': "email", 
+							'required': 'required',
+							'value': user.email
+						}%}		
 
-		{% block form_subtitle %}
-			{{ description }}
-		{% endblock %}
-		
-		{% block form_body %}
+						{% include "Forms/Elements/text-password.html" with {
+							'label' : 'Password',
+							'id': 'user_password', 
+							'name': "password", 
+						}%}		
 
-			{% include "Forms/Elements/text-email.html" with {
-				'label' : 'Email Address',
-				'id': 'user_email', 
-				'name': "email", 
-				'required': 'required',
-				'value': user.email
-			}%}		
+						<div class="form-group row">
+								<button type="submit" class="btn btn-lg  btn-primary">Login</button>
+						</div>
+				</div>
+					</form>
+			</div>
+		</div>
+	</div>
+</div>
 
-			{% include "Forms/Elements/text-password.html" with {
-				'label' : 'Password',
-				'id': 'user_password', 
-				'name': "password", 
-			}%}		
-	
-		{% endblock %}
-	{% endembed %}
+
+
+
 {% endblock %}

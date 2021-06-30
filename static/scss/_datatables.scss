@@ -43,3 +43,15 @@ table.dataTable thead th, table.dataTable thead td{
 table.dataTable > tbody > tr.child ul.dtr-details {
     width: 100%;
 }
+
+.dataTables_wrapper .dataTables_length select {
+
+    width: 7rem;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    color: var(--bs-table-striped-color);
+    background-color: #f2f7fa;
+	--bs-table-accent-bg: none;
+}
+

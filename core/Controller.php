@@ -20,6 +20,12 @@ abstract class Controller
      * @var array
      */
     protected $route_params = [];
+	
+    /**
+     * Parameters for the title and description of this page
+     * @var array
+     */	
+	public $page_data = ["title" => "", "description" => ""];
 
     /**
      * Page requires authentication
@@ -144,6 +150,17 @@ abstract class Controller
 	public function requestMethod(){
 
 		return $_SERVER['REQUEST_METHOD'];
+	}
+
+	public function render($template, $array = null){
+		
+		
+		View::renderTemplate($template, array_merge(
+				$this->route_params, 
+				$this->page_data,
+				empty($array) ? [] : $array)
+		);
+		
 	}
 
 }

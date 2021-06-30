@@ -1,16 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	<span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	<ul class="navbar-nav mr-auto">
-	  <li class="nav-item active">
-		<a class="nav-link" href="/">
+  	  <div class="nav-item nav-icon active">
+		<a href="/">
 			<img class="logo" src="/static/img/nav-logo.png">
 		</a>
-	  </li>
+	  </div>
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  
 
+	<ul class="navbar-nav mr-auto">
 	  <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  Sales
@@ -122,10 +125,10 @@
 		</div>
 	  </li>		  
 	</ul>
-  </div>
+	
+	
 
-	<div class="navbar-collapse nav-logout">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto">
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				  {{ session.user.email }}
@@ -137,7 +140,11 @@
 				</div>
 		  </li>	  
         </ul>
-    </div> 
+
+	
+  </div>
+
+	
   <div class="nav-mobile-logout">
 	{% include '/Buttons/logout-button.html' %}	
   </div>

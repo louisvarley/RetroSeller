@@ -86,11 +86,7 @@ class ManagerController extends \Core\Controller
 		
 		/* ON GET */
 		if($this->isGET()){
-			View::renderTemplate($this->route_params['controller'] . '/form.html', array_merge(
-				$this->route_params,
-				$this->page_data,
-				$this->getEntity(),
-			));
+			$this->render($this->route_params['controller'] . '/form.html', $this->getEntity());
 		}
 	}
 
@@ -129,11 +125,7 @@ class ManagerController extends \Core\Controller
 		
 		/* ON GET */
 		if($this->isGET()){
-			View::renderTemplate($this->route_params['controller'] . '/form.html', array_merge(
-				$this->route_params, 
-				$this->page_data,
-				$this->getEntity($this->route_params['id']),
-			));
+			$this->render($this->route_params['controller'] . '/form.html', $this->getEntity($this->route_params['id']));
 		}
 	}	
 
@@ -146,12 +138,8 @@ class ManagerController extends \Core\Controller
 
 		$orderBy = isset($_GET['orderby']) ? $_GET['orderby'] : "id";
 		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
-
-		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
-			$this->route_params, 
-			$this->page_data,
-			array("entities" => findAll($this->route_params['controller'], $orderBy, $order)),
-		));
+		
+		$this->render($this->route_params['controller'] . '/list.html', array("entities" => findAll($this->route_params['controller'], $orderBy, $order)));
 
 	}	
 		

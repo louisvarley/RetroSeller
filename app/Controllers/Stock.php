@@ -37,15 +37,8 @@ class Stock extends \App\Controllers\ManagerController
 		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);	
 		
 		$stock = findBy("Purchase", ["status" => $forSaleStatus ]);
-		
 
-		View::renderTemplate($this->route_params['controller'] . '/list.html', array_merge(
-			$this->route_params, 
-			$this->page_data,
-			array("entities" => $stock)
-		));
-
-			
+		$this->render($this->route_params['controller'] . '/list.html', array("entities" => $stock));	
 	
 	}
 	

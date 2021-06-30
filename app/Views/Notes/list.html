@@ -33,6 +33,18 @@
 		<div class="col-lg col-s"> <b>Note</b></div>
 	</div>
 			
+			
+	{% if( notes.count == 0 ) %}
+	<hr class="my-4">
+	<div class="row">
+		<div class="container">
+			<div class="row">
+				<b>No Notes</b>
+			</div>
+		</div>
+	</div>
+
+	{% endif %}			
 	{% for note in notes %}
 			
 		<div class="row">

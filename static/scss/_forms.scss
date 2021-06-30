@@ -44,22 +44,7 @@
     float: right;
 }
 
-.form-text {
-    margin-left: 15px;
-}
 
-
-.preview-image-holder{
-
-	width:100%;
-	padding-top:50px;
-
-	.preview-image{
-		width: 500px;
-		height: 500px;
-	}
-
-}
 
  #rs-meter-wrapper {
         width: 70px;
@@ -148,7 +133,27 @@
 	display:none;
 }
 
-.form-images-toolbar a{
+#addNoteCollapse{
+margin-bottom:10px;
+}
 
+[contenteditable].form-control[disabled], [contenteditable].form-control[readonly], [type="email"].form-control[disabled], [type="email"].form-control[readonly], [type="password"].form-control[disabled], [type="password"].form-control[readonly], [type="tel"].form-control[disabled], [type="tel"].form-control[readonly], [type="text"].form-control[disabled], [type="text"].form-control[readonly], input.form-control[disabled], input.form-control[readonly], input[type="email"][disabled], input[type="email"][readonly], input[type="number"][disabled], input[type="number"][readonly], input[type="password"][disabled], input[type="password"][readonly], input[type="text"][disabled], input[type="text"][readonly], textarea.form-control[disabled], textarea.form-control[readonly], textarea[disabled], textarea[readonly] {
+    box-shadow: none;
+    border-bottom: 1px dotted #ddd;
+    background-color: #f7f7f7;
+}
 
+.form-control {
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-radius: 4px !important;
+	padding: 5px;
+}
+
+.input-group-text{
+	padding: 0px 10px 0px 0px;
+}
+
+.form-control:not(textarea)  {
+    height: 40px;
 }

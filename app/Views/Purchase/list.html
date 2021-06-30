@@ -9,7 +9,7 @@
 			{% for entity in entities %}
 				<tr>			
 				<td>{{ entity.id }}</td>
-				<td><a target="_blank" href="{{ entity.getThumbnail() }}">{{ entity.thumbnail | as_thumbnail | raw }}</a></td>
+				<td><a target="_blank" href="{{ entity.getThumbnail() }}"><div class="purchase-image thumbnail"><img src="{{ entity.thumbnail}}"></div></a></td>
 				<td><a href="/purchase/edit/{{ entity.id }}">{{ entity.name }}</a></td>	
 				<td><span class="badge badge-purchase {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>										
 				<td>{{ entity.category.path }}</td>

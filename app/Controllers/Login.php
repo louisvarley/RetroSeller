@@ -12,6 +12,8 @@ use \Core\View;
 class Login extends \Core\Controller
 {
 
+	public $page_data = ["title" => "Login", "description" => ""];
+
     /**
      * Show the index page
      *
@@ -40,6 +42,7 @@ class Login extends \Core\Controller
 		}
 		
 
-        View::renderTemplate('Login/index.html');
+		$this->render('Login/index.html');
+
     }
 }
