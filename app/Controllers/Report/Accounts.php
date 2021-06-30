@@ -58,23 +58,59 @@ class Accounts extends \App\Controllers\Report
 		
 		$balance = 0;
 		
+		$arr = [];
+		
 		$x = 1;
 		foreach($account->getSales() as $sale){
 			
 			if($sale->isComplete()){
-				$x++;
-
-				$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
-				$amount = $sale->getProfitAmount() / $sale->getAccounts()->count();
+			
+				foreach($sale->getPurchases() as $purchase){
+						foreach($purchase->getExpenses() as $expense){
+							if($expense->getAccount()->getId() == $this->getId()){
+								if($purchase->getBuyOut() == null){
+									array_push($arr, [
+									'date' => $sale->getDate(),
+									'type' => 'Expense Payment',
+									'description' => $expense->getName(),
+									'amount' => $expense->getAmount() / $expense->getPurchases()->count()
+									]);
+								}
+							}
+						}
+				}
 				
-				$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $sale->getDate());
-				$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $amount);
-				$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $balance);				
-				$spreadsheet->getActiveSheet()->setCellValue('D' . $x, "Sale");		
-
+				array_push($arr, [
+				'date' => $sale->getDate(),
+				'type' => "Sale Profit",
+				'description' => $sale->getName(),
+				'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
+				]);
+				
 			}
+
 		}
-		
+
+
+
+		usort($array, function($a, $b){
+			
+			$t1 = strtotime($a['datetime']);
+			$t2 = strtotime($b['datetime']);
+			return $t1 - $t2;
+		});
+			
+			foreach($arr as $entry){
+				
+				$x++;
+			
+			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $entry['date']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $entry['type']);
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $entry['description']);				
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $entry['amount']);		
+
+		}
+	
 		
 		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
 		ob_end_clean();
