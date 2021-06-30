@@ -4,14 +4,13 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Account", "Purchase", "Total", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Account", "Purchase", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td>{{ entity.id }}</td>			
 			<td>{{ entity.account.name }}</td>
 			<td>{{ entity.purchase.name }}</td>	
-			<td>{{ entity.AdditionalAmount | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>			
 			<td>
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
