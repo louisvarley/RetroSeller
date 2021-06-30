@@ -67,7 +67,7 @@ class Accounts extends \App\Controllers\Report
 			
 				foreach($sale->getPurchases() as $purchase){
 						foreach($purchase->getExpenses() as $expense){
-							if($expense->getAccount()->getId() == $this->getId()){
+							if($expense->getAccount()->getId() == $account->getId()){
 								if($purchase->getBuyOut() == null){
 									array_push($arr, [
 									'date' => $sale->getDate(),
@@ -83,7 +83,7 @@ class Accounts extends \App\Controllers\Report
 				array_push($arr, [
 				'date' => $sale->getDate(),
 				'type' => "Sale Profit",
-				'description' => $sale->getName(),
+				'description' => $sale->getPurchasesString(),
 				'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
 				]);
 				
@@ -93,7 +93,7 @@ class Accounts extends \App\Controllers\Report
 
 
 
-		usort($array, function($a, $b){
+		usort($arr, function($a, $b){
 			
 			$t1 = strtotime($a['datetime']);
 			$t2 = strtotime($b['datetime']);
