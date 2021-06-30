@@ -58,7 +58,7 @@ define("_PURCHASE_STATUSES", array(
 define("_SALE_STATUSES", array(
 	'INCOMPLETE' => array('id' => 1, 'name' => 'In-Complete'),
 	'COMPLETE' => array('id' => 2, 'name' => 'Complete'),
-	'CANCELLED' => array('id' => 3, 'name' => 'Cancelled')
+	'CANCELLED' => array('id' => 3, 'name' => 'Cancelled')		
 	)
 );
 

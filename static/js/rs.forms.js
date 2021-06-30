@@ -403,7 +403,7 @@ rs.init("select2", function(){
 
 	firstEmptySelect = true;
 
-	$("select[multiple]").each(function(){
+	$("select").each(function(){
 		jQuery(this).select2({
 			allowClear: true,
 			escapeMarkup: function(markup) {return markup;},

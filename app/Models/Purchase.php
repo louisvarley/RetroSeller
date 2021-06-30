@@ -211,6 +211,7 @@ class Purchase
 		}
 
 	}
+	
 
     public function setSale($sale)
     {
