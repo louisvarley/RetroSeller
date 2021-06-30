@@ -8,21 +8,21 @@
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
-			<td>{{ entity.id }}</td>
-			<td>{{ entity.date | date('d/m/Y') }}</td>			
-			<td><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>
-			<td>
+			<td data-label="Id">{{ entity.id }}</td>
+			<td data-label="Date">{{ entity.date | date('d/m/Y') }}</td>			
+			<td data-label="Status"><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>
+			<td data-label="Accounts">
 			{% for account in entity.accounts %}
 			<span class="badge badge-primary badge-account" style="background-color:{{ account.color }}">{{ account.name }}</span>
 
 			{% endfor %}		
 			</td>
-			<td>{{ entity.grossAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
-			<td class="{{ entity.netAmount | rag }}">{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
-			<td>{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
-			<td class="{{ entity.getProfitAmount | rag }}">{{ entity.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
-			<td>{{ entity.getPurchasesString }}</td>
-			<td>
+			<td data-label="Gross">{{ entity.grossAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
+			<td data-label="Net"class="{{ entity.netAmount | rag }}">{{ entity.netAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
+			<td data-label="Spend">{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
+			<td data-label="Profit" class="{{ entity.getProfitAmount | rag }}">{{ entity.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
+			<td data-label="Purchases">{{ entity.getPurchasesString }}</td>
+			<td data-label="">
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}	

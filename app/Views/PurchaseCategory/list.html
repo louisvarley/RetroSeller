@@ -8,10 +8,10 @@
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
-			<td>{{ entity.id }}</td>
-			<td>{{ entity.name }}</td>	
-			<td><div class="colorbox" style="background-color:{{ entity.color }}"></div></td>				
-			<td>
+			<td data-label="Id">{{ entity.id }}</td>
+			<td data-label="Name">{{ entity.name }}</td>	
+			<td data-label="Color"><div class="colorbox" style="background-color:{{ entity.color }}"></div></td>				
+			<td data-label="">
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 			</td>				

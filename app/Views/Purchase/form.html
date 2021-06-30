@@ -28,7 +28,19 @@
 				
 				<hr class="my-4">		
 
-			{% endif %}			
+			{% endif %}	
+
+			{% if( purchase.id ) %}
+		
+				{% include "Notes/list.html" with {
+					'notes': purchase.notes,
+					'type': "purchase",
+					'id': purchase.id
+				}%}			
+
+				<hr class="my-4">	
+	
+			{% endif %}				
 
 			{% if( purchase.id ) %}
 			
@@ -134,17 +146,7 @@
 				'description': 'Price paid for this expense',			
 			}%}		
 
-			{% endif %}		
-
-			{% if( purchase.id ) %}
-		
-				{% include "Notes/list.html" with {
-					'notes': purchase.notes,
-					'type': "purchase",
-					'id': purchase.id
-				}%}				
-	
-			{% endif %}		
+			{% endif %}			
 
 		{% endblock %}
 	{% endembed %}

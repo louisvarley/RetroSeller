@@ -4,18 +4,18 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Account", "Item Number", "Name", "Price", "", "", ""]	} %}
+	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Account", "Item Number", "Name", "Price", "Purchases", "", ""]	} %}
 		{% block table_body %}
 			{% for userAccount, list in activeList %}
 				{% for item in list.ItemArray.Item %}
 					<tr>			
-					<td>{{ userAccount }}</td>
-					<td><a target="_blank" href="{{ item.ListingDetails.ViewItemURL }}">{{ item.ItemID }}</a></td>						
-					<td>{{ item.Title }}</td>	
-					<td>{{ item.SellingStatus.CurrentPrice.value  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
-					<td>{{ item.SKU | item_links | raw }}</td>
-					<td>{{ item.TimeLeft | format_duration }}</td>
-					<td>{% include '/eBay/listing-type-badge.html' with {'type': item.ListingType } %}</td>
+					<td data-label="Account">{{ userAccount }}</td>
+					<td data-label="Item Number"><a target="_blank" href="{{ item.ListingDetails.ViewItemURL }}">{{ item.ItemID }}</a></td>						
+					<td data-label="Title">{{ item.Title }}</td>	
+					<td data-label="Price">{{ item.SellingStatus.CurrentPrice.value  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
+					<td data-label="Purchases">{{ item.SKU | item_links | raw }}</td>
+					<td data-label="Time Left">{{ item.TimeLeft | format_duration }}</td>
+					<td data-label="Type">{% include '/eBay/listing-type-badge.html' with {'type': item.ListingType } %}</td>
 								
 					</tr>
 					

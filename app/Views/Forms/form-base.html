@@ -4,16 +4,24 @@
 <h5>{% block form_subtitle %}{% endblock %}</h5>
 
 <form method="POST" action="" id="{{ form_id }}">
-	<button type="submit" class="w-30 btn btn-success btn-md">Save</button>
+<hr class="my-4">	
+	<div class="form-group row">
+		<div class="offset-lg-4 offset-s-0 col-lg-8 col-s-12">
+			<button type="submit" class="w-100 btn btn-success btn-lg">Save</button>
+		</div>
+	</div>
+	
 	<hr class="my-4">
 	{% block form_body %}{% endblock %}
 	<hr class="my-4">		
 	
 	<div class="form-group row">
 		<div class="offset-lg-4 offset-s-0 col-lg-8 col-s-12">
-		<button type="submit" class="w-100 btn btn-success btn-lg">Save</button>
+			<button type="submit" class="w-100 btn btn-success btn-lg">Save</button>
 		</div>
 	</div>
+	
+	<hr class="my-4">	
 </form>
 
 

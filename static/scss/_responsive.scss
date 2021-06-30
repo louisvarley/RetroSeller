@@ -2,6 +2,8 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 
+	@include responsive-tables();
+
 	.login{
 		margin-top:10px;
 
@@ -11,10 +13,24 @@
 		padding-left: 10px;
 	}
 
+	table{
+	
+		.share {
+			padding: 0px 0px 0px 40px;
+		}
+		
+		.progress{
+			background-color: transparent;
+		}
+	
+	}
+
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 800px) {
+	
+	@include responsive-tables();
 	
 	.navbar {
 		padding-left: 10px;
@@ -22,9 +38,24 @@
 
 }
 
+/* Landscape Tablets devices (up to 1024px) */
+@media only screen and (max-width: 1024px) {
+	
+	@include responsive-tables();
+	
+	.navbar {
+		padding-left: 10px;
+	}
+
+}
+
+
+
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
 	
+
 	.navbar {
 		padding-left: 10px;
 	}
