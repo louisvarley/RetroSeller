@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","Status", "Item/s Sold", ,"Accounts","Gross", "Net", "Profit", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","Status","Item/s Sold","Accounts","Gross","Net","Profit", ""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
