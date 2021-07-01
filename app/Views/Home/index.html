@@ -45,7 +45,7 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="panel panel-success panel-colorful">
 			<div class="panel-body text-center">
-				<p class="text-uppercase mar-btm text-sm">30 Days Sales</p>
+				<p class="text-uppercase mar-btm text-sm">30 Days Sales (Net)</p>
 				<canvas id="salesChart" width="400" height="217px"></canvas>
 				<hr>
 				
@@ -97,16 +97,20 @@ var myChart = new Chart(ctx, {
 			}
 		]
 	  },	
-	
-	
- 
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
+	  options: {
+			scales: {
+				y: {
+					beginAtZero: true,
+					ticks: {
+						// Include a dollar sign in the ticks
+						callback: function(value, index, values) {
+							return '£' + value;
+						}
+					}
+				}
+			}
+		}		
+
 });
 </script>
 
