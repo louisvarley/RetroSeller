@@ -40,10 +40,10 @@ class Sales extends \App\Controllers\Report
 		$spreadsheet->getActiveSheet()->setCellValue('D1','Description');
 		$spreadsheet->getActiveSheet()->setCellValue('E1','Amount');	
 		
-		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);		
+		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(12);		
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);			
 		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25);	
-		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(35);	
+		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(50);	
 		
 
 		$spreadsheet->getActiveSheet()->getStyle("E")->applyFromArray([
