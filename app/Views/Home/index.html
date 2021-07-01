@@ -45,11 +45,11 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="panel panel-success panel-colorful">
 			<div class="panel-body text-center">
-				<p class="text-uppercase mar-btm text-sm">Sales</p>
-				<canvas id="salesChart" width="400" height="400"></canvas>
+				<p class="text-uppercase mar-btm text-sm">30 Days Sales</p>
+				<canvas id="salesChart" width="400" height="217px"></canvas>
 				<hr>
-				<p class="h2 text-thin">{{ sales |length }}</p>
-				<small><span class="text-semibold">Total Sales</span></small>
+				
+				
 			</div>
 		</div>
 	</div>
@@ -84,30 +84,28 @@
 var ctx = document.getElementById('salesChart');
 var myChart = new Chart(ctx, {
     type: 'line',
-    data: {
-        labels: [{% for key,value in salesData %}'{{key}}',{% endfor %}],
-        datasets: [{
-            label: 'Gross £',
-            data: [{% for key,value in salesData %}'{{value}}',{% endfor %}],
-            backgroundColor: [
-                'rgba(255, 255, 255, 0.2)',
-                'rgba(255, 255, 255, 0.2)',
-                'rgba(255, 255, 255, 0.2)',
-                'rgba(255, 255, 255, 0.2)',
-                'rgba(255, 255, 255, 0.2)',
-                'rgba(255, 255, 255, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)',
-                'rgba(255, 255, 255, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
+	  data: {
+	  labels: [{% for key,value in salesData %}'{{key}}',{% endfor %}],
+		datasets: [
+			{
+			label: 'Gross',
+			data: [{% for key,value in salesData %}'{{value.gross}}',{% endfor %}],
+			showLine: true,
+			fill: false,
+			borderColor: 'rgba(255, 255, 255, 0.8)'
+			},
+		  {
+			label: 'Net',
+			data: [{% for key,value in salesData %}'{{value.net}}',{% endfor %}],
+			showLine: true,
+			fill: false,
+			borderColor: 'rgba(255, 255, 255, 0.5)'
+			}
+		]
+	  },	
+	
+	
+ 
     options: {
         scales: {
             y: {

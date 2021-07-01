@@ -112,7 +112,6 @@ class Account
 		}
 		
 		return $amount;
-		
 	}
 	
 	public function getBalance(){
