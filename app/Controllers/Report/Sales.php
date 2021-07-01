@@ -95,7 +95,7 @@ class Sales extends \App\Controllers\Report
 							'date' => $sale->getDate(),
 							'type' => 'EXPENSE_PAYOUT',
 							'description' => 'Expense for ' . $expense->getName() . ' paid to ' . $expense->getAccount()->getName(),
-							'amount' => $expense->getAmount() / $expense->getPurchases()->count()
+							'amount' => 0 - $expense->getAmount() / $expense->getPurchases()->count()
 						]);
 						
 					}
@@ -109,7 +109,7 @@ class Sales extends \App\Controllers\Report
 					'date' => $sale->getDate(),
 					'type' => "PROFIT_PAY_OUT",
 					'description' => "Profit Share for " . $account->getName(),
-					'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
+					'amount' => 0 - ($sale->getProfitAmount() / $sale->getAccounts()->count())
 					]);
 				
 				}
