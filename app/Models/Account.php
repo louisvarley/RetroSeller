@@ -111,7 +111,7 @@ class Account
 			
 		}
 		
-		return $amount;
+		return 0 - $amount;
 		
 	}
 	
