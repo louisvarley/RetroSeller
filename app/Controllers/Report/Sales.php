@@ -34,10 +34,11 @@ class Sales extends \App\Controllers\Report
 		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 		
-		$spreadsheet->getActiveSheet()->setCellValue('A1','Date');
-		$spreadsheet->getActiveSheet()->setCellValue('B1','Type');
-		$spreadsheet->getActiveSheet()->setCellValue('C1','Description');
-		$spreadsheet->getActiveSheet()->setCellValue('D1','Amount');	
+		$spreadsheet->getActiveSheet()->setCellValue('A1','Sale ID');
+		$spreadsheet->getActiveSheet()->setCellValue('B1','Date');
+		$spreadsheet->getActiveSheet()->setCellValue('C1','Type');
+		$spreadsheet->getActiveSheet()->setCellValue('D1','Description');
+		$spreadsheet->getActiveSheet()->setCellValue('E1','Amount');	
 		
 		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);		
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);			
@@ -45,7 +46,7 @@ class Sales extends \App\Controllers\Report
 		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(35);	
 		
 
-		$spreadsheet->getActiveSheet()->getStyle("D")->applyFromArray([
+		$spreadsheet->getActiveSheet()->getStyle("E")->applyFromArray([
 
 			'numberFormat' => [
 				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
@@ -129,10 +130,11 @@ class Sales extends \App\Controllers\Report
 			
 			$x++;
 
-			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $traasaction['date']);
-			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $traasaction['type']);
-			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $traasaction['description']);				
-			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $traasaction['amount']);			
+			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $traasaction['id']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $traasaction['date']);
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $traasaction['type']);
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $traasaction['description']);				
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $traasaction['amount']);			
 		}
 	
 		
