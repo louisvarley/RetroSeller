@@ -39,15 +39,16 @@ class Accounts extends \App\Controllers\Report
 
 		$account = findEntity("account", $this->post['account_id']);
 
-		//header('Content-disposition: attachment; filename="' . $account->getName() . ' Statement' . '.xlsx"');
-		//header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-disposition: attachment; filename="' . $account->getName() . ' Statement' . '.xlsx"');
+		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 		
 		$spreadsheet->getActiveSheet()->setCellValue('A1','Date');
-		$spreadsheet->getActiveSheet()->setCellValue('B1','Amount');
-		$spreadsheet->getActiveSheet()->setCellValue('C1','Balance');
-		$spreadsheet->getActiveSheet()->setCellValue('D1','Description');	
+		$spreadsheet->getActiveSheet()->setCellValue('B1','Type');
+		$spreadsheet->getActiveSheet()->setCellValue('C1','Description');
+		$spreadsheet->getActiveSheet()->setCellValue('D1','Amount');	
+		$spreadsheet->getActiveSheet()->setCellValue('E1','Balance');
 		
 		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);		
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);			
@@ -55,60 +56,33 @@ class Accounts extends \App\Controllers\Report
 		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(35);	
 		
 
+		$spreadsheet->getActiveSheet()->getStyle("D")->applyFromArray([
+
+			'numberFormat' => [
+				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
+			]
+		]);
+
+		$spreadsheet->getActiveSheet()->getStyle("E")->applyFromArray([
+
+			'numberFormat' => [
+				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
+			]
+		]);
 		
-		$balance = 0;
-		
-		$arr = [];
-		
-		$x = 1;
-		foreach($account->getSales() as $sale){
+		$transactions = $account->getTransactions();
 			
-			if($sale->isComplete()){
+		$x = 1;		
 			
-				foreach($sale->getPurchases() as $purchase){
-						foreach($purchase->getExpenses() as $expense){
-							if($expense->getAccount()->getId() == $account->getId()){
-								if($purchase->getBuyOut() == null){
-									array_push($arr, [
-									'date' => $sale->getDate(),
-									'type' => 'Expense Payment',
-									'description' => $expense->getName(),
-									'amount' => $expense->getAmount() / $expense->getPurchases()->count()
-									]);
-								}
-							}
-						}
-				}
-				
-				array_push($arr, [
-				'date' => $sale->getDate(),
-				'type' => "Sale Profit",
-				'description' => $sale->getPurchasesString(),
-				'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
-				]);
-				
-			}
-
-		}
-
-
-
-		usort($arr, function($a, $b){
-			
-			$t1 = ($a['date']);
-			$t2 = ($b['date']);
-			return $t1->diff($t2);
-		});
-			
-		foreach($arr as $entry){
+		foreach($transactions as $traasaction){
 			
 			$x++;
-			
-			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $entry['date']);
-			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $entry['type']);
-			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $entry['description']);				
-			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $entry['amount']);		
 
+			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $traasaction['date']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $traasaction['type']);
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $traasaction['description']);				
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $traasaction['amount']);		
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $traasaction['balance']);	
 		}
 	
 		

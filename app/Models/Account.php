@@ -171,4 +171,130 @@ class Account
 		return $balance;
 		
 	}
+
+	public function getTransactions(){
+		
+		$transactions = [];
+		
+		/* For Each Sale */
+		foreach($this->getSales() as $sale){
+			
+			/* If is Completed */
+			if($sale->isComplete()){
+			
+				/* For Each Purchase Within the Sale */
+				foreach($sale->getPurchases() as $purchase){
+					
+						/* For Each Expenses Within the Purchase */
+						foreach($purchase->getExpenses() as $expense){
+							
+							/* Expense is Mine */
+							if($expense->getAccount()->getId() == $this->getId()){
+								
+								/* Was not a buyout - Should not ever be the case */
+								if($purchase->getBuyOut() == null){
+									
+									/* Add Expense */
+									array_push($transactions, [
+									'date' => $sale->getDate(),
+									'type' => 'EXPENSE_PAY_OUT',
+									'description' => $expense->getName(),
+									'amount' => $expense->getAmount() / $expense->getPurchases()->count()
+									]);
+									
+								}
+							}
+						}
+				}
+				
+				/* Add Profit From This Sale */
+				array_push($transactions, [
+				'date' => $sale->getDate(),
+				'type' => "PROFIT_PAY_OUT",
+				'description' => $sale->getPurchasesString(),
+				'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
+				]);
+				
+			}
+
+		}
+		
+		/*  For each Buyout */
+		foreach(findAll("buyout") as $buyout){
+
+			/* For Each Purchase In Buyout */
+			foreach($buyout->getPurchase()->getExpenses() as $expense){
+				
+				/* If Expense was yours... */
+				if($expense->getAccount()->getId() == $this->getId()){
+					
+					/* And Buyout was not yours */
+					if($buyout->getAccount()->getId() != $this->getId()){
+					
+						array_push($transactions, [
+						'date' => $buyout->getDate(),
+						'type' => "BUYOUT_PAY_OUT",
+						'description' => $buyout->getPurchase()->getName() . ' buyout from ' . $buyout->getAccount()->getName(),
+						'amount' => $expense->getAmount() / $expense->getPurchases()->count()
+						]);
+					
+					}
+					
+				}else{
+					
+					/* Otherwise, you are paying the buyout */
+					array_push($transactions, [
+					'date' => $buyout->getDate(),
+					'type' => "BUYOUT_PAY_IN",
+					'description' => $buyout->getPurchase()->getName() . ' buyout paid to ' . $expense->getAccount()->getName(),
+					'amount' => 0 - $expense->getAmount() / $expense->getPurchases()->count()
+					]);
+				}
+			}
+		}
+
+		/* For each Withdrawl */
+		foreach(findAll("withdrawal") as $withdrawal){
+			
+			/* If withdrawl is yours */
+			if($withdrawal->getAccount()->getId() == $this->getId()){
+				
+				array_push($transactions, [
+					'date' => $withdrawal->getDate(),
+					'type' => "WITHDRAW",
+					'description' =>$withdrawal->getDescription(),
+					'amount' => 0 - $withdrawal->getAmount()
+					]);
+				
+			}
+			
+		}
+	
+		/* Now Sort array by date */
+		usort($transactions, function($a, $b){
+
+		  $ad = ($a['date']);
+		  $bd = ($b['date']);
+
+		  if ($ad == $bd) {
+			return 0;
+		  }
+
+		  return $ad < $bd ? -1 : 1;
+		});
+		
+		
+		/* Add Balance */
+		$balance = 0;
+		foreach($transactions as $key => $transaction){
+			
+			$balance = $balance + $transaction['amount'];
+			$transactions[$key]['balance'] = $balance;
+	
+		}
+		
+		return $transactions;
+		
+	}
+
 }

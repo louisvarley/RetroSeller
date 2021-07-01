@@ -163,11 +163,11 @@ border-radius: 10em;
 	text-align:right;
 }
 
-.btn-no{
+.btn-modal-close{
 	display: inline-block;
 	font-weight: 400;
 	line-height: 1.5;
-	color: #444;
+
 	text-align: center;
 	text-decoration: none;
 	vertical-align: middle;
@@ -176,9 +176,13 @@ border-radius: 10em;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	padding: .8rem 1rem;
+	padding: .1rem .6rem;
 	font-size: 1rem;
 	border-radius: .25rem;
+	color: #fff;
+	background-color: #e51c23;
+	background-image: var(--bs-gradient);	
+	border: 0px;
 }
 
 

@@ -61,10 +61,15 @@ table caption {
   margin: .5em 0 .75em;
 }
 
-table tr {
+.table tr:first-child {
   background-color: #2196f3;
   border: 1px solid #ddd;
   padding: .35em;
+  color: #fff;
+}
+
+.table tr {
+  border: 1px solid #ddd;
 }
 
 table th,
