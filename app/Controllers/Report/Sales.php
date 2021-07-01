@@ -64,6 +64,7 @@ class Sales extends \App\Controllers\Report
 				
 				/* Add Gross Amount */
 				array_push($transactions, [
+					'id' => $sale->getId(),				
 					'date' => $sale->getDate(),
 					'type' => 'SALE_GROSS',
 					'description' => $sale->getPurchasesString(),
@@ -72,6 +73,7 @@ class Sales extends \App\Controllers\Report
 				
 				/* Add Postage Cost */
 				array_push($transactions, [
+					'id' => $sale->getId(),				
 					'date' => $sale->getDate(),
 					'type' => 'SALE_POSTAGE_COST',
 					'description' => "Postage Cost",
@@ -80,6 +82,7 @@ class Sales extends \App\Controllers\Report
 				
 				/* Add Fee Cost */
 				array_push($transactions, [
+					'id' => $sale->getId(),
 					'date' => $sale->getDate(),
 					'type' => 'SALE_FEE_COST',
 					'description' => 'Fees from ' . $sale->getPaymentVendor()->getName() . ' and ' . $sale->getSaleVendor()->getName(),
@@ -92,6 +95,7 @@ class Sales extends \App\Controllers\Report
 						
 						/* Add Expenses */
 						array_push($transactions, [
+							'id' => $sale->getId(),						
 							'date' => $sale->getDate(),
 							'type' => 'EXPENSE_PAYOUT',
 							'description' => 'Expense for ' . $expense->getName() . ' paid to ' . $expense->getAccount()->getName(),
@@ -106,6 +110,7 @@ class Sales extends \App\Controllers\Report
 				
 					/* Add Profit From This Sale */
 					array_push($transactions, [
+					'id' => $sale->getId(),					
 					'date' => $sale->getDate(),
 					'type' => "PROFIT_PAY_OUT",
 					'description' => "Profit Share for " . $account->getName(),
