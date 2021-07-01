@@ -101,75 +101,24 @@ class Account
 	
 	public function getMyProfit(){
 		
-		$balance = 0;
+		$amount = 0;
 		
-		/* Handle Sales */
-		foreach($this->getSales() as $sale){
+		foreach($this->getTransactions() as $transaction){
 			
-			if($sale->isComplete()){
-				/* get profit shares */
-				$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
+			if($transaction['type'] == 'PROFIT_PAY_OUT'){
+				$amount = $amount + $transaction['amount'];
 			}
+			
 		}
 		
-		return $balance;
+		return $amount;
 		
 	}
 	
 	public function getBalance(){
-		
-		$balance = 0;
-		
-		/* Handle Sales */
-		foreach($this->getSales() as $sale){
-			
-			if($sale->isComplete()){
-			
-				/* get profit shares */
-				$balance = $balance + $sale->getProfitAmount() / $sale->getAccounts()->count();
 				
-				/* get expenses */
-				foreach($sale->getPurchases() as $purchase){
-					foreach($purchase->getExpenses() as $expense){
-						
-						/* Exclude expenses from bought out items */
-						if($expense->getAccount()->getId() == $this->getId()){
-							if($purchase->getBuyOut() == null){
-								$balance = $balance + ($expense->getAmount() / $expense->getPurchases()->count());
-							}
-						}
-					}
-				}
-			
-			}
-		}
-		
-		/* Handle Buyouts. */
-		foreach(findAll("Purchase") as $purchase){
-			
-			if($purchase->getBuyOut() != null){
-				foreach($purchase->getExpenses() as $expense){
-					
-					/* If there was a buyout made, you get your expenses paid now */
-					if($expense->getAccount()->getId() == $this->getId()){
-						$balance = $balance + ($expense->getAmount() / $expense->getPurchases()->count());
-					}
-					
-					/* and the buy out account loses that amount from their balance */
-					if($purchase->getBuyOut()->getAccount()->getId() == $this->getId()){
-						$balance = $balance - ($expense->getAmount() / $expense->getPurchases()->count());
-					}
-				}		
-			}
-		}
-		
-		/* Minus all withdrawals */
-		foreach($this->getWithdrawals() as $withdrawal){
-			$balance = $balance - ($withdrawal->getAmount());
-		}			
-		
-		return $balance;
-		
+		$transactions = $this->getTransactions();
+		return end($transactions)['balance'];		
 	}
 
 	public function getTransactions(){
@@ -283,6 +232,16 @@ class Account
 		  return $ad < $bd ? -1 : 1;
 		});
 		
+		/* Default */
+		if(count($transactions) == 0){
+			
+			array_push($transactions, [
+					'date' => new \DateTime(),
+					'type' => "OPENING",
+					'description' =>"Opening Balance",
+					'amount' => 0
+					]);
+		}
 		
 		/* Add Balance */
 		$balance = 0;
@@ -292,6 +251,8 @@ class Account
 			$transactions[$key]['balance'] = $balance;
 	
 		}
+		
+		
 		
 		return $transactions;
 		
