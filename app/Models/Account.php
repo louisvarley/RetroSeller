@@ -99,6 +99,22 @@ class Account
         $this->color = $color;
     }		
 	
+	public function getWithdrawn(){
+		
+		$amount = 0;
+		
+		foreach($this->getTransactions() as $transaction){
+			
+			if($transaction['type'] == 'WITHDRAW'){
+				$amount = $amount + $transaction['amount'];
+			}
+			
+		}
+		
+		return $amount;
+		
+	}
+	
 	public function getMyProfit(){
 		
 		$amount = 0;
