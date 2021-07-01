@@ -82,7 +82,7 @@
 	
 <script>
 var ctx = document.getElementById('salesChart');
-var myChart = new Chart(ctx, {
+var chart = new Chart(ctx, {
     type: 'line',
 	  data: {
 	  labels: [{% for key,value in salesData %}'{{key}}',{% endfor %}],
@@ -93,30 +93,57 @@ var myChart = new Chart(ctx, {
 			data: [{% for key,value in salesData %}'{{value.net}}',{% endfor %}],
 			showLine: true,
 			fill: false,
-			borderColor: 'rgba(255, 255, 255, 0.5)'
+			borderColor: 'rgba(255, 255, 255, 1)'
 			}
 		]
 	  },	
 	  options: {
 		plugins:{   
-		 legend: {
-		   display: false
-				 },
-			  },
-			scales: {
-				y: {
-					beginAtZero: true,
-					ticks: {
-						// Include a dollar sign in the ticks
-						callback: function(value, index, values) {
-							return '£' + value;
-						}
+			legend: {
+				display: false
+			},
+			datalabels: {
+				display: true,
+				color: "#fff",
+				formatter: function (value, context) {
+					return "£" + value;
+				},			
+			},
+		},
+		scales: {
+			xAxes: {
+				gridLines: {
+					display: false,
+					color: "rgba(0,0,0,0)",
+				},
+				ticks: {
+					fontColor: "white", 
+				},
+				scaleLabel:{
+					fontColor: "white", 				
+				}				
+			},
+			yAxes: {
+				beginAtZero: true,
+				gridLines: {
+					display: false,
+					color: "rgba(0,0,0,0)",
+				},
+				ticks: {
+					fontColor: "white", 
+					callback: function(value, index, values) {
+						return '£' + value;
 					}
+				},
+				scaleLabel:{
+					fontColor: "white", 				
 				}
 			}
-		}		
-
+		}
+	}
+	
 });
+
 </script>
 
 
