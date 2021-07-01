@@ -586,6 +586,11 @@ table th {
   height: 1rem;
 }
 
+/* line 96, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+.note-table th, .note-table td {
+  white-space: break-spaces !important;
+}
+
 /* line 1, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
@@ -597,66 +602,68 @@ table th {
 /* line 7, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel i {
   font-size: 6em;
+  color: #000;
+  opacity: 0.1;
 }
 
-/* line 14, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 16, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-body {
   padding: 25px 20px;
 }
 
-/* line 18, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 20, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel hr {
   border-color: rgba(0, 0, 0, 0.1);
 }
 
-/* line 22, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 24, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .mar-btm {
   margin-bottom: 15px;
 }
 
-/* line 27, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 29, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-dark.panel-colorful {
   background-color: #3b4146;
   border-color: #3b4146;
   color: #fff;
 }
 
-/* line 33, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 35, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-success.panel-colorful {
   background-color: #28a745;
   border-color: #28a745;
   color: #fff;
 }
 
-/* line 39, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 41, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-danger.panel-colorful {
   background-color: #f76c51;
   border-color: #f76c51;
   color: #fff;
 }
 
-/* line 45, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 47, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-primary.panel-colorful {
   background-color: #5fa2dd;
   border-color: #5fa2dd;
   color: #fff;
 }
 
-/* line 51, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 53, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-secondary.panel-colorful {
   background-color: #6c757d;
   border-color: #6c757d;
   color: #fff;
 }
 
-/* line 57, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 59, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-info.panel-colorful {
   background-color: #4ebcda;
   border-color: #4ebcda;
   color: #fff;
 }
 
-/* line 63, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
+/* line 65, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_dashboard.scss */
 .panel-warning.panel-colorful {
   background-color: #ffc107;
   border-color: #ffc107;

@@ -38,9 +38,42 @@ class Home extends \Core\Controller
 			$valuation = $valuation + $purchase->getValuation();
 		}		
 		
+		
+		/* Dataset of Sales Last 7 Days */
+		$date = date('Y-m-d h:i:s', strtotime("-7 days"));
+
+		$salesSumed = entityManager()->getRepository(_MODELS . 'Sale')
+					->createQueryBuilder('e')
+					->select('e.date, sum(e.gross_amount) as amount')
+					->where('e.date BETWEEN :n7days AND :today ')
+					->setParameter('today', date('Y-m-d h:i:s'))
+					->setParameter('n7days', $date)
+					->groupby('e.date')
+					->getQuery()
+					->getArrayResult();		
+		
+		
+		$now = new \DateTime( "6 days ago", new \DateTimeZone('America/New_York'));
+		$interval = new \DateInterval( 'P1D'); // 1 Day interval
+		$period = new \DatePeriod( $now, $interval, 6); // 7 Days
+		
+		$salesData = array();
+		
+		foreach( $period as $day) {
+			$key = $day->format('D');
+			$salesData[$key] = 0;
+		}
+		
+		foreach($salesSumed as $salesSum){
+			$salesData[$salesSum['date']->format('D')] = $salesData[$salesSum['date']->format('D')] + $salesSum['amount'];
+		}
+		
+
+		
 		$dashboard_data = array(
 			"accounts" => $accounts,
-			"sales" => $sales,			
+			"sales" => $sales,	
+			"salesData" => $salesData,			
 			"purchases" => $purchases,
 			"profit" => $profit,
 			"valuation" => $valuation,
