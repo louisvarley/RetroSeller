@@ -154,8 +154,9 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Date</th>
-      <th scope="col">Sold By</th>
-      <th scope="col">Sold</th>	  
+      <th scope="col">Vendor</th>
+      <th scope="col">Sold</th>	 
+      <th scope="col">Gross Amount</th>	  
       <th scope="col">Net Amount</th>
       <th scope="col">Profit</th>	  
     </tr>
@@ -163,12 +164,13 @@
   <tbody>
 	{% for sale in latestSales %}
     <tr>
-      <th>{{ sale.id }}</th>
-      <td>{{ sale.date | date('d/m/Y') }}</td>
-	  <td>{{ sale.saleVendor.name }}</td>
-      <td>{{ sale.getPurchasesString }}</td>
-      <td>{{ sale.netAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 
-      <td>{{ sale.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
+      <th data-label="#">{{ sale.id }}</th>
+      <td data-label="Date">{{ sale.date | date('d/m/Y') }}</td>
+	  <td data-label="Vendor">{{ sale.saleVendor.name }}</td>
+      <td data-label="Sold">{{ sale.getPurchasesString }}</td>
+      <td data-label="Gross">{{ sale.grossAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	
+      <td data-label="Net">{{ sale.netAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 
+      <td data-label="Profit">{{ sale.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
     </tr>
    {% endfor %}
   </tbody>
