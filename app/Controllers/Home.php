@@ -72,8 +72,6 @@ class Home extends \Core\Controller
 			$salesData[$salesSum['date']->format('d')]['net'] = $salesData[$salesSum['date']->format('d')]['net'] + $salesSum['gross'] - ($salesSum['postage'] + $salesSum['fee']);			
 		}
 		
-
-		
 		$dashboard_data = array(
 			"accounts" => $accounts,
 			"sales" => $sales,	
@@ -81,7 +79,6 @@ class Home extends \Core\Controller
 			"purchases" => $purchases,
 			"profit" => $profit,
 			"valuation" => $valuation,
-			
 		);
 
 

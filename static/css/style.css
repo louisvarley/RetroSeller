@@ -223,6 +223,81 @@ hr {
   object-fit: cover;
 }
 
+/* line 227, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.Home .card {
+  border: 0;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  border-radius: 6px;
+  color: #333;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* line 238, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.Home .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #eee;
+  border-radius: .25rem;
+}
+
+/* line 250, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.Home .card {
+  font-size: .875rem;
+}
+
+/* line 254, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.Home .card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+/* line 261, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.Home .card [class*="card-header-"] .card-icon, .Home .card [class*="card-header-"] .card-text {
+  border-radius: 3px;
+  background-color: #999;
+  padding: 15px;
+  margin-top: -20px;
+  margin-right: 15px;
+  float: left;
+}
+
+/* line 280, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.card-stats .card-header .card-category, .card-stats .card-header .card-title {
+  text-align: right;
+}
+
+/* line 284, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.card-stats .card-header .card-icon {
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+}
+
+/* line 288, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.card-stats .card-header .card-icon i {
+  font-size: 36px;
+  line-height: 56px;
+  width: 56px;
+  height: 56px;
+  text-align: center;
+  color: #fff;
+}
+
+/* line 305, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.card-chart .card-header {
+  border-radius: 3px;
+  margin-top: -20px;
+  padding: 15p;
+}
+
 /* Toasts */
 /* line 3, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_toast.scss */
 .toast {
@@ -870,13 +945,13 @@ table th {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  /* line 59, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+  /* line 57, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
   .navbar {
     padding-left: 10px;
   }
 }
 
-/* line 65, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
+/* line 63, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_responsive.scss */
 table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before, table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control::before {
   border: 0px !important;
   box-shadow: none !important;

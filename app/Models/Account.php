@@ -130,12 +130,21 @@ class Account
 		return $amount;
 	}
 	
+	/* Balance on a given date */
 	public function getBalance(){
-				
+
 		$transactions = $this->getTransactions();
+
 		return end($transactions)['balance'];		
 	}
-
+	
+	/* Latest transactions */
+	public function getLatestTransactions($n = 30){
+		
+		return array_slice($this->getTransactions(),0 - $n);
+	}
+	
+	/* Transactions is used to calculate balances, this means we ALWAYS need the entire transactions calculated */
 	public function getTransactions(){
 		
 		$transactions = [];
@@ -189,11 +198,8 @@ class Account
 			/* For Each Purchase In Buyout */
 			foreach($buyout->getPurchase()->getExpenses() as $expense){
 				
-				/* If Expense was yours... */
-				if($expense->getAccount()->getId() == $this->getId()){
-					
-					/* And Buyout was not yours */
-					if($buyout->getAccount()->getId() != $this->getId()){
+				/* If Expense was yours And Buyout was not yours */
+				if($expense->getAccount()->getId() == $this->getId() && $buyout->getAccount()->getId() != $this->getId() ){
 					
 						array_push($transactions, [
 						'date' => $buyout->getDate(),
@@ -202,9 +208,8 @@ class Account
 						'amount' => $expense->getAmount() / $expense->getPurchases()->count()
 						]);
 					
-					}
-					
-				}else{
+				/* If the Buyout was yours and the Expense was not yours */
+				}elseif($buyout->getAccount()->getId() == $this->getId() && $expense->getAccount()->getId() != $this->getId() ){
 					
 					/* Otherwise, you are paying the buyout */
 					array_push($transactions, [
@@ -247,6 +252,7 @@ class Account
 		  return $ad < $bd ? -1 : 1;
 		});
 		
+		
 		/* Default */
 		if(count($transactions) == 0){
 			
@@ -258,16 +264,19 @@ class Account
 					]);
 		}
 		
+		
+
+		
 		/* Add Balance */
 		$balance = 0;
+		
+		
 		foreach($transactions as $key => $transaction){
 			
 			$balance = $balance + $transaction['amount'];
 			$transactions[$key]['balance'] = $balance;
 	
 		}
-		
-		
 		
 		return $transactions;
 		
