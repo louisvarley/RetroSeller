@@ -110,7 +110,7 @@ class Home extends \Core\Controller
 		$dashboard_data = array(
 			"accounts" => $accounts, // All Accounts
 			"sales" => $sales,	// All Sales
-			"latestSales" => array_slice($sales, -10),
+			"latestSales" => array_reverse(array_slice($sales, -10)),
 			"salesDaily" => $salesDaily, // Daily Sales Last 30 Days	
 			"purchases" => $purchases, // All Purchases
 			"profitAllTime" => $profitAllTime,
