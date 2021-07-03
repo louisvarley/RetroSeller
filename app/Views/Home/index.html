@@ -81,18 +81,18 @@
 
 <div class="row">
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-warning text-white">
+    <div class="card bg-{% if( salesThisWeek >= salesLastWeek ) %}success{% else %}danger{% endif %} text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Sales</h4>
         <h4 class="card-title mb-0">This Week</h4>		
-        <div class="fs-6 fw-semibold py-3">{{ salesThisWeek }}</div>
+        <div class="fs-6 fw-semibold py-3">{{ salesThisWeek }} {% if( salesThisWeek >= salesLastWeek ) %}<i class="fas fa-arrow-up"></i>{% else %}<i class="fas fa-arrow-down"></i>{% endif %}</div>
       </div>
     </div>
   </div>
 
 
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-warning text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Sales</h4>
         <h4 class="card-title mb-0">Last Week</h4>		
@@ -102,7 +102,7 @@
   </div>
   
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-warning text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Sales</h4>
         <h4 class="card-title mb-0">All Time</h4>		
@@ -112,7 +112,18 @@
   </div>  
   
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-success text-white">
+    <div class="card bg-{% if( salesThisWeek >= salesLastWeek ) %}success{% else %}danger{% endif %} text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Profit</h4>
+        <h4 class="card-title mb-0">This Week</h4>			
+        <div class="fs-6 fw-semibold py-3">{{ profitThisWeek  | format_currency('GBP', {rounding_mode: 'floor'}) }} {% if( salesThisWeek >= salesLastWeek ) %}<i class="fas fa-arrow-up"></i>{% else %}<i class="fas fa-arrow-down"></i>{% endif %}</div>
+		
+      </div>
+    </div>
+  </div>     
+  
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-primary text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Profit</h4>
         <h4 class="card-title mb-0">Last Week</h4>		
@@ -120,19 +131,9 @@
       </div>
     </div>
   </div>  
-  
+ 
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-success text-white">
-      <div class="card-body text-center">
-        <h4 class="card-title mb-0">Profit</h4>
-        <h4 class="card-title mb-0">This Week</h4>			
-        <div class="fs-6 fw-semibold py-3">{{ profitThisWeek  | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
-      </div>
-    </div>
-  </div>    
-
-  <div class="col-md-2 col-sm-4">
-    <div class="card bg-success text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Profit</h4>
         <h4 class="card-title mb-0">All Time</h4>	
