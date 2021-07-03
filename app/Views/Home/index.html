@@ -15,7 +15,8 @@
 	   <div class="card-body pb-0 d-flex justify-content-between align-items-start">
 		  <div>
 			 <div class="fs-4 fw-semibold">{{ account.name }}</div>
-			 <div>{{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+			 <div><b>Balance</b> {{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+			 <div><b>Profit</b> {{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>			 
 		  </div>
 	   </div>
 	   <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
@@ -40,7 +41,7 @@
         
       </div>
       <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
-         <canvas class="chart" id="salesChart" style="display: block; box-sizing: border-box; height: 300px; width: 1264px;" width="1264" height="300"></canvas>
+         <canvas id="salesChart" style="color: #fff; display: block; box-sizing: border-box; height: 300px; width: 1264px;" width="1264" height="300"></canvas>
          <div class="chartjs-tooltip" style="opacity: 0; left: 729.889px; top: 351.46px;">
             <table style="margin: 0px;">
                <thead class="chartjs-tooltip-header">
@@ -65,11 +66,6 @@
    </div>
 </div>
 
-		  
-		  
-		
-
-	
 <script>
 var ctx = document.getElementById('salesChart');
 var chart = new Chart(ctx, {
@@ -80,9 +76,10 @@ var chart = new Chart(ctx, {
 
 		  {
 			label: 'Net',
+			pointRadius: 0, 
 			data: [{% for key,value in salesData %}'{{value.net}}',{% endfor %}],
 			showLine: true,
-			fill: false,
+			fill: true,
 			borderColor: 'rgba(255, 255, 255, 1)'
 			}
 		]
@@ -103,32 +100,27 @@ var chart = new Chart(ctx, {
 		},
 		scales: {
 			xAxes: {
-				gridLines: {
-					display: false,
-					color: "rgba(0,0,0,0)",
+				grid: {
+					display:false
 				},
 				ticks: {
-					fontColor: "white", 
+					color:'white' ,
 				},
-				scaleLabel:{
-					fontColor: "white", 				
-				}				
+				scaleLabel : { color: 'white', fontSize:16 }			
 			},
 			yAxes: {
 				beginAtZero: true,
-				gridLines: {
-					display: false,
-					color: "rgba(0,0,0,0)",
+				grid: {
+					display:false
 				},
 				ticks: {
-					fontColor: "white", 
+					color:'white',
+					beginAtZero: true,
 					callback: function(value, index, values) {
 						return '£' + value;
 					}
 				},
-				scaleLabel:{
-					fontColor: "white", 				
-				}
+				scaleLabel : { color: 'white', fontSize:16 }
 			}
 		}
 	}
@@ -136,7 +128,6 @@ var chart = new Chart(ctx, {
 });
 
 </script>
-
 
 {% for account in accounts %}
 
@@ -152,7 +143,7 @@ var chart = new Chart(ctx, {
 			label: 'Net',
 			data: [{% for transaction in account.getLatestTransactions %}'{{transaction.balance}}',{% endfor %}],
 			showLine: true,
-			fill: false,
+			fill: true,
 			pointRadius: 0, 
 			borderColor: 'rgba(255, 255, 255, 1)'
 			}
@@ -170,9 +161,7 @@ var chart = new Chart(ctx, {
 
 </script>
 
-
 {% endfor %}
-
 
 {% endblock %}
 
