@@ -17,17 +17,17 @@
 
 		<div class="card-body pb-0 d-flex justify-content-between align-items-start">
 			<div>
-				<div class="fs-4 fw-semibold">{{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+				<div class="fs-5 fw-semibold">{{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
 				<div>Balance</div>		 
 			</div>
 			
 			<div>
-				<div class="fs-4 fw-semibold">{{ account.withdrawn | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+				<div class="fs-5 fw-semibold">{{ account.withdrawn | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
 				<div>Profit</div>		 
 			</div>
 			
 			<div>
-				<div class="fs-4 fw-semibold">{{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+				<div class="fs-5 fw-semibold">{{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
 				<div>Withdrawn</div>		 
 			</div>
 			
@@ -39,7 +39,6 @@
    </div>
  {% endfor %}
 </div>
-
 
 <div class="card mb-4">
    <div class="card-body bg-primary text-white">
@@ -76,18 +75,124 @@
    </div>
 </div>
 
+<div class="row">
+	<h4 class="card-title mb-0">Statistics</h4>
+</div>
+
+<div class="row">
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Sales</h4>
+        <h4 class="card-title mb-0">This Week</h4>		
+        <div class="fs-6 fw-semibold py-3">{{ salesThisWeek }}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Sales</h4>
+        <h4 class="card-title mb-0">Last Week</h4>		
+        <div class="fs-6 fw-semibold py-3">{{ salesLastWeek }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Sales</h4>
+        <h4 class="card-title mb-0">All Time</h4>		
+        <div class="fs-6 fw-semibold py-3">{{ salesAllTime }}</div>
+      </div>
+    </div>
+  </div>  
+  
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Profit</h4>
+        <h4 class="card-title mb-0">Last Week</h4>		
+        <div class="fs-6 fw-semibold py-3">{{ profitLastWeek  | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+      </div>
+    </div>
+  </div>  
+  
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Profit</h4>
+        <h4 class="card-title mb-0">This Week</h4>			
+        <div class="fs-6 fw-semibold py-3">{{ profitThisWeek  | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+      </div>
+    </div>
+  </div>    
+
+  <div class="col-md-2 col-sm-4">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4 class="card-title mb-0">Profit</h4>
+        <h4 class="card-title mb-0">All Time</h4>	
+        <div class="fs-6 fw-semibold py-3">{{ profitAllTime  | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+      </div>
+    </div>
+  </div>    
+</div>
+
+
+<div class="row">
+	<h4 class="card-title mb-0">Latest Sales</h4>
+</div>
+
+<div class="card">
+
+<table class="table">
+  <thead> 
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 <script>
 var ctx = document.getElementById('salesChart');
 var chart = new Chart(ctx, {
     type: 'line',
 	  data: {
-	  labels: [{% for key,value in salesData %}'{{key}}',{% endfor %}],
+	  labels: [{% for key,value in salesDaily %}'{{key}}',{% endfor %}],
 		datasets: [
 
 		  {
 			label: 'Net',
 			pointRadius: 0, 
-			data: [{% for key,value in salesData %}'{{value.net}}',{% endfor %}],
+			data: [{% for key,value in salesDaily %}'{{value.net}}',{% endfor %}],
 			showLine: true,
 			fill: true,
 			borderColor: 'rgba(255, 255, 255, 1)'

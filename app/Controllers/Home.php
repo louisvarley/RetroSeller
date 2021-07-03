@@ -30,8 +30,43 @@ class Home extends \Core\Controller
 		$profit = 0;
 		$valuation = 0;
 		
+		
+		$profitThisWeek = 0;
+		$profitLastWeek = 0;
+		$profitAllTime = 0;
+		
+		$salesThisWeek = 0;
+		$salesLastWeek = 0;
+		$salesAllTime = 0;
+		
+		/* We need some specific dates for reporting */
+		
+		$weekDayNow = date('N', time()) - 1;
+		
+		$today = (new \DateTime('now'));		
+		$thisMonday = ((new \DateTime('now'))->modify('-' . $weekDayNow . ' days'));
+		
+		$lastSunday = ((new \DateTime('now'))->modify('-' . ($weekDayNow+1) . ' days'));
+		$lastMonday = ((new \DateTime('now'))->modify('-' . ($weekDayNow+7) . ' days'));
+		
+		date_time_set($lastMonday, 00, 00);
+		date_time_set($thisMonday, 00, 00);	
+		date_time_set($lastSunday, 23, 59);			
+
 		foreach($sales as $sale){			
-			$profit = $profit + $sale->getProfitAmount();
+			$profitAllTime = $profitAllTime + $sale->getProfitAmount();
+			$salesAllTime++;
+			
+			if($sale->getDate() >= $lastMonday && $sale->getDate() <= $lastSunday){
+				$profitLastWeek = $profitLastWeek + $sale->getProfitAmount();
+				$salesLastWeek++;
+			}
+			
+			if($sale->getDate() >= $thisMonday && $sale->getDate() <= $today){
+				$profitThisWeek = $profitThisWeek + $sale->getProfitAmount();
+				$salesThisWeek++;
+			}			
+			
 		}
 		
 		foreach($purchases as $purchase){			
@@ -57,27 +92,32 @@ class Home extends \Core\Controller
 		$interval = new \DateInterval( 'P1D'); // 1 Day interval
 		$period = new \DatePeriod( $now, $interval, 29); // 7 Days
 		
-		$salesData = array();
+		$salesDaily = array();
 		
 		foreach( $period as $day) {
 			$key = $day->format('d');
-			$salesData[$key]['gross'] = 0;
-			$salesData[$key]['net'] = 0;			
+			$salesDaily[$key]['gross'] = 0;
+			$salesDaily[$key]['net'] = 0;			
 			
 		}
 		
 		foreach($salesSumed as $salesSum){
 
-			$salesData[$salesSum['date']->format('d')]['gross'] = $salesData[$salesSum['date']->format('d')]['gross'] + $salesSum['gross'];
-			$salesData[$salesSum['date']->format('d')]['net'] = $salesData[$salesSum['date']->format('d')]['net'] + $salesSum['gross'] - ($salesSum['postage'] + $salesSum['fee']);			
+			$salesDaily[$salesSum['date']->format('d')]['gross'] = $salesDaily[$salesSum['date']->format('d')]['gross'] + $salesSum['gross'];
+			$salesDaily[$salesSum['date']->format('d')]['net'] = $salesDaily[$salesSum['date']->format('d')]['net'] + $salesSum['gross'] - ($salesSum['postage'] + $salesSum['fee']);			
 		}
 		
 		$dashboard_data = array(
-			"accounts" => $accounts,
-			"sales" => $sales,	
-			"salesData" => $salesData,			
-			"purchases" => $purchases,
-			"profit" => $profit,
+			"accounts" => $accounts, // All Accounts
+			"sales" => $sales,	// All Sales
+			"salesDaily" => $salesDaily, // Daily Sales Last 30 Days	
+			"purchases" => $purchases, // All Purchases
+			"profitAllTime" => $profitAllTime,
+			"profitLastWeek" => $profitLastWeek,
+			"profitThisWeek" => $profitThisWeek,
+			"salesAllTime" => $salesAllTime,
+			"salesLastWeek" => $salesLastWeek,
+			"salesThisWeek" => $salesThisWeek,			
 			"valuation" => $valuation,
 		);
 
