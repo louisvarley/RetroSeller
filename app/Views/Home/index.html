@@ -10,22 +10,21 @@
  {% for account in accounts %}
    <div class="col-sm-6 col-lg-3">
 
-	  
 	<div class="card mb-4 text-white" style="background-color:{{ account.color }}">
-	   <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-		  <div>
-			 <div class="fs-4 fw-semibold">{{ account.name }}</div>
-			 <div><b>Balance</b> {{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
-			 <div><b>Profit</b> {{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>			 
-		  </div>
-	   </div>
-	   <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-		  <canvas class="chart" id="{{account.id}}_accountChart" style="display: block; box-sizing: border-box; height: 70px; width: 274px;" width="274" height="70"></canvas>
-	   </div>
+		<div class="card-header">
+			<h4 class="card-title mb-0">{{ account.name }}</h4>
+		</div>
+
+		<div class="card-body pb-0 d-flex justify-content-between align-items-start">
+			<div>
+				 <div><b>Balance</b> {{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+				 <div><b>Profit</b> {{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>			 
+			</div>
+		</div>
+	    <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+			<canvas class="chart" id="{{account.id}}_accountChart" style="display: block; box-sizing: border-box; height: 70px; width: 274px;" width="274" height="70"></canvas>
+		</div>
 	</div>
-	  
-	  
-	  
    </div>
  {% endfor %}
 </div>
