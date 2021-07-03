@@ -167,10 +167,10 @@
 		  <th data-label="#">{{ sale.id }}</th>
 		  <td data-label="Date">{{ sale.date | date('d/m/Y') }}</td>
 		  <td data-label="Vendor">{{ sale.saleVendor.name }}</td>
-		  <td data-label="Sold">{{ sale.getPurchasesString }}</td>
+		  <td data-label="Sold">{{ sale.PurchasesString }}</td>
 		  <td data-label="Gross">{{ sale.grossAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	
 		  <td data-label="Net">{{ sale.netAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 
-		  <td data-label="Profit">{{ sale.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
+		  <td data-label="Profit">{{ sale.ProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
 		</tr>
 	   {% endfor %}
 	  </tbody>
@@ -200,8 +200,8 @@
 		  <th data-label="#">{{ purchase.id }}</th>
 		  <td data-label="Date">{{ purchase.date | date('d/m/Y') }}</td>
 		  <td data-label="Vendor">{{ purchase.PurchaseVendor.name }}</td>
-		  <td data-label="Name">{{ purchase.Name }}</td>
-		  <td data-label="Spend">{% if( purchase.totalSpend > 0 ) %}{{ purchase.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}{% endif %} </td>	
+		  <td data-label="Name">{{ purchase.name }}</td>
+		  <td data-label="Spend">{{ purchase.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>	
 		  <td data-label="Share">
 			<div class="progress share">
 				{% for account in purchase.expenseShare %}

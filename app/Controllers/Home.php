@@ -106,7 +106,7 @@ class Home extends \Core\Controller
 			"accounts" => $accounts, // All Accounts
 			"sales" => $sales,	// All Sales
 			"latestSales" => array_reverse(array_slice($sales, -6)),
-			"latestPurchases" => array_reverse(array_slice($sales, -6)),			
+			"latestPurchases" => array_reverse(array_slice($purchases, -6)),			
 			"salesDaily" => $salesDaily, // Daily Sales Last 30 Days	
 			"purchases" => $purchases, // All Purchases
 			"profitAllTime" => $profitAllTime,
