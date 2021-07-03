@@ -153,6 +153,7 @@ var chart = new Chart(ctx, {
 			data: [{% for transaction in account.getLatestTransactions %}'{{transaction.balance}}',{% endfor %}],
 			showLine: true,
 			fill: false,
+			pointRadius: 0, 
 			borderColor: 'rgba(255, 255, 255, 1)'
 			}
 		]
