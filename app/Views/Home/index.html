@@ -22,12 +22,12 @@
 			</div>
 			
 			<div>
-				<div class="fs-5 fw-semibold">{{ account.withdrawn | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+				<div class="fs-5 fw-semibold">{{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
 				<div>Profit</div>		 
 			</div>
 			
 			<div>
-				<div class="fs-5 fw-semibold">{{ account.myProfit | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
+				<div class="fs-5 fw-semibold">{{ account.withDrawn | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
 				<div>Withdrawn</div>		 
 			</div>
 			
@@ -112,7 +112,7 @@
   </div>  
   
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-warning text-white">
+    <div class="card bg-success text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Profit</h4>
         <h4 class="card-title mb-0">Last Week</h4>		
@@ -122,7 +122,7 @@
   </div>  
   
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-warning text-white">
+    <div class="card bg-success text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Profit</h4>
         <h4 class="card-title mb-0">This Week</h4>			
@@ -132,7 +132,7 @@
   </div>    
 
   <div class="col-md-2 col-sm-4">
-    <div class="card bg-warning text-white">
+    <div class="card bg-success text-white">
       <div class="card-body text-center">
         <h4 class="card-title mb-0">Profit</h4>
         <h4 class="card-title mb-0">All Time</h4>	
@@ -153,29 +153,24 @@
   <thead> 
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Date</th>
+      <th scope="col">Sold By</th>
+      <th scope="col">Sold</th>	  
+      <th scope="col">Net Amount</th>
+      <th scope="col">Profit</th>	  
     </tr>
   </thead>
   <tbody>
+	{% for sale in latestSales %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th>{{ sale.id }}</th>
+      <td>{{ sale.date | date('d/m/Y') }}</td>
+	  <td>{{ sale.saleVendor.name }}</td>
+      <td>{{ sale.getPurchasesString }}</td>
+      <td>{{ sale.netAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 
+      <td>{{ sale.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+   {% endfor %}
   </tbody>
 </table>
 </div>
