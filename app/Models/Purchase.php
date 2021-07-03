@@ -274,7 +274,7 @@ class Purchase
 			}else{
 				
 				if($expense->getAmount() == 0){
-					$accounts[$expense->getAccount()->getId()]['amount'] += 0.1;
+					$accounts[$expense->getAccount()->getId()]['amount'] += 1;
 				}else{
 					$accounts[$expense->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 
 				}
