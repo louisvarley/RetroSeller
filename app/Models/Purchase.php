@@ -273,23 +273,28 @@ class Purchase
 				$accounts[$this->getBuyOut()->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 
 			}else{
 				
-				if($expense->getAmount() == 0){
-					$accounts[$expense->getAccount()->getId()]['amount'] += 1;
+				if($expense->getAmount() < 1){
+					$accounts[$expense->getAccount()->getId()]['amount'] += 0.1;
 				}else{
-					$accounts[$expense->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 
+					$accounts[$expense->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 	
 				}
 			}
 		}	
 		
 		foreach($accounts as $key => $account){
 			if($accounts[$key]['amount'] > 0){
-				$accounts[$key]['percentage'] = $accounts[$key]['amount'] / ($this->getTotalSpend() / 100);
+				if($this->getTotalSpend() > 0){
+					$accounts[$key]['percentage'] = $accounts[$key]['amount'] / ($this->getTotalSpend() / 100);
+				}else{
+					$accounts[$key]['percentage'] = 100;
+				}
 			}else{
 				$accounts[$key]['percentage'] = 0;
 			}
 			
-		}			
+		}
 		
+
 		return $accounts;
 		
 	}
