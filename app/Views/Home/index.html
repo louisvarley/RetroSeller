@@ -164,7 +164,7 @@
 	  <tbody>
 		{% for sale in latestSales %}
 		<tr>
-		  <th data-label="#">{{ sale.id }}</th>
+		  <td data-label="#">{{ sale.id }}</td>
 		  <td data-label="Date">{{ sale.date | date('d/m/Y') }}</td>
 		  <td data-label="Vendor">{{ sale.saleVendor.name }}</td>
 		  <td data-label="Sold">{{ sale.PurchasesString }}</td>
@@ -197,7 +197,7 @@
 	  <tbody>
 		{% for purchase in latestPurchases %}
 		<tr>
-		  <th data-label="#">{{ purchase.id }}</th>
+		  <td data-label="#">{{ purchase.id }}</td>
 		  <td data-label="Date">{{ purchase.date | date('d/m/Y') }}</td>
 		  <td data-label="Vendor">{{ purchase.PurchaseVendor.name }}</td>
 		  <td data-label="Name">{{ purchase.name }}</td>

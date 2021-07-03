@@ -625,7 +625,7 @@ table caption {
 }
 
 /* line 64, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
-.table tr:first-child {
+.table tr:first-child th {
   background-color: #2196f3;
   border: 1px solid #ddd;
   padding: .35em;
