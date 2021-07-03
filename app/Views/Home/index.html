@@ -149,35 +149,72 @@
 </div>
 
 <div class="card">
-
-<table class="table">
-  <thead> 
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Date</th>
-      <th scope="col">Vendor</th>
-      <th scope="col">Sold</th>	 
-      <th scope="col">Gross Amount</th>	  
-      <th scope="col">Net Amount</th>
-      <th scope="col">Profit</th>	  
-    </tr>
-  </thead>
-  <tbody>
-	{% for sale in latestSales %}
-    <tr>
-      <th data-label="#">{{ sale.id }}</th>
-      <td data-label="Date">{{ sale.date | date('d/m/Y') }}</td>
-	  <td data-label="Vendor">{{ sale.saleVendor.name }}</td>
-      <td data-label="Sold">{{ sale.getPurchasesString }}</td>
-      <td data-label="Gross">{{ sale.grossAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	
-      <td data-label="Net">{{ sale.netAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 
-      <td data-label="Profit">{{ sale.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
-    </tr>
-   {% endfor %}
-  </tbody>
-</table>
+	<table class="table">
+	  <thead> 
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Date</th>
+		  <th scope="col">Vendor</th>
+		  <th scope="col">Sold</th>	 
+		  <th scope="col">Gross Amount</th>	  
+		  <th scope="col">Net Amount</th>
+		  <th scope="col">Profit</th>	  
+		</tr>
+	  </thead>
+	  <tbody>
+		{% for sale in latestSales %}
+		<tr>
+		  <th data-label="#">{{ sale.id }}</th>
+		  <td data-label="Date">{{ sale.date | date('d/m/Y') }}</td>
+		  <td data-label="Vendor">{{ sale.saleVendor.name }}</td>
+		  <td data-label="Sold">{{ sale.getPurchasesString }}</td>
+		  <td data-label="Gross">{{ sale.grossAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	
+		  <td data-label="Net">{{ sale.netAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 
+		  <td data-label="Profit">{{ sale.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	 	  
+		</tr>
+	   {% endfor %}
+	  </tbody>
+	</table>
 </div>
 
+
+<div class="row">
+	<h4 class="card-title mb-0">Latest Purchases</h4>
+</div>
+
+<div class="card">
+	<table class="table">
+	  <thead> 
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Date</th>
+		  <th scope="col">Vendor</th>
+		  <th scope="col">Name</th>	 
+		  <th scope="col">Spend</th>	  
+		  <th scope="col">Share</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		{% for purchase in latestPurchases %}
+		<tr>
+		  <th data-label="#">{{ purchase.id }}</th>
+		  <td data-label="Date">{{ purchase.date | date('d/m/Y') }}</td>
+		  <td data-label="Vendor">{{ purchase.PurchaseVendor.name }}</td>
+		  <td data-label="Name">{{ purchase.Name }}</td>
+		  <td data-label="Spend">{{ purchase.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>	
+		  <td data-label="Share">
+			<div class="progress share">
+				{% for account in purchase.expenseShare %}
+					<div data-tooltip="{{ account.name }} {{ account.percentage |round(1, 'floor') }}%" class="progress-bar tool-tip" role="progressbar" style="background-color:{{ account.color }}; width: {{ account.percentage }}%" aria-valuenow="{{ account.amount }}" aria-valuemin="0" aria-valuemax="{{ entity.totalSpend }}"></div>
+				{% endfor %}
+			</div>
+		  </td>	 
+		 
+		</tr>
+	   {% endfor %}
+	  </tbody>
+	</table>
+</div>
 
 <script>
 var ctx = document.getElementById('salesChart');

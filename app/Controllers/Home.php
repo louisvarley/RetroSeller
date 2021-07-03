@@ -25,7 +25,7 @@ class Home extends \Core\Controller
 
 		$sales = findAll("Sale");
 		$accounts = findAll("Account");
-		$purchases = findBy("Purchase", ["status" => $forSaleStatus ]);
+		$purchases = findAll("Purchase");
 		
 		$profit = 0;
 		$valuation = 0;
@@ -69,11 +69,6 @@ class Home extends \Core\Controller
 			
 		}
 		
-		foreach($purchases as $purchase){			
-			$valuation = $valuation + $purchase->getValuation();
-		}		
-		
-		
 		/* Dataset of Sales Last 7 Days */
 		$date = date('Y-m-d h:i:s', strtotime("-30 days"));
 
@@ -110,7 +105,8 @@ class Home extends \Core\Controller
 		$dashboard_data = array(
 			"accounts" => $accounts, // All Accounts
 			"sales" => $sales,	// All Sales
-			"latestSales" => array_reverse(array_slice($sales, -10)),
+			"latestSales" => array_reverse(array_slice($sales, -6)),
+			"latestPurchases" => array_reverse(array_slice($sales, -6)),			
 			"salesDaily" => $salesDaily, // Daily Sales Last 30 Days	
 			"purchases" => $purchases, // All Purchases
 			"profitAllTime" => $profitAllTime,
