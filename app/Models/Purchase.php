@@ -272,10 +272,13 @@ class Purchase
 			if($this->getBuyout() != null){
 				$accounts[$this->getBuyOut()->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 
 			}else{
-				$accounts[$expense->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 
+				
+				if($expense->getAmount() == 0){
+					$accounts[$expense->getAccount()->getId()]['amount'] += 0.1;
+				}else{
+					$accounts[$expense->getAccount()->getId()]['amount'] += ($expense->getAmount() / count($expense->getPurchases())); 
+				}
 			}
-			
-			
 		}	
 		
 		foreach($accounts as $key => $account){
