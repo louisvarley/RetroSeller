@@ -190,7 +190,6 @@ class eBayService
 
         $response = $this->service()->getOrders($request);
 
-
         if (isset($response->Errors)) {
             foreach ($response->Errors as $error) {
                 printf(
@@ -344,7 +343,10 @@ class eBayService
 				
 				$sale = $sale[0];
 				
-				if($order->OrderStatus == "Completed"){
+				if($order->ShippedTime){
+					$sale->setStatus(\app\Models\SaleStatus::Dispatched());
+				}
+				elseif($order->OrderStatus == "Completed"){
 					$sale->setStatus(\app\Models\SaleStatus::Paid());
 				}
 				elseif($order->OrderStatus == "Cancelled"){
