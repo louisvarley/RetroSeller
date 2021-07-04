@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Invoice{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			<h2>Generate an Invoice</h2>
+			
+			<hr class="my-4">
+			
+			<h4>Payee</h4>
+			<hr class="my-4">		
+			{% include "Forms/Elements/text-email.html" with {
+				'label' : 'Receiving Account',
+				'id': 'user_email', 
+				'name': "user_email", 
+				'required': 'required',
+				'description': 'Used to generate payment details, logo etc'
+			}%}		
+
+			<hr class="my-4">	
+			<h4>Sale</h4>
+			<hr class="my-4">		
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'MySQL Hostname',
+				'id': 'db_host', 
+				'name': "db_host", 
+				'required': 'required',
+				'description': 'Enter your MySQL Hostname'
+			}%}		
+
+			<hr class="my-4">	
+			<h4>Postage</h4>
+			<hr class="my-4">
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'MySQL Database Name',
+				'id': 'db_name', 
+				'name': "db_name", 
+				'required': 'required',
+				'description': 'Choose a database name'
+			}%}				
+			
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

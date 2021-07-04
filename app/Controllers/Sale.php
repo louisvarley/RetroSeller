@@ -64,7 +64,8 @@ class Sale extends \App\Controllers\ManagerController
 		}				
 		
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
-		$sale->setPostageCost($data['sale']['postage_cost']);		
+		$sale->setPostageCost($data['sale']['postage_cost']);
+		$sale->setPostageAmount($data['sale']['postage_amount']);	
 		$sale->setFeeCost($data['sale']['fee_cost']);		
 		$sale->setPaymentVendor($paymentVendor);		
 		$sale->setSaleVendor($saleVendor);
@@ -120,7 +121,8 @@ class Sale extends \App\Controllers\ManagerController
 		
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
 		$sale->setPostageCost($data['sale']['postage_cost']);	
-
+		$sale->setPostageAmount($data['sale']['postage_amount']);
+		
 		$saleVendorFee = (($saleVendor->getPercentageFee() / 100) * $data['sale']['gross_amount']) + $saleVendor->getFixedFee();
 		$paymentVendorFee = (($paymentVendor->getPercentageFee() / 100) * $data['sale']['gross_amount']) + $paymentVendor->getFixedFee();
 		

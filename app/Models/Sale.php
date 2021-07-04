@@ -60,6 +60,11 @@ class Sale
 	/**
      * @ORM\Column(type="decimal", precision=7, scale=2)
     */
+    protected $postage_amount = 0;	
+
+	/**
+     * @ORM\Column(type="decimal", precision=7, scale=2)
+    */
     protected $postage_cost = 0;
 	
 	/**
@@ -113,6 +118,16 @@ class Sale
     {
         $this->gross_amount = $gross_amount;
     }	
+	
+    public function getPostageAmount()
+    {
+        return $this->postage_amount;
+    }	
+	
+    public function setPostageAmount($postage_amount)
+    {
+        $this->postage_amount = $postage_amount;
+    }		
 	
     public function getPostageCost()
     {
@@ -194,7 +209,7 @@ class Sale
 		
 		if($this->isCancelled()) return 0;
 		
-		return $this->getGrossAmount() - ($this->getFeeCost() + $this->getPostageCost());
+		return ($this->getGrossAmount() + $this->getPostageAmount()) - ($this->getFeeCost() + $this->getPostageCost());
 	}
 	
 	/* Net Minus all Purchase Spend */

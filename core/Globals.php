@@ -255,7 +255,9 @@ function dbCheck(){
 
 }
 
-dbCheck();
+if(php_sapi_name() !== 'cli'){
+	dbCheck();
+}
 
 sessionManager()->start();
 
