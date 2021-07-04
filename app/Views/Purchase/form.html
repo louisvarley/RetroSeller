@@ -66,10 +66,10 @@
 			}%}
 			
 			{% include "Forms/Elements/text-currency.html" with {
-				'label' : 'Valuation',			
+				'label' : 'Sale Price',			
 				'id': 'valuation', 
 				'name': "#{controller}[valuation]", 
-				'description': 'Give this purchase a valuation, will be used for stock lists',
+				'description': 'Give this purchase a sale price, used on stocklist and invoices.',
 				'required': 'required',
 				'value': purchase.valuation				
 			}%}					
