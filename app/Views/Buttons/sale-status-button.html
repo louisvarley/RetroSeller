@@ -1,7 +1,13 @@
 
-{% if( sale.isDispatched != true) %}
-<a href="/{{model}}/edit/{{sale.id}}"><button data-tooltip="Mark as Dispatched" type="button" class="btn btn-sm btn-primary"><i class="fas fa-truck"></i></button></a>
 
 
-{% endif %} 
-
+  <button class="btn btn-sm btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<i class="fas fa-truck"></i>
+  </button>
+  
+  
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	{% for saleStatus in saleStatuses %}
+		<a data-status-id="{{saleStatus.id}}" data-sale-id="{{entity.id}}" class="sale-status-dropdown dropdown-item" href="#">{{saleStatus.name}}</a>
+	{% endfor %}
+  </div>

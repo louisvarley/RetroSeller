@@ -25,7 +25,8 @@
 			<td data-label="">
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
-			{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}	
+			{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}
+			{% include '/Buttons/sale-status-button.html' with {'model': controller, 'entity': entity} %}			
 			{% include '/Modals/notes.html' with {'entity': entity, 'type': 'sale'} %}	
 			</td>				
 			</tr>

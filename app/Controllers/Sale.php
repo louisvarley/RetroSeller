@@ -138,4 +138,21 @@ class Sale extends \App\Controllers\ManagerController
 		
 	}	
 	
+    /**
+     * When the list action is called
+     *
+     * @return void
+     */
+	public function listAction(){
+
+		$orderBy = isset($_GET['orderby']) ? $_GET['orderby'] : "id";
+		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
+		
+		$this->render($this->route_params['controller'] . '/list.html', 
+			array("entities" => findAll($this->route_params['controller'], $orderBy, $order), 'saleStatuses' => findAll("saleStatus"))
+			
+		);
+
+	}		
+	
 }
