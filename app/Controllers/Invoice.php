@@ -54,7 +54,7 @@ class Invoice extends \Core\Controller
 		/*output the result*/
 		
 		
-		$pdf->SetFont('Arial','B',180);
+		$pdf->SetFont('Arial','B',100);
 		$pdf->SetTextColor(242,231,230);
 		$pdf->Text(35,190,$sale->getStatus()->getName());	
 		$pdf->SetTextColor(0,0,0);
@@ -167,12 +167,6 @@ class Invoice extends \Core\Controller
 		
 		$pdf->Cell(70 ,6,$account->getPayPalEmailAddress(),0,0,'L');	
 		$pdf->SetFont('Arial','B',10);			
-		
-		$pdf->SetY(5);
-    // Arial italic 8
-    $pdf->SetFont('Arial','I',8);
-    // Page number
-    $pdf->Cell(0,10,'Prepared by: Your Name');
 		
 		
 		$pdf->Output();	
