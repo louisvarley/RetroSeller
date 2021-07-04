@@ -26,6 +26,12 @@ abstract class Controller
      * @var array
      */	
 	public $page_data = ["title" => "", "description" => ""];
+	
+    /**
+     * Notifications for nav bar
+     * @var array
+     */		
+	public $notifications = [];
 
     /**
      * Page requires authentication
@@ -43,6 +49,7 @@ abstract class Controller
     public function __construct($route_params)
     {
         $this->route_params = $route_params;
+		$this->notifications = array('notifications' => notificationService()->fetch());
 		$this->inputData();
     }
 	
@@ -59,7 +66,6 @@ abstract class Controller
 		}
 		
 	}
-	
 
     /**
      * Magic method called when a non-existent or inaccessible method is
@@ -158,6 +164,7 @@ abstract class Controller
 		View::renderTemplate($template, array_merge(
 				$this->route_params, 
 				$this->page_data,
+				$this->notifications,
 				empty($array) ? [] : $array)
 		);
 		

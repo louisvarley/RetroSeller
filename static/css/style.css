@@ -599,67 +599,81 @@ table th {
   color: #fff;
 }
 
-/* line 22, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 19, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+.badge-warning {
+  background-color: #ff9800;
+  background-image: var(--bs-gradient);
+  color: #fff;
+}
+
+/* line 25, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+.badge-danger {
+  background-color: #e51c23;
+  background-image: var(--bs-gradient);
+  color: #fff;
+}
+
+/* line 34, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-purchase.forsale {
   background-color: #007bff;
   color: #fff;
 }
 
-/* line 27, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 39, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-purchase.sold {
   background-color: #28a745;
   color: #fff;
 }
 
-/* line 32, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 44, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-purchase.held {
   background-color: #999;
   color: #fff;
 }
 
-/* line 37, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 49, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-purchase.requiresrepair {
   background-color: #dd4b39;
   color: #fff;
 }
 
-/* line 42, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 54, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-purchase.writtenoff {
   background-color: #666;
   color: #fff;
 }
 
-/* line 47, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 59, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-purchase.boughtout {
   background-color: #810696;
   color: #fff;
 }
 
-/* line 56, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
-.badge-sale.unpaid {
+/* line 68, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+.badge-sale.pending-payment {
   background-color: #777b80;
   color: #fff;
 }
 
-/* line 61, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 73, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-sale.paid {
   background-color: #007bff;
   color: #fff;
 }
 
-/* line 66, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 78, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-sale.dispatched {
   background-color: #28a745;
   color: #fff;
 }
 
-/* line 71, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 83, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-sale.cancelled {
   background-color: #e51c23;
   color: #fff;
 }
 
-/* line 79, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 91, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-float {
   position: relative;
   top: -15px;

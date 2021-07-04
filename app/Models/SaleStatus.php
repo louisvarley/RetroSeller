@@ -12,7 +12,7 @@ class SaleStatus
 {
 	/* Static Statuses */
 	public static function Paid() {return findEntity("SaleStatus", _SALE_STATUSES['PAID']['id']);}
-	public static function UnPaid() {return findEntity("SaleStatus", _SALE_STATUSES['UNPAID']['id']);}	
+	public static function Pending() {return findEntity("SaleStatus", _SALE_STATUSES['PENDING']['id']);}	
 	public static function Cancelled() {return findEntity("SaleStatus", _SALE_STATUSES['CANCELLED']['id']);}	
 	public static function Dispatched() {return findEntity("SaleStatus", _SALE_STATUSES['DISPATCHED']['id']);}
 	

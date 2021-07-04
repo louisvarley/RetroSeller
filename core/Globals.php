@@ -56,7 +56,7 @@ define("_PURCHASE_STATUSES", array(
 
 /* Sale Statuses */
 define("_SALE_STATUSES", array(
-	'UNPAID' => array('id' => 1, 'name' => 'Un-Paid'),
+	'PENDING' => array('id' => 1, 'name' => 'Pending-Payment'),
 	'PAID' => array('id' => 2, 'name' => 'Paid'),
 	'CANCELLED' => array('id' => 3, 'name' => 'Cancelled'),
 	'DISPATCHED' => array('id' => 4, 'name' => 'Dispatched')		
@@ -237,6 +237,11 @@ function setMetadata($key, $value){
 function eBayService($intergrationId){	
 	return \Core\Services\eBayService::instance($intergrationId);
 }
+
+function notificationService(){	
+	return \Core\Services\notificationService::instance();
+}
+
 
 function dbCheck(){
 

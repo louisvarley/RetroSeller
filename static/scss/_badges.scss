@@ -16,6 +16,18 @@
 	color:#fff;
 }
 
+.badge-warning{
+	background-color: #ff9800;
+	background-image: var(--bs-gradient);
+	color:#fff;
+}
+
+.badge-danger{
+	background-color: #e51c23;
+	background-image: var(--bs-gradient);
+	color:#fff;
+}
+
 
 .badge-purchase{
 
@@ -53,7 +65,7 @@
 
 .badge-sale{
 
-	&.unpaid{
+	&.pending-payment{
 		background-color:#777b80;
 		color:#fff;
 	}

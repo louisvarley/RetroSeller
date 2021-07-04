@@ -351,7 +351,7 @@ class eBayService
 					$sale->setStatus(\app\Models\SaleStatus::Cancelled());
 				}
 				else{
-					$sale->setStatus(\app\Models\SaleStatus::UnPaid());
+					$sale->setStatus(\app\Models\SaleStatus::Pending());
 				}					
 
                 $sale->setGrossAmount($order->AmountPaid->value);
