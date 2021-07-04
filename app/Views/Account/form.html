@@ -45,6 +45,45 @@
 				'description': 'Give this account a color',
 				'required': 'required',
 				'value': account.color				
+			}%}		
+
+			<hr class="my-4">	
+			
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'Invoicing Details',
+				'subtitle': 'Used for generating invoices with payment information'
+			}%}				
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Business Name',
+				'id': 'business_name', 
+				'name': "#{controller}[business_name]", 
+				'description': 'Business name to use on invoices and paperwork',
+				'value': account.businessName
+			}%}				
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Account Number',
+				'id': 'account_number', 
+				'name': "#{controller}[account_number]", 
+				'description': 'Bank Account Number for BACs Payments',
+				'value': account.accountNumber
+			}%}		
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Account Sort Code',
+				'id': 'account_sort_code', 
+				'name': "#{controller}[account_sort_code]", 
+				'description': 'Bank Sort Code for BACs Payments',
+				'value': account.accountSortCode
+			}%}	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'PayPal Email Address',
+				'id': 'paypal_email_address', 
+				'name': "#{controller}[paypal_email_address]", 
+				'description': 'PayPal Email Address for PayPal Payments',
+				'value': account.payPalEmailAddress
 			}%}				
 					
 		{% endblock %}

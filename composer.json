@@ -6,7 +6,8 @@
         "twig/intl-extra": "^3.3",
         "phpoffice/phpspreadsheet": "^1.18",
         "benmorel/ebay-sdk-php": "^19.0",
-        "vaibhavpandeyvpz/doctrine-datatables": "^1.3"
+        "vaibhavpandeyvpz/doctrine-datatables": "^1.3",
+        "setasign/fpdf": "^1.8"
     },
     "autoload": {
         "psr-4": {

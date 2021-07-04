@@ -31,6 +31,13 @@ class Account extends \App\Controllers\ManagerController
 		$account->setName($data['account']['name']);
 		$account->setColor($data[$this->route_params['controller']]['color']);		
 
+		$account->setPayPalEmailAddress($data['account']['paypal_email_address']);
+		$account->setAccountNumber($data['account']['account_number']);
+		$account->setAccountSortCode($data['account']['account_sort_code']);
+		$account->setBusinessName($data['account']['business_name']);
+				
+				
+		
 		entityManager()->persist($account);
 		entityManager()->flush();
 		
@@ -42,6 +49,11 @@ class Account extends \App\Controllers\ManagerController
 		$account->setName($data[$this->route_params['controller']]['name']);
 		$account->setColor($data[$this->route_params['controller']]['color']);		
 		
+		$account->setPayPalEmailAddress($data['account']['paypal_email_address']);
+		$account->setAccountNumber($data['account']['account_number']);
+		$account->setAccountSortCode($data['account']['account_sort_code']);
+		$account->setBusinessName($data['account']['business_name']);
+				
 		entityManager()->persist($account);
 		entityManager()->flush();
 

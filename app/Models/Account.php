@@ -22,6 +22,27 @@ class Account
     */
     protected $name;	
 	
+	
+	/**
+    * @ORM\Column(type="string", nullable="true")
+    */
+    protected $account_number;	
+
+	/**
+    * @ORM\Column(type="string", nullable="true")
+    */
+    protected $account_sort_code;	
+	
+	/**
+    * @ORM\Column(type="string", nullable="true")
+    */
+    protected $paypal_email_address;		
+	
+	/**
+    * @ORM\Column(type="string", nullable="true")
+    */
+    protected $business_name;		
+	
     /**
      * Many Accounts have Many Sales.
      * @ORM\ManyToMany(targetEntity="Sale", mappedBy="accounts")
@@ -97,6 +118,46 @@ class Account
     public function setColor($color)
     {
         $this->color = $color;
+    }		
+	
+    public function getAccountNumber()
+    {
+        return $this->account_number;
+    }
+
+    public function setAccountNumber($accountNumber)
+    {
+        $this->account_number = $accountNumber;
+    }	
+
+    public function getAccountSortCode()
+    {
+        return $this->account_sort_code;
+    }
+
+    public function setAccountSortCode($accountSortCode)
+    {
+        $this->account_sort_code = $accountSortCode;
+    }	
+	
+    public function getPayPalEmailAddress()
+    {
+        return $this->paypal_email_address;
+    }
+
+    public function setPayPalEmailAddress($payPalEmailAddress)
+    {
+        $this->paypal_email_address = $payPalEmailAddress;
+    }		
+
+    public function getBusinessName()
+    {
+        return $this->business_name;
+    }
+
+    public function setBusinessName($business_name)
+    {
+        $this->business_name = $business_name;
     }		
 	
 	public function getWithdrawn(){

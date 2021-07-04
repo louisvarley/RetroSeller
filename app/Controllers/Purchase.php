@@ -107,11 +107,4 @@ class Purchase extends \App\Controllers\ManagerController
 		
 	}	
 	
-	public function thumbnailAction(){
-		
-		var_dump($this->route_params['id']);
-		
-	}
-
-	
 }
