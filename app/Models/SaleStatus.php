@@ -11,9 +11,10 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 class SaleStatus
 {
 	/* Static Statuses */
-	public static function Complete() {return findEntity("SaleStatus", _SALE_STATUSES['COMPLETE']['id']);}
+	public static function Paid() {return findEntity("SaleStatus", _SALE_STATUSES['PAID']['id']);}
+	public static function UnPaid() {return findEntity("SaleStatus", _SALE_STATUSES['UNPAID']['id']);}	
 	public static function Cancelled() {return findEntity("SaleStatus", _SALE_STATUSES['CANCELLED']['id']);}	
-	public static function Incomplete() {return findEntity("SaleStatus", _SALE_STATUSES['INCOMPLETE']['id']);}
+	public static function Dispatched() {return findEntity("SaleStatus", _SALE_STATUSES['DISPATCHED']['id']);}
 	
 	/**
     * @ORM\Id

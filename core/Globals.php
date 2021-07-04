@@ -56,9 +56,10 @@ define("_PURCHASE_STATUSES", array(
 
 /* Sale Statuses */
 define("_SALE_STATUSES", array(
-	'INCOMPLETE' => array('id' => 1, 'name' => 'In-Complete'),
-	'COMPLETE' => array('id' => 2, 'name' => 'Complete'),
-	'CANCELLED' => array('id' => 3, 'name' => 'Cancelled')		
+	'UNPAID' => array('id' => 1, 'name' => 'Un-Paid'),
+	'PAID' => array('id' => 2, 'name' => 'Paid'),
+	'CANCELLED' => array('id' => 3, 'name' => 'Cancelled'),
+	'DISPATCHED' => array('id' => 4, 'name' => 'Dispatched')		
 	)
 );
 
@@ -92,6 +93,7 @@ if(!defined("_FIRST_LAUNCH")){
 /**
 * Global Functions
 */
+
 
 function toastManager(){	
 	return \Core\ToastManager::instance();
@@ -235,6 +237,20 @@ function setMetadata($key, $value){
 function eBayService($intergrationId){	
 	return \Core\Services\eBayService::instance($intergrationId);
 }
+
+function dbCheck(){
+
+	try {
+		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+		$conn = new \mysqli(_DB_HOST, _DB_USER, _DB_PASSWORD);
+	} 
+	catch (mysqli_sql_exception $e) {
+		die('Unable to connect to MySQL Database ' . _DB_USER . '@' . _DB_NAME . ' on ' . _DB_HOST);	
+	}
+
+}
+
+dbCheck();
 
 sessionManager()->start();
 

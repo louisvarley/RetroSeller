@@ -308,13 +308,13 @@ class eBayService
                 $sale = new \App\Models\Sale();
 				
 				if($order->OrderStatus == "Completed"){
-					$sale->setStatus(\app\Models\SaleStatus::Complete());
+					$sale->setStatus(\app\Models\SaleStatus::Paid());
 				}
 				elseif($order->OrderStatus == "Cancelled"){
 					$sale->setStatus(\app\Models\SaleStatus::Cancelled());
 				}
 				else{
-					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
+					$sale->setStatus(\app\Models\SaleStatus::UnPaid());
 				}						
 
                 foreach($skuArray as $sku){
@@ -345,13 +345,13 @@ class eBayService
 				$sale = $sale[0];
 				
 				if($order->OrderStatus == "Completed"){
-					$sale->setStatus(\app\Models\SaleStatus::Complete());
+					$sale->setStatus(\app\Models\SaleStatus::Paid());
 				}
 				elseif($order->OrderStatus == "Cancelled"){
 					$sale->setStatus(\app\Models\SaleStatus::Cancelled());
 				}
 				else{
-					$sale->setStatus(\app\Models\SaleStatus::Incomplete());
+					$sale->setStatus(\app\Models\SaleStatus::UnPaid());
 				}					
 
                 $sale->setGrossAmount($order->AmountPaid->value);

@@ -48,9 +48,14 @@ class Sale extends \App\Controllers\ManagerController
 		foreach($data['sale']['purchases'] as $purchase_id){
 			$purchase = findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
-			if($sale->isComplete()){
+			if($sale->isPaid()){
 				$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
 			}
+			
+			if($sale->isCancelled()){
+				$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
+			}			
+			
 		}
 		
 		$sale->getAccounts()->clear();	

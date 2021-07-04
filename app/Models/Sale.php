@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  */
 class Sale
 {
+
 	/**
     * @ORM\Id
     * @ORM\Column(type="integer", name="id")
@@ -102,6 +103,9 @@ class Sale
 	
     public function getGrossAmount()
     {
+		
+		if($this->isCancelled()) return 0;
+		
         return $this->gross_amount;
     }	
 	
@@ -206,6 +210,9 @@ class Sale
 	
 	/* Net Minus all Purchase Spend */
 	public function getProfitAmount(){
+		
+		if($this->isCancelled()) return 0;
+		
 		return $this->getNetAmount() - $this->getPurchaseSpendAmount();
 	}	
 	
@@ -221,17 +228,29 @@ class Sale
 		return substr($str,0,45) . (strlen($str) > 45 ? '...' : '');
 	}
 	
-	public function isComplete(){
+	public function isPaid(){
 		
-		if($this->getStatus() == \app\Models\SaleStatus::Complete()){
+		if($this->getStatus() == \app\Models\SaleStatus::Paid()){
 			return true;
 		};
+		
+		if($this->getStatus() == \app\Models\SaleStatus::Dispatched()){
+			return true;
+		};		
 		
 	}
 	
 	public function isCancelled(){
 		
 		if($this->getStatus() == \app\Models\SaleStatus::Cancelled()){
+			return true;
+		};
+		
+	}	
+	
+	public function isDispatched(){
+		
+		if($this->getStatus() == \app\Models\SaleStatus::Dispatched()){
 			return true;
 		};
 		

@@ -153,7 +153,7 @@ class Account
 		foreach($this->getSales() as $sale){
 			
 			/* If is Completed */
-			if($sale->isComplete()){
+			if($sale->isPaid()){
 			
 				/* For Each Purchase Within the Sale */
 				foreach($sale->getPurchases() as $purchase){

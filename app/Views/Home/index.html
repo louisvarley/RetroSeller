@@ -154,6 +154,7 @@
 		<tr>
 		  <th scope="col">#</th>
 		  <th scope="col">Date</th>
+		  <th scope="col">Status</th>
 		  <th scope="col">Vendor</th>
 		  <th scope="col">Sold</th>	 
 		  <th scope="col">Gross Amount</th>	  
@@ -166,6 +167,7 @@
 		<tr>
 		  <td data-label="#">{{ sale.id }}</td>
 		  <td data-label="Date">{{ sale.date | date('d/m/Y') }}</td>
+		  <td data-label="Status"><span class="badge badge-sale {{ sale.status.name | lower | replace({' ': ''}) }}">{{ sale.status.name }}</span></td>
 		  <td data-label="Vendor">{{ sale.saleVendor.name }}</td>
 		  <td data-label="Sold">{{ sale.PurchasesString }}</td>
 		  <td data-label="Gross">{{ sale.grossAmount | format_currency('GBP', {rounding_mode: 'floor'}) }} </td>	
