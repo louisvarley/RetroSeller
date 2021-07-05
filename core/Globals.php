@@ -235,11 +235,11 @@ function setMetadata($key, $value){
 }
 
 function eBayService($intergrationId){	
-	return \Core\Services\eBayService::instance($intergrationId);
+	return \Core\Services\EbayService::instance($intergrationId);
 }
 
 function notificationService(){	
-	return \Core\Services\notificationService::instance();
+	return \Core\Services\NotificationService::instance();
 }
 
 

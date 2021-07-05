@@ -112,9 +112,7 @@ class Router
 			$this->params['controller'] = str_ireplace("ebay","eBay", $this->params['controller']);
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
-			
-			$controller = str_ireplace("ebay","eBay", $controller);
-			
+
             $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {

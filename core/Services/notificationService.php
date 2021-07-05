@@ -5,7 +5,7 @@ use App\Config;
 
 namespace Core\Services;
 
-class notificationService
+class NotificationService
 {
 
 	protected static $instance = null;
