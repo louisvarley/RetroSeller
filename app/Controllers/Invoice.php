@@ -52,7 +52,7 @@ class Invoice extends \Core\Controller
 		$invoice = new \Konekt\PdfInvoice\InvoicePrinter("A4","£");
 
 		/* Header settings */
-		//$invoice->setLogo(DIR_CORE . "/static/img/logo.png");   //logo image path
+		$invoice->setLogo(_URL_ROOT . $account->getLogo()->getUrl());   //logo image path
 		$invoice->setColor($account->getColor());      // pdf color scheme
 		$invoice->setType("Invoice");    // Invoice Type
 		$invoice->setReference($this->invPad($sale->getId()));   // Reference

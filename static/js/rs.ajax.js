@@ -23,21 +23,111 @@ rs.init("sale_status_button", function(){
 			}
 		});
 		
+		
+		
 	});
 	
 })
 
-rs.init("image_upload_button", function(){
+rs.init("account_image_upload_button", function(){
 
 	/* Handle Clicked Upload */
-	jQuery('.btn-image-new').click(function(){	
+	jQuery('#account_logo').find('.btn-image-new').click(function(){	
 		var input = jQuery(this).next();
 		jQuery(input).click()
 		return false;
 	});
 	
 	/* Handle Image Upload Ajax */
-	$('.image-upload').ajaxfileupload({
+	jQuery('#account_logo').find('.image-upload').ajaxfileupload({
+		action: '/api/accounts/accountLogo?accountId=' + id,
+		valid_extensions : ['jpg','png'],
+		onComplete: function(data) {
+			location.reload(); 
+		},
+		onStart: function() {
+			rs.throwSuccess("Uploading...","Started Upload...");
+		},
+		onCancel: function() {
+			console.log('no file selected');
+		}
+	});		
+	
+	/* Handle Preview Clicked*/
+	jQuery('#account_logo').find('.form-image-view').click(function() {
+		
+		var blobId = jQuery(this).data("id");
+		window.open("/blob/" + blobId + '.jpg'); 
+	});			
+	
+	
+/* Handle Delete Clicked*/
+	jQuery('#account_logo').find('.form-image-delete').click(function() {
+	
+		var blobId = jQuery(this).data("id");
+		var accountId = jQuery('#id').val();
+
+		jQuery.ajax({
+			url: '/api/accounts/accountLogo?blobId=' + blobId + '&accountId=' + accountId,
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'DELETE',
+			type: 'DELETE',
+			success: function(data){
+				
+				jQuery('.form-image-' + blobId).fadeOut();
+				return false;
+			},
+			fail: function(data){
+				rs.throwSuccess("Error...", data['response']['error']);
+			}
+		});
+
+	});
+	
+	/* Handle Rotate Clicked*/
+	jQuery('#account_logo').find('.form-image-rotate').click(function() {
+	
+		var blobId = jQuery(this).data("id");
+
+		jQuery.ajax({
+			url: '/api/accounts/accountLogoRotate?blobId=' + blobId,
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'GET',
+			type: 'GET',
+			success: function(data){
+				var img = jQuery('.preview-image-' + blobId);
+				var angle = ($(img).data('angle') + 90) || 90;
+				$(img).css({'transform': 'rotate(' + angle + 'deg)'});
+				$(img).data('angle', angle);
+				
+				
+				return false;
+				
+			},
+			fail: function(data){
+				rs.throwSuccess("Error...", data['response']['error']);
+			}
+		});
+
+	});	
+	
+})
+
+rs.init("purchase_image_upload_button", function(){
+
+	/* Handle Clicked Upload */
+	jQuery('#purchase_images').find('.btn-image-new').click(function(){	
+		var input = jQuery(this).next();
+		jQuery(input).click()
+		return false;
+	});
+	
+	/* Handle Image Upload Ajax */
+	jQuery('#purchase_images').find('.image-upload').ajaxfileupload({
 		action: '/api/purchases/purchaseImage?purchaseId=' + id,
 		valid_extensions : ['jpg','png'],
 		onComplete: function(data) {
@@ -52,7 +142,7 @@ rs.init("image_upload_button", function(){
 	});		
 	
 	/* Handle Delete Clicked*/
-	$('body').on('click', '.form-image-delete', function() {
+	jQuery('#purchase_images').find('.form-image-delete').click(function() {
 	
 		var blobId = jQuery(this).data("id");
 		var purchaseId = jQuery('#id').val();
@@ -77,7 +167,7 @@ rs.init("image_upload_button", function(){
 	});
 	
 	/* Handle Rotate Clicked*/
-	jQuery('.form-image-rotate').click(function() {
+	jQuery('#purchase_images').find('.form-image-rotate').click(function() {
 	
 		var blobId = jQuery(this).data("id");
 
@@ -106,7 +196,7 @@ rs.init("image_upload_button", function(){
 	});	
 	
 	/* Handle Preview Clicked*/
-	$('body').on('click', '.form-image-view', function() {
+	jQuery('#purchase_images').find('.form-image-view').click(function() {
 		
 		var blobId = jQuery(this).data("id");
 		

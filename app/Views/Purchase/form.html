@@ -44,7 +44,8 @@
 
 			{% if( purchase.id ) %}
 			
-			{% include "Forms/Elements/images-editor.html" with {
+			{% include "Forms/Elements/multiple-image-uploader.html" with {
+				'id': 'purchase_images',
 				'images': purchase.images,
 				'label': 'Images',
 				'description': 'Optional Images for this purchase'

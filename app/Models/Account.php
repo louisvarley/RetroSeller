@@ -47,7 +47,13 @@ class Account
      * @ORM\ManyToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
-    protected $business_address;	
+    protected $business_address;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Blob")
+     * @ORM\JoinColumn(name="blob_id", referencedColumnName="id")
+     */
+    protected $logo;	
 	
     /**
      * Many Accounts have Many Sales.
@@ -175,6 +181,16 @@ class Account
     {
         $this->business_address = $businessAddress;
     }			
+	
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    }				
 	
 	public function getWithdrawn(){
 		

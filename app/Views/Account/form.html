@@ -64,6 +64,19 @@
 
 			<hr class="my-4">
 
+			{% if( account.id ) %}
+			
+			{% include "Forms/Elements/image-uploader.html" with {
+				'id': 'account_logo',
+				'image': account.logo,
+				'label': 'Company Logo',
+				'description': 'Optional, used for Invoices and Packing Slips'
+			}%}		
+
+			<hr class="my-4">	
+				
+			{% endif %}	
+
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'Line 1',
 				'id': 'business_name', 

@@ -1,0 +1,26 @@
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+<div id="{{ id }}" class="form-images">
+	<div class="form-images-preview" style="width:100%; margin-bottom:20px;">
+		{% for image in images %}
+			<div class="form-image form-image-{{ image.id }}">
+				<div class="form-images-toolbar">
+					   <button type="button" data-id="{{ image.id }}" class="form-image-rotate btn btn-sm btn-primary"><i class="fas fa-undo"></i></button>
+					   <button type="button" data-id="{{ image.id }}" class="form-image-delete btn btn-sm btn-primary"><i class="fas fa-times"></i></button>
+					   <button type="button" data-id="{{ image.id }}" class="form-image-view btn btn-sm btn-primary"><i class="fas fa-images"></i></button>	   	
+				</div>
+				<div class="purchase-image small preview-image-{{ image.id }}">
+					<a target="_blank" href="{{ image.url }}">
+						<img src="{{ image.getSmallUrl }}">
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="form-images-uploader">
+		<button class="btn btn-sm btn-image-new btn-success">Add Image</button>
+		<input class="image-upload" name="images[]" type="file" accept="image/*" capture="camera">
+	</div>
+</div>
+{% endblock %}
+{% endembed %}
