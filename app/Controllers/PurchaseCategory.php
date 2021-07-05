@@ -34,8 +34,8 @@ class PurchaseCategory extends \App\Controllers\ManagerController
 		$category->setColor($data[$this->route_params['controller']]['color']);
 		$category->setParent(findEntity($this->route_params['controller'], $data[$this->route_params['controller']]['parent_id']));
 	
-		EntityService()->persist($category);
-		EntityService()->flush();
+		entityService()->persist($category);
+		entityService()->flush();
 		
 		$this->updatePaths();
 		
@@ -49,8 +49,8 @@ class PurchaseCategory extends \App\Controllers\ManagerController
 		$category->setColor($data[$this->route_params['controller']]['color']);
 		$category->setParent(findEntity($this->route_params['controller'], $data[$this->route_params['controller']]['parent_id']));
 	
-		EntityService()->persist($category);
-		EntityService()->flush();
+		entityService()->persist($category);
+		entityService()->flush();
 
 		$this->updatePaths();
 
@@ -105,7 +105,7 @@ class PurchaseCategory extends \App\Controllers\ManagerController
 		';
 		
 
-        $statement = EntityService()->getConnection()->prepare($sql);
+        $statement = entityService()->getConnection()->prepare($sql);
         $statement->execute();
 
 	}

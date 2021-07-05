@@ -42,7 +42,7 @@ class Sale extends \App\Controllers\ManagerController
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
 			$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
-			EntityService()->persist($purchase);
+			entityService()->persist($purchase);
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
@@ -72,7 +72,7 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));
 
 		
-		EntityService()->persist($sale);
+		entityService()->persist($sale);
 		
 		if(isset($data['note']) &&  $data['note'] != ""){
 
@@ -81,11 +81,11 @@ class Sale extends \App\Controllers\ManagerController
 			$note->setNote($data['note']);
 			$note->setDate(new \DateTime('now'));
 			$note->setUser();
-			EntityService()->persist($note);
+			entityService()->persist($note);
 
 		}
 
-		EntityService()->flush();
+		entityService()->flush();
 		
 	}
 	
@@ -101,7 +101,7 @@ class Sale extends \App\Controllers\ManagerController
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
-			EntityService()->persist($purchase);
+			entityService()->persist($purchase);
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
@@ -133,8 +133,8 @@ class Sale extends \App\Controllers\ManagerController
 
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));	
 		
-		EntityService()->persist($sale);
-		EntityService()->flush();
+		entityService()->persist($sale);
+		entityService()->flush();
 		
 		return $sale->getId();
 		

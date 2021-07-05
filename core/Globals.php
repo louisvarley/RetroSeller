@@ -125,19 +125,19 @@ if(!defined("_FIRST_LAUNCH")){
 /* Find a Single Entity by ID */
 function findEntity($model, $id){
 	$model = ucfirst($model);	
-	return EntityService()->find(_MODELS . $model, $id);	
+	return entityService()->find(_MODELS . $model, $id);	
 }
 
 /* Find Multiple Entities By a Matching Criteria */
 function findBy($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 	$model = ucfirst($model);
-	return EntityService()->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
+	return entityService()->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
 }
 
 /* Find Multiple Entities By a Not Matching Criteria */
 function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 	$model = ucfirst($model);	
-	return EntityService()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
+	return entityService()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
 }
 
 /* Find All Entities */
@@ -145,32 +145,32 @@ function findAll($model, $orderBy = null, $order = "ASC" ){
 	$model = ucfirst($model);	
 	
 	if(!empty($orderBy)){
-		return EntityService()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
+		return entityService()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
 	}else{
-		return EntityService()->getRepository(_MODELS . $model)->findAll();	
+		return entityService()->getRepository(_MODELS . $model)->findAll();	
 	}
 	
 }
 
 /* Create a Query from Scratch */
 function createQuery($query){	
-	return EntityService()->createQuery($query);
+	return entityService()->createQuery($query);
 }
 
 /* Create Query Builder From Scratch */
 function createQueryBuilder($fields = null){	
-	return EntityService()->createQueryBuilder($fields);
+	return entityService()->createQueryBuilder($fields);
 }
 
 /* Create a Named Query */
 function createdNamedQuery($model, $namedQuery){
-	return EntityService()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
+	return entityService()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
 }
 
 /* Create an Optionset */
 function createOptionSet($model, $valueField, $textField, $criteria = null){
 	
-	$qb = EntityService()->createQueryBuilder($model);
+	$qb = entityService()->createQueryBuilder($model);
 	$qb->from(_MODELS . $model, "u");
 	$qb->addSelect("u" . '.' . $valueField . ' AS value');
 
@@ -239,8 +239,8 @@ function setMetadata($key, $value){
 
 	}
 
-	EntityService()->persist($meta);
-	EntityService()->flush();
+	entityService()->persist($meta);
+	entityService()->flush();
 
 
 }

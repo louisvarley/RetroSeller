@@ -72,7 +72,7 @@ class Home extends \Core\Controller
 		/* Dataset of Sales Last 7 Days */
 		$date = date('Y-m-d h:i:s', strtotime("-30 days"));
 
-		$salesSumed = EntityService()->getRepository(_MODELS . 'Sale')
+		$salesSumed = entityService()->getRepository(_MODELS . 'Sale')
 					->createQueryBuilder('e')
 					->select('e.date, sum(e.gross_amount) as gross, sum(e.fee_cost) as fee, sum(e.postage_cost) as postage')
 					->where('e.date BETWEEN :n7days AND :today ')

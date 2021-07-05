@@ -96,26 +96,26 @@ define('_DB_DUMPER','mysqldump');";
 		require(_CONFIG_FILE);
 		
 		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(EntityService());
-		$classes = EntityService()->getMetadataFactory()->getAllMetadata();
+		$classes = entityService()->getMetadataFactory()->getAllMetadata();
 		$schemaTool->createSchema($classes);					
 						
 
-		$proxyFactory = EntityService()->getProxyFactory();
-		$metadatas = EntityService()->getMetadataFactory()->getAllMetadata();
+		$proxyFactory = entityService()->getProxyFactory();
+		$metadatas = entityService()->getMetadataFactory()->getAllMetadata();
 		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 		
 
 		$user = new \App\Models\User();
 		$user->setEmail($this->post['user_email']);	
 		$user->setPassword($this->post['user_password']);
-		EntityService()->persist($user);
+		entityService()->persist($user);
 		
 		
 		foreach(_PURCHASE_STATUSES as $purchaseStatus){
 			
 			$status = new \App\Models\PurchaseStatus();
 			$status->setname($purchaseStatus['name']);
-			EntityService()->persist($status);
+			entityService()->persist($status);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
@@ -123,11 +123,11 @@ define('_DB_DUMPER','mysqldump');";
 
 			$status = new \App\Models\SaleStatus();
 			$status->setname($saleStatus['name']);
-			EntityService()->persist($status);
+			entityService()->persist($status);
 			
 		}
 		
-		EntityService()->flush();
+		entityService()->flush();
 		
 		toastService()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
 		header('Location: /login');
@@ -151,7 +151,7 @@ define('_DB_DUMPER','mysqldump');";
 				$pStatus->setName($purchaseStatus['name']);
 			}
 			
-			EntityService()->persist($pStatus);
+			entityService()->persist($pStatus);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
@@ -165,11 +165,11 @@ define('_DB_DUMPER','mysqldump');";
 				$sStatus->setName($saleStatus['name']);
 			}
 			
-			EntityService()->persist($sStatus);	
+			entityService()->persist($sStatus);	
 
 		}
 		
-		EntityService()->flush();
+		entityService()->flush();
 		toastService()->throwSuccess("Ready to Rock and Roll...", "You are fully Updated");	
 		
 		header('Location: /');

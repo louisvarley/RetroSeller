@@ -224,9 +224,9 @@ class EbayService
 
                 if ($purchase) {
                     $purchase->seteBayItemId($activeAuction->ItemID);
-                    EntityService()->persist($purchase);
+                    entityService()->persist($purchase);
 					$updates++;
-                    EntityService()->flush();
+                    entityService()->flush();
                 }
             }
         }
@@ -341,8 +341,8 @@ class EbayService
                 $sale->setPostageCost(0);
                 $sale->setDate($order->CreatedTime);
 
-                EntityService()->persist($sale);
-                EntityService()->flush();
+                entityService()->persist($sale);
+                entityService()->flush();
 				
                 $imports++;
 				
@@ -366,8 +366,8 @@ class EbayService
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setDate($order->CreatedTime);
-				EntityService()->persist($sale);
-                EntityService()->flush();
+				entityService()->persist($sale);
+                entityService()->flush();
 				
 				$updates++;
 			}

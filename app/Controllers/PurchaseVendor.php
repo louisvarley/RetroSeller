@@ -30,8 +30,8 @@ class PurchaseVendor extends \App\Controllers\ManagerController
 		$vendor = findEntity($this->route_params['controller'], $id);
 		$vendor->setName($data[$this->route_params['controller']]['name']);
 
-		EntityService()->persist($vendor);
-		EntityService()->flush();
+		entityService()->persist($vendor);
+		entityService()->flush();
 		
 	}
 	
@@ -41,8 +41,8 @@ class PurchaseVendor extends \App\Controllers\ManagerController
 
 		$vendor->setName($data[$this->route_params['controller']]['name']);
 		
-		EntityService()->persist($vendor);
-		EntityService()->flush();
+		entityService()->persist($vendor);
+		entityService()->flush();
 
 		return $vendor->getId();
 		

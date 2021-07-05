@@ -32,8 +32,8 @@ class PaymentVendor extends \App\Controllers\ManagerController
 		$vendor->setFixedFee($data[$this->route_params['controller']]['fixed_fee']);
 		$vendor->setPercentageFee($data[$this->route_params['controller']]['percentage_fee']);
 		
-		EntityService()->persist($vendor);
-		EntityService()->flush();
+		entityService()->persist($vendor);
+		entityService()->flush();
 		
 	}
 	
@@ -45,8 +45,8 @@ class PaymentVendor extends \App\Controllers\ManagerController
 		$vendor->setFixedFee($data[$this->route_params['controller']]['fixed_fee']);
 		$vendor->setPercentageFee($data[$this->route_params['controller']]['percentage_fee']);
 		
-		EntityService()->persist($vendor);
-		EntityService()->flush();
+		entityService()->persist($vendor);
+		entityService()->flush();
 
 		return $vendor->getId();
 		

@@ -40,8 +40,8 @@ class User extends \App\Controllers\ManagerController
 			$user->setPassword($data['user']['password']);
 		}
 
-		EntityService()->persist($user);
-		EntityService()->flush();
+		entityService()->persist($user);
+		entityService()->flush();
 		
 	}
 	
@@ -59,8 +59,8 @@ class User extends \App\Controllers\ManagerController
 		$user->setPassword($data['user']['password']);
 		$user->generateApiKey();
 		
-		EntityService()->persist($user);
-		EntityService()->flush();
+		entityService()->persist($user);
+		entityService()->flush();
 
 		return $user->getId();
 		

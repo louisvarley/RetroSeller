@@ -104,13 +104,13 @@ class Import extends \Core\Controller
 				$purchase->setValuation($value[1]);
 				$purchase->setCategory($purchaseCategory);	
 
-				EntityService()->persist($purchase);
+				entityService()->persist($purchase);
 							
 			}
 		};
 		
 	
-		EntityService()->flush();
+		entityService()->flush();
 		
 		toastService()->throwSuccess("Saved...", "Imported " . $count . " New Purchases");
 		

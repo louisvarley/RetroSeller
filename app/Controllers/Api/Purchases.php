@@ -26,11 +26,11 @@ class Purchases extends \App\Controllers\Api
 
 			$image = new \App\Models\Blob();
 			$image->setData($imageBase64);
-			EntityService()->persist($image);
+			entityService()->persist($image);
 
 			$purchase->getImages()->add($image);
 
-			EntityService()->flush();
+			entityService()->flush();
 
 			return new \Core\Classes\ApiResponse(200, 0, ['blobId' => $image->getId(), 'message' => 'Image Saved']);
 	
@@ -50,8 +50,8 @@ class Purchases extends \App\Controllers\Api
 
 			$purchase->getImages()->removeElement($image);
 
-			EntityService()->remove($image);
-			EntityService()->flush();
+			entityService()->remove($image);
+			entityService()->flush();
 
 			
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Image deleted']);
@@ -92,7 +92,7 @@ class Purchases extends \App\Controllers\Api
     ])
     ->withIndexColumn('u.id')
     ->withQueryBuilder(
-        EntityService()->createQueryBuilder()
+        entityService()->createQueryBuilder()
             ->select('u')
             ->from(_MODELS . "purchase", 'u')
 			->join('u.status', 's')

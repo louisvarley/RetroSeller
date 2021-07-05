@@ -22,7 +22,7 @@ class Sales extends \App\Controllers\Api
 			
 			$sale->setStatus($status);
 			
-			EntityService()->flush();
+			entityService()->flush();
 
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Status Changed']);
 	

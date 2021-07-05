@@ -30,7 +30,7 @@ class ManagerController extends \Core\Controller
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => EntityService()->find(_MODELS . $this->route_params['controller'], $id)
+			$this->route_params['controller'] => entityService()->find(_MODELS . $this->route_params['controller'], $id)
 		);	
 	} 
 	
@@ -59,8 +59,8 @@ class ManagerController extends \Core\Controller
      */		
 	public function deleteEntity($entity){
 		
-		EntityService()->remove($entity);
-		EntityService()->flush();
+		entityService()->remove($entity);
+		entityService()->flush();
 		
 	}
     
