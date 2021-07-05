@@ -10,7 +10,7 @@ use \App\Models\Purchase;
  *
  * PHP version 7.0
  */
-class eBay extends \App\Controllers\Api
+class ebay extends \App\Controllers\Api
 {
 	
 	protected function getSalesGetAction(){
