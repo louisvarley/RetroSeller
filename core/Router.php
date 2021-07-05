@@ -109,7 +109,6 @@ class Router
 
         if ($this->match($url)) {
 			
-			$this->params['controller'] = str_ireplace("ebay","eBay", $this->params['controller']);
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
 
