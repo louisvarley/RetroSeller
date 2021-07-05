@@ -76,8 +76,8 @@ class Blob
 		ob_end_clean(); 	
 		
 		$this->setData($imageBase64);
-		entityManager()->persist($this);
-		entityManager()->flush();
+		EntityService()->persist($this);
+		EntityService()->flush();
 
 	}
 

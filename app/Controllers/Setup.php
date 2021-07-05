@@ -24,7 +24,7 @@ class Setup extends \Core\Controller
 		/* Config File Exists, Update */
 		if(file_exists(_CONFIG_FILE)){
 			
-			if(authenticationManager()->loggedIn()){
+			if(authenticationService()->loggedIn()){
 				$this->update();
 			}
 			
@@ -47,7 +47,7 @@ class Setup extends \Core\Controller
 		$connection = @fsockopen($this->post['db_host'], $this->post['db_port']);
 
 		if(!is_resource($connection)){
-			toastManager()->throwError("Error...", ("MySQL Connection failed: Host Server not Found"));
+			toastService()->throwError("Error...", ("MySQL Connection failed: Host Server not Found"));
 			View::renderTemplate('Setup/index.html');
 		}
 	
@@ -56,7 +56,7 @@ class Setup extends \Core\Controller
 			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
 		} catch (mysqli_sql_exception $e) {
-			toastManager()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
+			toastService()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
 			View::renderTemplate('Setup/index.html');
 			return;			
 		}
@@ -67,7 +67,7 @@ class Setup extends \Core\Controller
 
 		if ($row == null) {	
 			$conn->close();
-			toastManager()->throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
+			toastService()->throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
 			View::renderTemplate('Setup/index.html');
 			return;
 		}
@@ -95,27 +95,27 @@ define('_DB_DUMPER','mysqldump');";
 
 		require(_CONFIG_FILE);
 		
-		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(entityManager());
-		$classes = entityManager()->getMetadataFactory()->getAllMetadata();
+		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(EntityService());
+		$classes = EntityService()->getMetadataFactory()->getAllMetadata();
 		$schemaTool->createSchema($classes);					
 						
 
-		$proxyFactory = entityManager()->getProxyFactory();
-		$metadatas = entityManager()->getMetadataFactory()->getAllMetadata();
+		$proxyFactory = EntityService()->getProxyFactory();
+		$metadatas = EntityService()->getMetadataFactory()->getAllMetadata();
 		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 		
 
 		$user = new \App\Models\User();
 		$user->setEmail($this->post['user_email']);	
 		$user->setPassword($this->post['user_password']);
-		entityManager()->persist($user);
+		EntityService()->persist($user);
 		
 		
 		foreach(_PURCHASE_STATUSES as $purchaseStatus){
 			
 			$status = new \App\Models\PurchaseStatus();
 			$status->setname($purchaseStatus['name']);
-			entityManager()->persist($status);
+			EntityService()->persist($status);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
@@ -123,13 +123,13 @@ define('_DB_DUMPER','mysqldump');";
 
 			$status = new \App\Models\SaleStatus();
 			$status->setname($saleStatus['name']);
-			entityManager()->persist($status);
+			EntityService()->persist($status);
 			
 		}
 		
-		entityManager()->flush();
+		EntityService()->flush();
 		
-		toastManager()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
+		toastService()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
 		header('Location: /login');
 		
 		
@@ -151,7 +151,7 @@ define('_DB_DUMPER','mysqldump');";
 				$pStatus->setName($purchaseStatus['name']);
 			}
 			
-			entityManager()->persist($pStatus);
+			EntityService()->persist($pStatus);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
@@ -165,12 +165,12 @@ define('_DB_DUMPER','mysqldump');";
 				$sStatus->setName($saleStatus['name']);
 			}
 			
-			entityManager()->persist($sStatus);	
+			EntityService()->persist($sStatus);	
 
 		}
 		
-		entityManager()->flush();
-		toastManager()->throwSuccess("Ready to Rock and Roll...", "You are fully Updated");	
+		EntityService()->flush();
+		toastService()->throwSuccess("Ready to Rock and Roll...", "You are fully Updated");	
 		
 		header('Location: /');
 				

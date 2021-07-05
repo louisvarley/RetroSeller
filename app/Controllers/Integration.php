@@ -35,8 +35,8 @@ class Integration extends \App\Controllers\ManagerController
 		$integration->setCertId($data['integration']['certId']);
 		$integration->setAuthToken($data['integration']['authToken']);
 		
-		entityManager()->persist($integration);
-		entityManager()->flush();
+		EntityService()->persist($integration);
+		EntityService()->flush();
 		
 	}
 	
@@ -50,8 +50,8 @@ class Integration extends \App\Controllers\ManagerController
 		$integration->setCertId($data['integration']['certId']);
 		$integration->setAuthToken($data['integration']['authToken']);		
 		
-		entityManager()->persist($integration);
-		entityManager()->flush();
+		EntityService()->persist($integration);
+		EntityService()->flush();
 
 		return $integration->getId();
 		

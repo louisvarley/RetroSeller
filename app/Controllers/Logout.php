@@ -21,7 +21,7 @@ class Logout extends \Core\Controller
     {
 		
 		
-		authenticationManager()->logout();
+		authenticationService()->logout();
 		
 		header('Location: /');
 		

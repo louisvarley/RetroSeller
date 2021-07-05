@@ -121,38 +121,23 @@ if(!defined("_FIRST_LAUNCH")){
 */
 
 
-function toastManager(){	
-	return \Core\ToastManager::instance();
-}
-
-function sessionManager(){	
-	return \Core\SessionManager::instance();
-}
-
-function authenticationManager(){	
-	return \Core\AuthenticationManager::instance();
-}
-
-function entityManager(){	
-	return \Core\EntityManager::instance()->entityManager;
-}
 
 /* Find a Single Entity by ID */
 function findEntity($model, $id){
 	$model = ucfirst($model);	
-	return \Core\EntityManager::instance()->entityManager->find(_MODELS . $model, $id);	
+	return EntityService()->find(_MODELS . $model, $id);	
 }
 
 /* Find Multiple Entities By a Matching Criteria */
 function findBy($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 	$model = ucfirst($model);
-	return \Core\EntityManager::instance()->entityManager->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
+	return EntityService()->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
 }
 
 /* Find Multiple Entities By a Not Matching Criteria */
 function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 	$model = ucfirst($model);	
-	return \Core\EntityManager::instance()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
+	return EntityService()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
 }
 
 /* Find All Entities */
@@ -160,32 +145,32 @@ function findAll($model, $orderBy = null, $order = "ASC" ){
 	$model = ucfirst($model);	
 	
 	if(!empty($orderBy)){
-		return entityManager()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
+		return EntityService()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
 	}else{
-		return entityManager()->getRepository(_MODELS . $model)->findAll();	
+		return EntityService()->getRepository(_MODELS . $model)->findAll();	
 	}
 	
 }
 
 /* Create a Query from Scratch */
 function createQuery($query){	
-	return entityManager()->createQuery($query);
+	return EntityService()->createQuery($query);
 }
 
 /* Create Query Builder From Scratch */
 function createQueryBuilder($fields = null){	
-	return entityManager()->createQueryBuilder($fields);
+	return EntityService()->createQueryBuilder($fields);
 }
 
 /* Create a Named Query */
 function createdNamedQuery($model, $namedQuery){
-	return entityManager()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
+	return EntityService()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
 }
 
 /* Create an Optionset */
 function createOptionSet($model, $valueField, $textField, $criteria = null){
 	
-	$qb = entityManager()->createQueryBuilder($model);
+	$qb = EntityService()->createQueryBuilder($model);
 	$qb->from(_MODELS . $model, "u");
 	$qb->addSelect("u" . '.' . $valueField . ' AS value');
 
@@ -254,10 +239,27 @@ function setMetadata($key, $value){
 
 	}
 
-	entityManager()->persist($meta);
-	entityManager()->flush();
+	EntityService()->persist($meta);
+	EntityService()->flush();
 
 
+}
+
+
+function toastService(){	
+	return \Core\Services\ToastService::instance();
+}
+
+function sessionService(){	
+	return \Core\Services\SessionService::instance();
+}
+
+function authenticationService(){	
+	return \Core\Services\AuthenticationService::instance();
+}
+
+function EntityService(){	
+	return \Core\Services\EntityService::instance()->EntityManager;
 }
 
 function eBayService($intergrationId){	
@@ -267,7 +269,6 @@ function eBayService($intergrationId){
 function notificationService(){	
 	return \Core\Services\NotificationService::instance();
 }
-
 
 function dbCheck(){
 
@@ -285,6 +286,6 @@ if(php_sapi_name() !== 'cli'){
 	dbCheck();
 }
 
-sessionManager()->start();
+sessionService()->start();
 
 

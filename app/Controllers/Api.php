@@ -17,7 +17,7 @@ class Api extends \Core\Controller
 	
 	public function apiCheck(){
 		
-		if(authenticationManager()->validApiKey()){
+		if(authenticationService()->validApiKey()){
 			return true;
 		}
 		
@@ -46,14 +46,14 @@ class Api extends \Core\Controller
 		$reflection = new \ReflectionMethod($this, $method);		
 		
 		/* Update Last Activity Time */
-		sessionManager()->activity();
+		sessionService()->activity();
 		
 		/* Method Not Found */
         if (!method_exists($this, $method)) {
 			$response = new \Core\Classes\ApiResponse(404, 404, ['message' => "API Method $method not found in " . get_class($this)]);
 			
 		/* Method found, but protected and no authentication or API Key */	
-		}elseif($reflection->isProtected() && (!$this->apiCheck() && !authenticationManager()->loggedIn())){
+		}elseif($reflection->isProtected() && (!$this->apiCheck() && !authenticationService()->loggedIn())){
 			$response = new \Core\Classes\ApiResponse(401, 401, ['message' => "UnAuthorised or invalid API Key "]);
 			
 		/* Fine to Run */

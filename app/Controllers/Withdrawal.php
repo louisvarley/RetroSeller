@@ -37,8 +37,8 @@ class Withdrawal extends \App\Controllers\ManagerController
 		$withdrawal->setDescription($data['withdrawal']['description']);
 		$withdrawal->setDate(date_create_from_format('d/m/Y', $data['withdrawal']['date']));	
 
-		entityManager()->persist($withdrawal);
-		entityManager()->flush();
+		EntityService()->persist($withdrawal);
+		EntityService()->flush();
 		
 	}
 	
@@ -54,8 +54,8 @@ class Withdrawal extends \App\Controllers\ManagerController
 		$withdrawal->setDescription($data['withdrawal']['description']);
 		$withdrawal->setDate(date_create_from_format('d/m/Y', $data['withdrawal']['date']));	
 		
-		entityManager()->persist($withdrawal);
-		entityManager()->flush();
+		EntityService()->persist($withdrawal);
+		EntityService()->flush();
 
 		return $withdrawal->getId();
 		

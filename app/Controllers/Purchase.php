@@ -52,7 +52,7 @@ class Purchase extends \App\Controllers\ManagerController
 		$purchase->setValuation($data['purchase']['valuation']);
 		$purchase->setCategory($purchaseCategory);		
 		
-		entityManager()->persist($purchase);
+		EntityService()->persist($purchase);
 
 
 		if(isset($data['note']) &&  $data['note'] != ""){
@@ -62,11 +62,11 @@ class Purchase extends \App\Controllers\ManagerController
 			$note->setNote($data['note']);
 			$note->setDate(new \DateTime('now'));
 			$note->setUser();
-			entityManager()->persist($note);
+			EntityService()->persist($note);
 
 		}
 
-		entityManager()->flush();
+		EntityService()->flush();
 
 	}
 	
@@ -85,7 +85,7 @@ class Purchase extends \App\Controllers\ManagerController
 		$purchase->setValuation($data['purchase']['valuation']);
 		$purchase->setCategory($purchaseCategory);	
 			
-		entityManager()->persist($purchase);	
+		EntityService()->persist($purchase);	
 			
 		if(isset($data['purchase']['account_id']) && !empty($data['purchase']['account_id']) && !empty($data['purchase']['amount'])){
 			
@@ -97,11 +97,11 @@ class Purchase extends \App\Controllers\ManagerController
 			$expense->setDate(date_create_from_format('d/m/Y', $data['purchase']['date']));		
 			$expense->setAccount($account);
 			$expense->getPurchases()->add($purchase);
-			entityManager()->persist($expense);
+			EntityService()->persist($expense);
 			
 		}	
 		
-		entityManager()->flush();
+		EntityService()->flush();
 		
 		return $purchase->getId();
 		

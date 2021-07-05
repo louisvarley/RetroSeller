@@ -38,8 +38,8 @@ class Account extends \App\Controllers\ManagerController
 				
 				
 		
-		entityManager()->persist($account);
-		entityManager()->flush();
+		EntityService()->persist($account);
+		EntityService()->flush();
 		
 	}
 	
@@ -54,8 +54,8 @@ class Account extends \App\Controllers\ManagerController
 		$account->setAccountSortCode($data['account']['account_sort_code']);
 		$account->setBusinessName($data['account']['business_name']);
 				
-		entityManager()->persist($account);
-		entityManager()->flush();
+		EntityService()->persist($account);
+		EntityService()->flush();
 
 		return $account->getId();
 		

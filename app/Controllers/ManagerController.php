@@ -30,7 +30,7 @@ class ManagerController extends \Core\Controller
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => entityManager()->find(_MODELS . $this->route_params['controller'], $id)
+			$this->route_params['controller'] => EntityService()->find(_MODELS . $this->route_params['controller'], $id)
 		);	
 	} 
 	
@@ -59,8 +59,8 @@ class ManagerController extends \Core\Controller
      */		
 	public function deleteEntity($entity){
 		
-		entityManager()->remove($entity);
-		entityManager()->flush();
+		EntityService()->remove($entity);
+		EntityService()->flush();
 		
 	}
     
@@ -118,7 +118,7 @@ class ManagerController extends \Core\Controller
 		/* ON UPDATE */
 		if($this->isPOST() && array_key_exists("id", $this->route_params)){
 			$this->updateEntity($this->route_params['id'], $this->post);
-			toastManager()->throwSuccess("Saved...", "Your changes were saved");
+			toastService()->throwSuccess("Saved...", "Your changes were saved");
 			header('Location: /'. $this->route_params['controller'] . '/edit/' . $this->route_params['id']);
 			die();
 		}			

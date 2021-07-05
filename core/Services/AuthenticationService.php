@@ -1,9 +1,8 @@
 <?php
 
+namespace Core\Services;
 
-namespace Core;
-
-class AuthenticationManager{
+class AuthenticationService{
 	
 	protected static $instance = null;
 		
@@ -35,26 +34,26 @@ class AuthenticationManager{
 	public function loggedIn(){
 		
 		
-		if(false == sessionManager()->isset("user"))
+		if(false == sessionService()->isset("user"))
 			return false;
 			
-		if(sessionManager()->isset("user") && time() - sessionManager()->load("activity") > 1800){
+		if(sessionService()->isset("user") && time() - sessionService()->load("activity") > 1800){
 			$this->logout();
-			toastManager()->throwError("Logged Out", "Logged Out due to idle activity");
+			toastService()->throwError("Logged Out", "Logged Out due to idle activity");
 		}
 		
-		if(sessionManager()->isset("user")){
+		if(sessionService()->isset("user")){
 			return true;
 		}
 		
 	}
 	
 	public function login($user){
-		sessionManager()->save("user", $user);		
+		sessionService()->save("user", $user);		
 	}
 	
 	public function logout(){
-		sessionManager()->destroy();
+		sessionService()->destroy();
 	}
 
 	public function me(){
@@ -62,7 +61,7 @@ class AuthenticationManager{
 		if($this->loggedIn()){
 			
 
-			return findEntity("user",sessionManager()->load("user")->getId());
+			return findEntity("user",sessionService()->load("user")->getId());
 		}
 
 	}

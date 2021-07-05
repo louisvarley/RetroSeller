@@ -44,9 +44,9 @@ class Import extends \Core\Controller
 			$result['updated_sales'] = $result['updated_sales'] + $r['updates'];			
 		}
 			
-		toastManager()->throwSuccess("Saved...", "Imported " . $result['new_sales'] . " New Sales from eBay");
-		toastManager()->throwSuccess("Saved...", "Updated " . $result['updated_sales'] . " Sales from eBay");
-		toastManager()->throwSuccess("Saved...", "Updated " . $result['updated_purchases'] . " Purchases from eBay");		
+		toastService()->throwSuccess("Saved...", "Imported " . $result['new_sales'] . " New Sales from eBay");
+		toastService()->throwSuccess("Saved...", "Updated " . $result['updated_sales'] . " Sales from eBay");
+		toastService()->throwSuccess("Saved...", "Updated " . $result['updated_purchases'] . " Purchases from eBay");		
 		header('Location: /');
 
 		
@@ -104,15 +104,15 @@ class Import extends \Core\Controller
 				$purchase->setValuation($value[1]);
 				$purchase->setCategory($purchaseCategory);	
 
-				entityManager()->persist($purchase);
+				EntityService()->persist($purchase);
 							
 			}
 		};
 		
 	
-		entityManager()->flush();
+		EntityService()->flush();
 		
-		toastManager()->throwSuccess("Saved...", "Imported " . $count . " New Purchases");
+		toastService()->throwSuccess("Saved...", "Imported " . $count . " New Purchases");
 		
 		
 

@@ -39,8 +39,8 @@ class Buyout extends \App\Controllers\ManagerController
 		
 		$buyout->getPurchase()->setStatus(findEntity("purchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']));
 
-		entityManager()->persist($buyout);
-		entityManager()->flush();
+		EntityService()->persist($buyout);
+		EntityService()->flush();
 		
 	}
 	
@@ -55,8 +55,8 @@ class Buyout extends \App\Controllers\ManagerController
 		$buyout->setPurchase($purchase);			
 		$buyout->getPurchase()->setStatus(findEntity("PurchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']));
 		
-		entityManager()->persist($buyout);
-		entityManager()->flush();
+		EntityService()->persist($buyout);
+		EntityService()->flush();
 
 		return $buyout->getId();
 		

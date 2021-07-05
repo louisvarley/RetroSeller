@@ -59,7 +59,7 @@ abstract class Controller
 		
 		if($this->authentication){
 
-			if(!authenticationManager()->loggedIn()){
+			if(!authenticationService()->loggedIn()){
 				header('Location: /login');
 				die();
 			}
@@ -89,7 +89,7 @@ abstract class Controller
 			$this->authenticationCheck();
 			
 			/* Update Last Activity Time */
-			sessionManager()->activity();
+			sessionService()->activity();
 			
             if ($this->before() !== false) {
                 call_user_func_array([$this, $method], $args);

@@ -22,7 +22,7 @@ class Login extends \Core\Controller
     public function indexAction()
     {
 		
-		if(authenticationManager()->loggedIn())
+		if(authenticationService()->loggedIn())
 			header('Location: /');
 		
 		if($this->isPOST()){
@@ -31,12 +31,12 @@ class Login extends \Core\Controller
 			 
 			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
 				
-				authenticationManager()->login($user[0]);
+				authenticationService()->login($user[0]);
 				header('Location: /');
 				
 			}else{
 			
-				toastManager()->throwError("Error...", "Your login details were incorrect or not found");
+				toastService()->throwError("Error...", "Your login details were incorrect or not found");
 			
 			}
 		}

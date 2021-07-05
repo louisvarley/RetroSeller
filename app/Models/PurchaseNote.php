@@ -71,7 +71,7 @@ class PurchaseNote
 	
 	public function setUser()
 	{
-		$this->user = authenticationManager()->me();
+		$this->user = authenticationService()->me();
 	}
    
 	public function getNote()

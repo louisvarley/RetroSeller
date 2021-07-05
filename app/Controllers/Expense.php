@@ -45,8 +45,8 @@ class Expense extends \App\Controllers\ManagerController
 			$expense->getPurchases()->add(findEntity("Purchase", $purchase_id));
 		}
 
-		entityManager()->persist($expense);
-		entityManager()->flush();
+		EntityService()->persist($expense);
+		EntityService()->flush();
 		
 	}
 	
@@ -65,8 +65,8 @@ class Expense extends \App\Controllers\ManagerController
 			$expense->getPurchases()->add(findEntity("Purchase", $purchase_id));
 		}
 		
-		entityManager()->persist($expense);
-		entityManager()->flush();
+		EntityService()->persist($expense);
+		EntityService()->flush();
 
 		return $expense->getId();
 		

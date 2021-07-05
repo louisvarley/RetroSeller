@@ -1,9 +1,8 @@
 <?php
 
+namespace Core\Services;
 
-namespace Core;
-
-class SessionManager{
+class SessionService{
 	
 	protected static $instance = null;
 	

@@ -1,8 +1,8 @@
 <?php
 
-namespace Core;
+namespace Core\Services;
 
-class ToastManager{
+class ToastService{
 	
 	protected static $instance = null;
 	
@@ -22,18 +22,18 @@ class ToastManager{
 	
 	public function __construct(){
 		
-		if(sessionManager()->load("toasts") == null){
-			sessionManager()->save("toasts",array());
+		if(sessionService()->load("toasts") == null){
+			sessionService()->save("toasts",array());
 		}
 		
 	}
 	
 	public function clear(){	
-		sessionManager()->save("toasts",array());		
+		sessionService()->save("toasts",array());		
 	}
 	
 	public function throwSuccess($title, $text){
-		sessionManager()->append("toasts",array(
+		sessionService()->append("toasts",array(
 			"title" => $title,
 			"type" => "success",
 			"text" => $text
@@ -42,7 +42,7 @@ class ToastManager{
 	}
 	
 	public function throwError($title, $text){
-		sessionManager()->append("toasts",array(
+		sessionService()->append("toasts",array(
 			"title" => $title,
 			"type" => "error",
 			"text" => $text
@@ -50,7 +50,7 @@ class ToastManager{
 	}
 	
 	public function throwWarning($title, $text){
-		sessionManager()->append("toasts",array(
+		sessionService()->append("toasts",array(
 			"title" => $title,
 			"type" => "warning",
 			"text" => $text
@@ -59,7 +59,7 @@ class ToastManager{
 	
 	public function getToasts(){
 		
-		return sessionManager()->load("toasts");
+		return sessionService()->load("toasts");
 	}
 	
 }

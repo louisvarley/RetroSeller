@@ -10,7 +10,7 @@ use \DTS\eBaySDK\Trading\Enums;
 
 namespace Core\Services;
 
-class eBayService
+class EbayService
 {
 
     protected static $instance = [];
@@ -224,9 +224,9 @@ class eBayService
 
                 if ($purchase) {
                     $purchase->seteBayItemId($activeAuction->ItemID);
-                    entityManager()->persist($purchase);
+                    EntityService()->persist($purchase);
 					$updates++;
-                    entityManager()->flush();
+                    EntityService()->flush();
                 }
             }
         }
@@ -341,8 +341,8 @@ class eBayService
                 $sale->setPostageCost(0);
                 $sale->setDate($order->CreatedTime);
 
-                entityManager()->persist($sale);
-                entityManager()->flush();
+                EntityService()->persist($sale);
+                EntityService()->flush();
 				
                 $imports++;
 				
@@ -366,8 +366,8 @@ class eBayService
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setDate($order->CreatedTime);
-				entityManager()->persist($sale);
-                entityManager()->flush();
+				EntityService()->persist($sale);
+                EntityService()->flush();
 				
 				$updates++;
 			}

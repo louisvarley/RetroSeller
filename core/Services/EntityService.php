@@ -4,13 +4,11 @@ use App\Config;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
+namespace Core\Services;
 
-
-namespace Core;
-
-class EntityManager{
+class EntityService{
 	
-	public $entityManager;
+	public $EntityManager;
 	
 	protected static $instance = null;
 	
@@ -31,8 +29,7 @@ class EntityManager{
 
 
 		$evm = new \Doctrine\Common\EventManager();
-		$evm->addEventListener("postGenerateSchema", new \Core\IgnoreViewsListener());
-		
+
 		/* Doctrine */
 		$paths = array(DIR_APP . "/Models");
 
@@ -50,7 +47,7 @@ class EntityManager{
 		}
 		
 		$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, $devMode, $cacheDir, null, false);
-		$this->entityManager = \Doctrine\ORM\EntityManager::create($dbParams, $config, $evm);
+		$this->EntityManager = \Doctrine\ORM\EntityManager::create($dbParams, $config, $evm);
 		
 		
 		
@@ -59,7 +56,7 @@ class EntityManager{
 	
 	public function Manager(){
 		
-		return $this->entityManager;
+		return $this->EntityManager;
 	}
 	
 	public function findByNot( $entity, array $criteria, array $orderBy = null, $limit = null, $offset = null )

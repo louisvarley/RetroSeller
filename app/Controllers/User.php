@@ -33,15 +33,15 @@ class User extends \App\Controllers\ManagerController
 		if(isset($data['user']['password']) && strlen($data['user']['password']) > 5){
 			
 			if($data['user']['password'] != $data['user']['password_confirm']){
-				toastManager()->throwError("Error...", "Password Mismatch");
+				toastService()->throwError("Error...", "Password Mismatch");
 				return;
 			}
 			
 			$user->setPassword($data['user']['password']);
 		}
 
-		entityManager()->persist($user);
-		entityManager()->flush();
+		EntityService()->persist($user);
+		EntityService()->flush();
 		
 	}
 	
@@ -52,15 +52,15 @@ class User extends \App\Controllers\ManagerController
 		$user->setEmail($data['user']['email']);
 		
 		if($data['user']['password'] != $data['user']['password_confirm']){
-			toastManager()->throwError("Error...", "Password Mismatch");
+			toastService()->throwError("Error...", "Password Mismatch");
 			return;
 		}
 		
 		$user->setPassword($data['user']['password']);
 		$user->generateApiKey();
 		
-		entityManager()->persist($user);
-		entityManager()->flush();
+		EntityService()->persist($user);
+		EntityService()->flush();
 
 		return $user->getId();
 		
