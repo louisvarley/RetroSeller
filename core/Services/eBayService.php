@@ -286,6 +286,13 @@ class eBayService
             }
 
             $skuArray = explode(",",rtrim(ltrim($skus,","),","));
+			
+			foreach($skuArray as $k => $v){
+				
+				$skuArray[$k] = explode("_", $v)[0]; /* Used to remove suffix eBay adds to variations */
+				
+			}
+			
 
             $sale = findBy("sale", ["ebay_order_id" => $order->OrderID]);
 			
