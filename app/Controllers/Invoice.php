@@ -35,145 +35,64 @@ class Invoice extends \Core\Controller
 		
 	} 
 
+
+	public function invPad($id){
+		return 'INV' . str_pad($id, 5, "0", STR_PAD_LEFT ); 
+	}
 	
 	public function generate(){
 		
 		//header('Content-disposition: attachment; filename=purchase_import_template.xlsx');
 		//header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		
-		define("POUND",chr(163));
-		
-		
-		
 		$sale = findEntity("sale", $this->route_params['id']);
-		$account = findEntity("account", $this->post['invoice']['account']);
-		
-		$pdf = new \FPDF('P','mm','A4');
-
-		$pdf->AddPage();
-		/*output the result*/
-		
-		
-		$pdf->SetFont('Arial','B',100);
-		$pdf->SetTextColor(242,231,230);
-		$pdf->Text(35,190,$sale->getStatus()->getName());	
-		$pdf->SetTextColor(0,0,0);
-
-		$pdf->setFillColor(215,215,217);
-
-		/*set font to arial, bold, 14pt*/
-		$pdf->SetFont('Arial','B',24);
-		
-		
-		$pdf->SetFont('Arial','B',24);
-        $pdf->Cell(60);
-		
-		$pdf->Cell(0, 10, "Invoice", 0, true, 'R');
-
-        $pdf->Ln(10);
-        $pdf->SetFont('Arial','B',14);
-        $pdf->Cell(70);
-
-        $pdf->Ln(10);		
-		
-		$pdf->Cell(71 ,10,'',0,0);
-		$pdf->Cell(59 ,10,'',0,1);
-
-		$pdf->SetFont('Arial','B',24);
-		$pdf->Cell(71 ,5,$account->GetBusinessName(),0,0);
-		$pdf->Cell(50 ,10,'',0,1);
-		
-		$pdf->SetFont('Arial','B',10);
-		$pdf->Cell(25 ,5,'Sale ID:',0,0);
-		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(34 ,5, $sale->getId() ,0,1);
-
-		$pdf->Cell(50 ,0,'',0,1);
-
-		$pdf->SetFont('Arial','B',10);
-		$pdf->Cell(25 ,5,'Invoice Date:',0,0);
-		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(34 ,5, date('d-m-Y'),0,1);
-		 
-		$pdf->SetFont('Arial','B',15);
-		$pdf->SetFont('Arial','B',10);
-		$pdf->Cell(189 ,10,'',0,1);
-
-		$pdf->SetFont('Arial','B',10);
-		/*Heading Of the table*/
-		$pdf->Cell(90 ,6,'Description',1,0,'C', true);
-		$pdf->Cell(23 ,6,'Qty',1,0,'C', true);
-		$pdf->Cell(30 ,6,'Unit Price',1,0,'C', true);
-		$pdf->Cell(20 ,6,'Tax',1,0,'C', true);
-		$pdf->Cell(25 ,6,'Total',1,1,'C', true);/*end of line*/
-		/*Heading Of the table end*/
-		$pdf->SetFont('Arial','',10);
-			$total = 0;
-			foreach($sale->getPurchases() as $purchase){
-				$total = $total + $purchase->getValuation();
-				$pdf->Cell(90 ,6,$purchase->getName(),1,0);
-				$pdf->Cell(23 ,6,'1',1,0,'R');
-				$pdf->Cell(30 ,6,POUND . sprintf('%.2f',$purchase->getValuation()),1,0,'R');
-				$pdf->Cell(20 ,6,POUND . sprintf('%.2f',0),1,0,'R');
-				$pdf->Cell(25 ,6,POUND . sprintf('%.2f',$purchase->getValuation()),1,1,'R');
-			}
-				
-				
-		$pdf->Cell(118 ,6,'',0,0);
-
-		$pdf->Cell(25 ,6,'Discounts',0,0);
-		$pdf->Cell(45 ,6,POUND . sprintf('%.2f',$total - $sale->getGrossAmount()) ,1,1,'R');				
-				
-				
-		$pdf->Cell(118 ,6,'',0,0);
-		$pdf->Cell(25 ,6,'Sub Total',0,0);
-		$pdf->Cell(45 ,6,POUND . sprintf('%.2f',$sale->getGrossAmount()) ,1,1,'R');
-
-		$pdf->Cell(118 ,6,'',0,0);
-		$pdf->Cell(25 ,6,'P&P',0,0);
-		$pdf->Cell(45 ,6,POUND . sprintf('%.2f',$sale->getPostageAmount()),1,1,'R');
-		
-		$pdf->Cell(118 ,6,'',0,0);
-		$pdf->Cell(25 ,6,'Total',0,0);
-		$pdf->Cell(45 ,6,POUND . sprintf('%.2f',$sale->getGrossAmount() + $sale->getPostageAmount()),1,1,'R');		
-		
-		$pdf->Cell(0 ,6,'',0,0);
-		
-		$pdf->Cell(50 ,5,'',0,1);
-
-		$pdf->SetFont('Arial','B',10);
-
-		$pdf->Cell(100 ,6,'Payment Options',0,0,'L');
-		$pdf->Cell(50 ,6,'',0,1);		
-		$pdf->SetFont('Arial','B',7);
-		
-		$pdf->SetFont('Arial','B',7);
-		$pdf->Cell(15 ,6,'BACS',0,0,'L');
-		$pdf->SetFont('Arial','',7);
-				
-		$pdf->Cell(50 ,5,'',0,1);
+		$account = findEntity("account", $this->post['invoice']['account']);		
 			
-		$pdf->Cell(70 ,6,"Account Name: " . $account->getBusinessName(),0,0,'L');	
-		$pdf->Cell(50 ,5,'',0,1);
-		$pdf->Cell(70 ,6,"Account Number: " . $account->getAccountNumber(),0,0,'L');	
-		$pdf->Cell(50 ,5,'',0,1);	
-		$pdf->Cell(70 ,6,"Sortcode: " . $account->getAccountSortCode() ,0,0,'L');	
-			
-		$pdf->Cell(50 ,5,'',0,1);
-		$pdf->SetFont('Arial','B',7);		
-		$pdf->Cell(15 ,6,'PayPal',0,0,'L');
-		$pdf->SetFont('Arial','',7);		
-		$pdf->Cell(50 ,5,'',0,1);
-		
-		$pdf->Cell(70 ,6,$account->getPayPalEmailAddress(),0,0,'L');	
-		$pdf->SetFont('Arial','B',10);			
-		
-		
-		$pdf->Output();	
-		
-				
 
+		$invoice = new \Konekt\PdfInvoice\InvoicePrinter("A4","£");
+
+		/* Header settings */
+		//$invoice->setLogo(DIR_CORE . "/static/img/logo.png");   //logo image path
+		$invoice->setColor($account->getColor());      // pdf color scheme
+		$invoice->setType("Invoice");    // Invoice Type
+		$invoice->setReference($this->invPad($sale->getId()));   // Reference
+		$invoice->setDate(date_format($sale->getDate(),"M jS Y"));   //Billing Date
+		$invoice->setFrom(array($account->GetBusinessName(),"128 AA Juanita Ave","Glendora , CA 91740"));
+		//$invoice->setTo(array("Purchaser Name","Sample Company Name","128 AA Juanita Ave","Glendora , CA 91740"));
+
+		$total = 0;
+		foreach($sale->getPurchases() as $purchase){
+			$total = $total + $purchase->getValuation();
+			$invoice->addItem($purchase->getName(),$purchase->getDescription(),1,0,$purchase->getValuation(),0,$purchase->getValuation());
+		}
+
+		$invoice->addTotal("Discount",$total - $sale->getGrossAmount());
+		$invoice->addTotal("Shipping",$sale->getPostageAmount());
+
+		$invoice->addTotal("Total Due", $sale->getPostageAmount() + $sale->getGrossAmount());
+
+		$invoice->addBadge($sale->getStatus()->getName());
+
+		$invoice->addTitle("Important Notice");
+
+		$invoice->addParagraph("Purchases are only dispatched once payment has been made in full.");
 		
+		$invoice->addParagraph("All purchases have a 14 day warranty from date this invoice was issued. This excludes products described as faulty, incomplete or damaged.");
+		
+		$invoice->addTitle("Payment Methods");
+		
+		if($account->getAccountNumber()){
+			$invoice->addParagraph("BACS: Account Number: " . $account->getAccountNumber() . ', Sort Code: ' . $account->getAccountSortCode() . ', Reference: ' . $this->invPad($sale->getId()));		
+		}
+		
+		if($account->getPayPalEmailAddress()){
+			$invoice->addParagraph("PayPal: Payment by PayPal, " . $account->getPayPalEmailAddress());		
+		}
+		
+		$invoice->setFooternote("Generated By RetroSeller");
+
+		$invoice->render('INV-' . $sale->getId() . '.pdf','I'); 
+			
 	}
 
 	
