@@ -35,9 +35,20 @@ class Account extends \App\Controllers\ManagerController
 		$account->setAccountNumber($data['account']['account_number']);
 		$account->setAccountSortCode($data['account']['account_sort_code']);
 		$account->setBusinessName($data['account']['business_name']);
-				
-				
 		
+		if($data['account']['address']){
+			
+				if($account->getBusinessAddress() == null){
+					$account->setBusinessAddress(new \app\Models\Address());
+					entityService()->persist($account->getBusinessAddress());
+				}
+				$account->getBusinessAddress()->setLine1($data['account']['address']['line1']);	
+				$account->getBusinessAddress()->setLine2($data['account']['address']['line2']);	
+				$account->getBusinessAddress()->setCity($data['account']['address']['city']);	
+				$account->getBusinessAddress()->setState($data['account']['address']['state']);	
+				$account->getBusinessAddress()->setPostalCode($data['account']['address']['postalcode']);					
+		}
+
 		entityService()->persist($account);
 		entityService()->flush();
 		
@@ -53,6 +64,19 @@ class Account extends \App\Controllers\ManagerController
 		$account->setAccountNumber($data['account']['account_number']);
 		$account->setAccountSortCode($data['account']['account_sort_code']);
 		$account->setBusinessName($data['account']['business_name']);
+				
+		if($data['account']['address']){
+			
+				if($account->getBusinessAddress() == null){
+					$account->setBusinessAddress(new \app\Models\Address());
+					entityService()->persist($account->getBusinessAddress());
+				}
+				$account->getBusinessAddress()->setLine1($data['account']['address']['line1']);	
+				$account->getBusinessAddress()->setLine2($data['account']['address']['line2']);	
+				$account->getBusinessAddress()->setCity($data['account']['address']['city']);	
+				$account->getBusinessAddress()->setState($data['account']['address']['state']);	
+				$account->getBusinessAddress()->setPostalCode($data['account']['address']['postalcode']);					
+		}				
 				
 		entityService()->persist($account);
 		entityService()->flush();

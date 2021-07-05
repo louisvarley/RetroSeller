@@ -41,7 +41,13 @@ class Account
 	/**
     * @ORM\Column(type="string", nullable="true")
     */
-    protected $business_name;		
+    protected $business_name;	
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Address")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    protected $business_address;	
 	
     /**
      * Many Accounts have Many Sales.
@@ -155,10 +161,20 @@ class Account
         return $this->business_name;
     }
 
-    public function setBusinessName($business_name)
+    public function setBusinessName($businessName)
     {
-        $this->business_name = $business_name;
+        $this->business_name = $businessName;
     }		
+	
+    public function getBusinessAddress()
+    {
+        return $this->business_address;
+    }
+
+    public function setBusinessAddress($businessAddress)
+    {
+        $this->business_address = $businessAddress;
+    }			
 	
 	public function getWithdrawn(){
 		

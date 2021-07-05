@@ -57,7 +57,13 @@ class Invoice extends \Core\Controller
 		$invoice->setType("Invoice");    // Invoice Type
 		$invoice->setReference($this->invPad($sale->getId()));   // Reference
 		$invoice->setDate(date_format($sale->getDate(),"M jS Y"));   //Billing Date
-		$invoice->setFrom(array($account->GetBusinessName(),"128 AA Juanita Ave","Glendora , CA 91740"));
+		
+		if($account->getBusinessAddress()){		
+
+			$invoice->setFrom(array($account->getBusinessName(),$account->getBusinessAddress()->getLine1(),$account->getBusinessAddress()->getLine2(),$account->getBusinessAddress()->getcity(),$account->getBusinessAddress()->getState(), $account->getBusinessAddress()->getPostalcode()));
+		}
+		
+		
 		//$invoice->setTo(array("Purchaser Name","Sample Company Name","128 AA Juanita Ave","Glendora , CA 91740"));
 
 		$total = 0;
