@@ -15,6 +15,14 @@
 		
 		{% block form_body %}
 		
+			{% include "Forms/Elements/text-percentage.html" with {
+				'label' : 'Undervalued Percentage',
+				'id': 'id', 
+				'name': "#{controller}[undervalued_percentage]", 
+				'description': 'What percentage profit from total spend should the system consider undervalued',
+				'value': settings.undervalued_percentage
+			}%}
+		
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

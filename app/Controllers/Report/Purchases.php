@@ -34,24 +34,19 @@ class Purchases extends \App\Controllers\Report
 		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 		
-		$spreadsheet->getActiveSheet()->setCellValue('A1','Purchase ID');
-		$spreadsheet->getActiveSheet()->setCellValue('B1','Type');		
-		$spreadsheet->getActiveSheet()->setCellValue('C1','Valuation');
-		$spreadsheet->getActiveSheet()->setCellValue('D1','Current Spend');
-		$spreadsheet->getActiveSheet()->setCellValue('E1','Profit / Loss');
+		$spreadsheet->getActiveSheet()->setCellValue('A1','Type');
+		$spreadsheet->getActiveSheet()->setCellValue('B1','Id');
+		$spreadsheet->getActiveSheet()->setCellValue('C1','Name');		
+		$spreadsheet->getActiveSheet()->setCellValue('D1','Valuation');
+		$spreadsheet->getActiveSheet()->setCellValue('E1','Current Spend');
+		$spreadsheet->getActiveSheet()->setCellValue('F1','Profit / Loss');
 		
-		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(12);		
-		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);		
+		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(12);	
+		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(12);			
 		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25);		
-		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(25);	
-		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(50);	
-		
-		$spreadsheet->getActiveSheet()->getStyle("C")->applyFromArray([
-
-			'numberFormat' => [
-				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
-			]
-		]);
+		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(12);		
+		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(12);	
+		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(12);	
 		
 		$spreadsheet->getActiveSheet()->getStyle("D")->applyFromArray([
 
@@ -59,8 +54,15 @@ class Purchases extends \App\Controllers\Report
 				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
 			]
 		]);
-
+		
 		$spreadsheet->getActiveSheet()->getStyle("E")->applyFromArray([
+
+			'numberFormat' => [
+				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
+			]
+		]);
+
+		$spreadsheet->getActiveSheet()->getStyle("F")->applyFromArray([
 
 			'numberFormat' => [
 				'formatCode' => \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00
@@ -86,7 +88,8 @@ class Purchases extends \App\Controllers\Report
 					/* Add Gross Amount */
 					array_push($transactions, [
 						'type' => 'LOSS',
-						'id' => $purchase->getId(),				
+						'id' => $purchase->getId(),	
+						'name' => $purchase->getname(),						
 						'valuation' => $purchase->getValuation(),
 						'spend' => $purchase->getTotalSpend(),
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
@@ -94,11 +97,12 @@ class Purchases extends \App\Controllers\Report
 				
 				}
 				/* Gain is less than 10%  */				
-				elseif(($purchase->getValuation() / ($purchase->getTotalSpend() / 100)) < 10 ){
+				elseif(($purchase->getValuation() / ($purchase->getTotalSpend() / 100)) < getMetadata("undervalued_percentage") ){
 					
 					array_push($transactions, [
 						'type' => 'LOW_PROFIT',
-						'id' => $purchase->getId(),				
+						'id' => $purchase->getId(),	
+						'name' => $purchase->getname(),
 						'valuation' => $purchase->getValuation(),
 						'spend' => $purchase->getTotalSpend(),
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
@@ -112,15 +116,16 @@ class Purchases extends \App\Controllers\Report
 			
 		$x = 1;		
 			
-		foreach($transactions as $traasaction){
+		foreach($transactions as $transaction){
 			
 			$x++;
 
-			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $traasaction['id']);
-			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $traasaction['type']);
-			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $traasaction['valuation']);
-			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $traasaction['spend']);				
-			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $traasaction['profit']);			
+			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $transaction['type']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['id']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['name']);
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $transaction['valuation']);
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $transaction['spend']);				
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['profit']);			
 		}
 	
 		

@@ -126,15 +126,15 @@ class Sales extends \App\Controllers\Report
 			
 		$x = 1;		
 			
-		foreach($transactions as $traasaction){
+		foreach($transactions as $transaction){
 			
 			$x++;
 
-			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $traasaction['id']);
-			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $traasaction['date']);
-			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $traasaction['type']);
-			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $traasaction['description']);				
-			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $traasaction['amount']);			
+			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $transaction['id']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['date']);
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $transaction['type']);
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $transaction['description']);				
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['amount']);			
 		}
 	
 		
