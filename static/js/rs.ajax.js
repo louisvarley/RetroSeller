@@ -140,7 +140,12 @@ rs.init("purchase_image_upload_button", function(){
 
 		},
 		onStart: function() {
+			if(rs.isMobile()){
+				alert("Uploading image from camera");
+			}else{
 			rs.throwSuccess("Uploading...","Started Upload...");
+			}
+			
 		},
 		onCancel: function() {
 			console.log('no file selected');
