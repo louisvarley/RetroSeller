@@ -97,7 +97,7 @@ class Purchases extends \App\Controllers\Report
 				
 				}
 				/* Gain is less than 10%  */				
-				elseif(($purchase->getValuation() / ($purchase->getTotalSpend() / 100)) < getMetadata("undervalued_percentage") ){
+				elseif((($purchase->getTotalSpend() / 100) * getMetadata("undervalued_percentage"))  < $purchase->getValuation()  ){
 					
 					array_push($transactions, [
 						'type' => 'LOW_PROFIT',
@@ -122,10 +122,10 @@ class Purchases extends \App\Controllers\Report
 
 			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $transaction['type']);
 			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['id']);
-			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['name']);
-			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $transaction['valuation']);
-			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $transaction['spend']);				
-			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['profit']);			
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $transaction['name']);
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $transaction['valuation']);
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['spend']);				
+			$spreadsheet->getActiveSheet()->setCellValue('F' . $x, $transaction['profit']);			
 		}
 	
 		
