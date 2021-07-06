@@ -10,7 +10,14 @@
 			<tr>
 			<td data-label="Id">{{ entity.id }}</td>
 			<td data-label="Date">{{ entity.date | date('d/m/Y') }}</td>			
-			<td data-label="Status"><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>
+			<td data-label="Status"><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span>
+			
+			
+			{% if( entity.eBayOrderId ) %}
+				<span data-tooltip="Connected to Auction" class="badge badge-success"><i class="fas fa-gavel"></i></span>		
+			{% endif %}					
+			
+			</td>
 			<td data-label="Vendor">
 				<span style="background-color:{{entity.saleVendor.color}}" class="badge badge-vendor {{ entity.saleVendor.name | lower | replace({' ': ''}) }}">{{ entity.saleVendor.name }}</span>
 				<span style="background-color:{{entity.paymentVendor.color}}" class="badge badge-vendor {{ entity.paymentVendor.name | lower | replace({' ': ''}) }}">{{ entity.paymentVendor.name }}</span>
