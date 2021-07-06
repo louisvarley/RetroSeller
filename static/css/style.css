@@ -210,6 +210,11 @@ hr {
   padding: 15p;
 }
 
+/* line 231, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.dropdown-menu {
+  padding: 5px;
+}
+
 /* Toasts */
 /* line 3, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_toast.scss */
 .toast {
