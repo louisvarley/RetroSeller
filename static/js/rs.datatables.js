@@ -69,8 +69,9 @@ rs.rgba2hex = function (rgba) {
   
 }
 
-rs.init("auto-color",function(){
-
+rs.checkListColumnColours = function(){
+	
+	
 	$('.list-table').find("tr").each(function(){
 		
 		var rgbString = jQuery(this).css("background-color");
@@ -82,6 +83,19 @@ rs.init("auto-color",function(){
 		}
 		
 	})
+	
+}
+
+rs.init("auto-color",function(){
+
+	rs.checkListColumnColours();
+	
+	
+	jQuery('.paginate_button').click(function(){
+		
+		rs.checkListColumnColours();
+		
+	});
 	
 })
 	
