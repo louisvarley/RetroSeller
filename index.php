@@ -53,6 +53,12 @@ $router->add('{controller}/{action}');
 /* Controller Action With ID */
 $router->add('{controller}/{action}/{id:\d+}');   
 
+/* Controller Action With ID */
+$router->add('{controller}/{action}/{id:\d+}');   
+
+/* Controller Action With ID Dashed */
+$router->add('{controller}/{action}/{id:[0-9-]*$}');   
+
 /* Controller Index With ID */
 $router->add('{controller}/{id:\d+}', ['controller' => '{controller}', 'action' => 'index']);
 

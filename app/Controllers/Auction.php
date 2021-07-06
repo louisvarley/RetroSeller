@@ -17,7 +17,7 @@ class Auction extends \Core\Controller
 {
 	
 	protected $authentication = true;	
-	public $page_data = ["title" => "Settings", "description" => "Config Settings"];	
+	public $page_data = ["title" => "eBay", "description" => "eBay Selling"];	
 	
 
 	
@@ -34,5 +34,28 @@ class Auction extends \Core\Controller
 		$this->render($this->route_params['controller'] . '/list.html', array("activeList" => $auctions),);
 
 	} 
+	
+	public function orderAction(){
+		
+		$id = $this->route_params['id'];
+
+		$results = [];
+		
+		/* Check all Intergrations */
+		foreach(findAll("integration") as $integration){
+			$results[] = eBayService($integration->getId())->getOrder($id);
+		}
+		
+		if($results){
+		
+			$order = end($results)[0];	
+	
+			
+			$this->render("Auction" . '/order.html', array("order" => $order, 'countries' => \Core\Classes\Countries::fetch()),);
+		
+		}
+
+		
+	}	
 	
 }

@@ -19,9 +19,10 @@ class Account extends \App\Controllers\ManagerController
 	public $page_data = ["title" => "Account", "description" => "Accounts are virtual segregations or funds"];	
 	
 	public function getEntity($id = 0){
-		
+
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id)			
+			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
+			'countries' => \Core\Classes\Countries::fetch(),
 		);	
 	} 
 
@@ -36,6 +37,7 @@ class Account extends \App\Controllers\ManagerController
 		$account->setAccountSortCode($data['account']['account_sort_code']);
 		$account->setBusinessName($data['account']['business_name']);
 		
+
 		if($data['account']['address']){
 			
 				if($account->getBusinessAddress() == null){
@@ -46,7 +48,8 @@ class Account extends \App\Controllers\ManagerController
 				$account->getBusinessAddress()->setLine2($data['account']['address']['line2']);	
 				$account->getBusinessAddress()->setCity($data['account']['address']['city']);	
 				$account->getBusinessAddress()->setState($data['account']['address']['state']);	
-				$account->getBusinessAddress()->setPostalCode($data['account']['address']['postalcode']);					
+				$account->getBusinessAddress()->setPostalCode($data['account']['address']['postalcode']);
+				$account->getBusinessAddress()->setCountry($data['account']['address']['country']);				
 		}
 
 		entityService()->persist($account);
@@ -75,7 +78,8 @@ class Account extends \App\Controllers\ManagerController
 				$account->getBusinessAddress()->setLine2($data['account']['address']['line2']);	
 				$account->getBusinessAddress()->setCity($data['account']['address']['city']);	
 				$account->getBusinessAddress()->setState($data['account']['address']['state']);	
-				$account->getBusinessAddress()->setPostalCode($data['account']['address']['postalcode']);					
+				$account->getBusinessAddress()->setPostalCode($data['account']['address']['postalcode']);
+				$account->getBusinessAddress()->setCountry($data['account']['address']['country']);					
 		}				
 				
 		entityService()->persist($account);

@@ -4,13 +4,17 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","Status","Accounts","Gross", "Net", "Spend", "Profit", "Item/s Sold", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Date","Status","Vendors","Accounts","Gross", "Net", "Spend", "Profit", "Item/s Sold", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td data-label="Id">{{ entity.id }}</td>
 			<td data-label="Date">{{ entity.date | date('d/m/Y') }}</td>			
 			<td data-label="Status"><span class="badge badge-sale {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>
+			<td data-label="Vendor">
+				<span style="{{entity.saleVendor.color}}" class="badge badge-vendor {{ entity.saleVendor.name | lower | replace({' ': ''}) }}">{{ entity.saleVendor.name }}</span>
+				<span style="{{entity.paymentVendor.color}}" class="badge badge-vendor {{ entity.paymentVendor.name | lower | replace({' ': ''}) }}">{{ entity.paymentVendor.name }}</span>
+			</td>			
 			<td data-label="Accounts">
 			{% for account in entity.accounts %}
 			<span class="badge badge-primary badge-account" style="background-color:{{ account.color }}">{{ account.name }}</span>
@@ -22,13 +26,22 @@
 			<td data-label="Spend">{{ entity.getPurchaseSpendAmount  | format_currency('GBP', {rounding_mode: 'floor'})}}</td>	
 			<td data-label="Profit" class="{{ entity.getProfitAmount | rag }}">{{ entity.getProfitAmount | format_currency('GBP', {rounding_mode: 'floor'})}}</td>
 			<td data-label="Purchases">{{ entity.getPurchasesString }}</td>
-			<td data-label="">
+			<td data-label="Options">
+			<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-cogs"></i>
+			</button>
+			<div class="dropdown-menu dropdown-menu-right">
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}
 			{% include '/Buttons/sale-status-button.html' with {'model': controller, 'entity': entity} %}	
-			{% include '/Buttons/invoice-button.html' with {'model': controller, 'id': entity.id} %}			
-			{% include '/Modals/notes.html' with {'entity': entity, 'type': 'sale'} %}	
+			{% include '/Buttons/invoice-button.html' with {'model': controller, 'id': entity.id} %}	
+			
+			{% if( purchase.id ) %}
+				{% include '/Buttons/ebay-order-button.html' with {'model': controller, 'order_id': entity.eBayOrderId} %}		
+			{% endif %}				
+			</div>
+				{% include '/Modals/notes.html' with {'entity': entity, 'type': 'sale'} %}	
 			</td>				
 			</tr>
 			{% endfor %}

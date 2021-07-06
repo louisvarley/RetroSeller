@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Name","Status","Category", "Date", "Total Spend","Share", ""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Name","Status","Category", "Date", "Total Spend","Share", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr>			
@@ -22,14 +22,18 @@
 					{% endfor %}
 					</div>
 				</td>
-				<td data-label="">
-				{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}			
-				{% include '/Buttons/expenses-button.html' with {'modal': entity.id, 'id': entity.id} %}
-				{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}				
-				{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
-
-				{% include '/Modals/expenses.html' with {'entity': entity} %}
-				{% include '/Modals/notes.html' with {'entity': entity, 'type': 'purchase'} %}				
+				<td data-label="Options">
+				<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-cogs"></i>
+				</button>
+				<div class="dropdown-menu dropdown-menu-right">				
+					{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}			
+					{% include '/Buttons/expenses-button.html' with {'modal': entity.id, 'id': entity.id} %}
+					{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}				
+					{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}	
+				</div>				
+					{% include '/Modals/expenses.html' with {'entity': entity} %}
+					{% include '/Modals/notes.html' with {'entity': entity, 'type': 'purchase'} %}	
 				</td>
 				</tr>
 				

@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}order{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-display.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			eBay Order {{ id }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'Order Details',			
+				'subtitle': 'Basic Order Information',			
+			}%}	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Status',	
+				'description': 'Order Status',
+				'readonly': true,
+				'value' : order.OrderStatus				
+			}%}	
+
+			{% include "Forms/Elements/text-currency.html" with {
+				'label' : 'Total Amount',			
+				'description': 'Total amount Buyer Paid',
+				'readonly': true,
+				'value': order.AmountPaid.value				
+			}%}	
+
+			{% include "Forms/Elements/text-date.html" with {
+				'label' : 'Date',	
+				'description': 'Date this order was made',
+				'readonly': true,
+				'value' : order.CreatedTime				
+			}%}				
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Buyer User Id',	
+				'description': 'Buyers eBay User ID',
+				'readonly': true,
+				'value' : order.BuyerUserID				
+			}%}					
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Seller User Id',	
+				'description': 'Sellers eBay User ID',
+				'readonly': true,
+				'value' : order.SellerUserID				
+			}%}		
+			
+			{% if( order.PaidTime  ) %}
+			
+					{% include "Forms/Elements/text-datetime.html" with {
+						'label' : 'Paid Date',	
+						'description': 'Date this order was dispatched',
+						'readonly': true,
+						'value' : order.PaidTime			
+					}%}	
+				
+				{% else %}	
+			
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Paid Date',	
+						'description': 'Date this order was dispatched',
+						'readonly': true,
+						'value' : "Not Paid"			
+					}%}	
+			
+			{% endif %}							
+						
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'Shipping Information',			
+				'subtitle': 'Shipping and Package Delivery Info',			
+			}%}		
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Buyer',			
+				'id': 'gross_amount', 
+				'description': 'Buyers Shipping Name',
+				'readonly': true,
+				'value': order.ShippingAddress.Name				
+			}%}					
+
+
+
+			{% include "Forms/Elements/text-address.html" with {
+				'label' : 'Shipping Address',			
+				'id': 'shipping_address',
+				'readonly': true,
+				'name': "#{controller}[address]", 
+				'description': 'Buyers Address',
+				'line1': order.ShippingAddress.Street1,
+				'line2': order.ShippingAddress.Street2,
+				'city': order.ShippingAddress.CityName,
+				'state': order.ShippingAddress.StateOrProvince,
+				'postalcode': order.ShippingAddress.PostalCode,
+				'country': order.ShippingAddress.Country,				
+			}%}				
+
+			<hr class="my-4">	
+			
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Shipping Method',			
+				'description': 'Shipping Method Selected',
+				'readonly': true,
+				'value': order.ShippingServiceSelected.ShippingService				
+			}%}				
+			
+			
+			{% if( order.ShippedTime  ) %}
+			
+					{% include "Forms/Elements/text-datetime.html" with {
+						'label' : 'Dispatch Date',	
+						'description': 'Date this order was dispatched',
+						'readonly': true,
+						'value' : order.ShippedTime			
+					}%}	
+				
+				{% else %}	
+			
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Dispatch Date',	
+						'description': 'Date this order was dispatched',
+						'readonly': true,
+						'value' : "Not Dispatched"			
+					}%}	
+			
+			{% endif %}				
+			
+			
+			{% if( order.ShippingServiceSelected.ShippingPackageInfo | length > 0  ) %}
+			
+				{% for package in order.ShippingServiceSelected.ShippingPackageInfo %}
+				
+					{% include "Forms/Elements/text-datetime.html" with {
+						'label' : 'Actual Delivery Date',	
+						'description': 'Date this order was delivered',
+						'readonly': true,
+						'value' : package.ActualDeliveryTime			
+					}%}	
+				
+				{% endfor %}
+				
+				{% else %}	
+				
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Actual Delivery Date',	
+						'description': 'Date this order was delivered',
+						'readonly': true,
+						'value' : "Not Delivered"			
+					}%}	
+			
+			{% endif %}	
+
+
+			
+
+
+
+			
+			
+		
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+
+

@@ -77,45 +77,19 @@
 				
 			{% endif %}	
 
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Line 1',
-				'id': 'business_name', 
-				'name': "#{controller}[address][line1]", 
-				'description': 'Business Address Line 1',
-				'value': account.businessAddress.line1
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Line 2',
-				'id': 'business_name', 
-				'name': "#{controller}[address][line2]", 
-				'description': 'Business Address Line 2',
-				'value': account.businessAddress.line2
-			}%}	
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Town / City',
-				'id': 'business_name', 
-				'name': "#{controller}[address][city]", 
-				'description': 'Business Address City',
-				'value': account.businessAddress.city
+			{% include "Forms/Elements/text-address.html" with {
+				'label' : 'Shipping Address',			
+				'id': 'shipping_address', 
+				'name': "#{controller}[address]", 
+				'description': 'Buyers Address',
+				'line1': account.businessAddress.line1,
+				'line2': account.businessAddress.line2,
+				'city': account.businessAddress.city,
+				'state': account.businessAddress.state,
+				'postalcode': account.businessAddress.postalCode,
+				'country': account.businessAddress.country,				
 			}%}				
 			
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'State / County',
-				'id': 'business_name', 
-				'name': "#{controller}[address][state]", 
-				'description': 'Business Address State or County',
-				'value': account.businessAddress.state
-			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Postal Code',
-				'id': 'business_name', 
-				'name': "#{controller}[address][postalcode]", 
-				'description': 'Business Address Postal Code',
-				'value': account.businessAddress.postalCode
-			}%}					
 			<hr class="my-4">			
 			
 			{% include "Forms/Elements/text.html" with {

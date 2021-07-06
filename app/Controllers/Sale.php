@@ -155,6 +155,7 @@ class Sale extends \App\Controllers\ManagerController
 			
 		);
 
-	}		
+	}	
+
 	
 }

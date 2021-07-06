@@ -1,0 +1,6 @@
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+<span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+<input autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} id="{{ id }}" name="{{ name }}" type="text" {{ required }} value="{{ value | date('d/m/Y h:m') }}" {% if readonly %}readonly{% endif %} class="form-control datepicker {{classes}}">
+{% endblock %}
+{% endembed %}

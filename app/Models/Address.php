@@ -47,6 +47,10 @@ class Address
     */
     protected $postal_code;	
 	
+	/**
+    * @ORM\Column(type="string", nullable="false")
+    */
+    protected $country;
 	
     public function getId()
     {
@@ -111,6 +115,16 @@ class Address
     public function setPostalCode($postalCode)
     {
         $this->postal_code = $postalCode;
+    } 	
+	
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    public function setCountry($country)
+    {
+        $this->country = $country;
     } 	
 	
 	public function asArray(){

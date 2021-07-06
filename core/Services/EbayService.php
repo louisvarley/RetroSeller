@@ -70,6 +70,51 @@ class EbayService
     }
 
 
+	public function getOrder($orderId){
+
+        $pst = new \DateTimeZone('Europe/London');
+        $createTimeFrom = new \DateTime("-5 days");
+        $createTimeTo = new \DateTime("-0 hours");
+
+        $request = new \DTS\eBaySDK\Trading\Types\GetOrdersRequestType();
+
+        $request->RequesterCredentials = new \DTS\eBaySDK\Trading\Types\CustomSecurityHeaderType();
+        $request->RequesterCredentials->eBayAuthToken = $this->config()['oauthUserToken'];
+
+
+        $request->DetailLevel[] = "ReturnAll";
+        $request->IncludeFinalValueFee = true;
+        $request->Pagination = new \DTS\eBaySDK\Trading\Types\PaginationType();
+        $request->Pagination->EntriesPerPage = 50;
+        $request->Pagination->PageNumber = 1;
+        $request->SortingOrder = \DTS\eBaySDK\Trading\Enums\SortOrderCodeType::C_DESCENDING;
+        $request->OrderIDArray = new \DTS\eBaySDK\Trading\Types\OrderIDArrayType();
+        $request->OrderIDArray->OrderID[] = $orderId;
+
+        $response = $this->service()->getOrders($request);
+
+
+        $response = $this->service()->getOrders($request);
+
+        if (isset($response->Errors)) {
+            foreach ($response->Errors as $error) {
+                printf(
+                    "%s: %s\n%s\n\n",
+                    $error->SeverityCode === \DTS\eBaySDK\Trading\Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
+                    $error->ShortMessage,
+                    $error->LongMessage
+                );
+            }
+        }
+
+
+        if ($response->Ack !== 'Failure' && isset($response->OrderArray->Order)) {
+            return $response->OrderArray->Order;
+        }
+
+        return null;
+    }
+
     public function getMyActiveAuctions($pageNum = 1)
     {
 
@@ -133,7 +178,6 @@ class EbayService
 
         return $response->SaleRecord;
     }
-
 
 	public function getItem($itemId){
 		
@@ -208,7 +252,6 @@ class EbayService
         return null;
 
     }
-
 
 	public function updatePurchasesWithAuctions()
 	{

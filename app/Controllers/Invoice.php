@@ -66,8 +66,14 @@ class Invoice extends \Core\Controller
 		$invoice->setDate(date_format($sale->getDate(),"M jS Y"));   //Billing Date
 		
 		if($account->getBusinessAddress()){		
-
-			$invoice->setFrom(array($account->getBusinessName(),$account->getBusinessAddress()->getLine1(),$account->getBusinessAddress()->getLine2(),$account->getBusinessAddress()->getcity(),$account->getBusinessAddress()->getState(), $account->getBusinessAddress()->getPostalcode()));
+		
+			$invoice->setFrom(array($account->getBusinessName(),
+			$account->getBusinessAddress()->getLine1(),
+			$account->getBusinessAddress()->getLine2(),
+			$account->getBusinessAddress()->getcity(),
+			$account->getBusinessAddress()->getState(),
+			$account->getBusinessAddress()->getPostalcode(),
+			\Core\Classes\Countries::get($account->getBusinessAddress()->getCountry())));
 		}
 		
 		
