@@ -97,7 +97,7 @@ class Purchases extends \App\Controllers\Report
 				
 				}
 				/* Gain is less than 10%  */				
-				elseif((($purchase->getTotalSpend() / 100) * getMetadata("undervalued_percentage"))  < $purchase->getValuation()  ){
+				elseif((($purchase->getTotalSpend() / 100) * getMetadata("undervalued_percentage"))  < ($purchase->getTotalSpend() - $purchase->getValuation())){
 					
 					array_push($transactions, [
 						'type' => 'LOW_PROFIT',
