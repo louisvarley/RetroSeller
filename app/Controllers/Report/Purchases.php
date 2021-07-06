@@ -29,7 +29,7 @@ class Purchases extends \App\Controllers\Report
 
 	public function UnderValuedAction(){
 		
-		header('Content-disposition: attachment; filename="Sales Statement.xlsx"');
+		header('Content-disposition: attachment; filename="Undervalued Purchases Report.xlsx"');
 		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
