@@ -37,6 +37,15 @@
 				'description': 'Vendor Name',
 				'value': purchaseVendor.name
 			}%}			
+			
+			{% include "Forms/Elements/text-colorpicker.html" with {
+				'label' : 'Color',			
+				'id': 'color', 
+				'name': "#{controller}[color]", 
+				'description': 'Give this vendor a color',
+				'required': 'required',
+				'value': purchaseVendor.color				
+			}%}					
 					
 		{% endblock %}
 	{% endembed %}

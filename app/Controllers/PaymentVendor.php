@@ -31,6 +31,7 @@ class PaymentVendor extends \App\Controllers\ManagerController
 		$vendor->setName($data[$this->route_params['controller']]['name']);
 		$vendor->setFixedFee($data[$this->route_params['controller']]['fixed_fee']);
 		$vendor->setPercentageFee($data[$this->route_params['controller']]['percentage_fee']);
+		$vendor->setColor($data[$this->route_params['controller']]['color']);
 		
 		entityService()->persist($vendor);
 		entityService()->flush();
@@ -44,6 +45,7 @@ class PaymentVendor extends \App\Controllers\ManagerController
 		$vendor->setName($data[$this->route_params['controller']]['name']);
 		$vendor->setFixedFee($data[$this->route_params['controller']]['fixed_fee']);
 		$vendor->setPercentageFee($data[$this->route_params['controller']]['percentage_fee']);
+		$vendor->setColor($data[$this->route_params['controller']]['color']);
 		
 		entityService()->persist($vendor);
 		entityService()->flush();

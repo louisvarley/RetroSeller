@@ -38,6 +38,15 @@
 				'value': saleVendor.name
 			}%}			
 			
+			{% include "Forms/Elements/text-colorpicker.html" with {
+				'label' : 'Color',			
+				'id': 'color', 
+				'name': "#{controller}[color]", 
+				'description': 'Give this vendor a color',
+				'required': 'required',
+				'value': saleVendor.color				
+			}%}					
+			
 			{% include "Forms/Elements/text-currency.html" with {
 				'label' : 'Fixed Fee',			
 				'id': 'fixed_fee', 

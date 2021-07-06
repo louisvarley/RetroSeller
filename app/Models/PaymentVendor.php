@@ -31,7 +31,12 @@ class PaymentVendor
 	/**
      * @ORM\Column(type="decimal", precision=7, scale=2)
     */
-    protected $percentage_fee = 0;	
+    protected $percentage_fee = 0;
+
+	/**
+    * @ORM\Column(type="string", nullable="false")
+    */
+    protected $color;		
 	
 	
     public function getId()
@@ -67,6 +72,16 @@ class PaymentVendor
     public function setPercentageFee($percentage_fee)
     {
         $this->percentage_fee = $percentage_fee;
-    }		
+    }	
+
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }			
 	
 }

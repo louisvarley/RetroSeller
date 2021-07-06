@@ -23,6 +23,11 @@ class PurchaseVendor
     */
     protected $name;	
 	
+	/**
+    * @ORM\Column(type="string", nullable="false")
+    */
+    protected $color;		
+	
 	
     public function getId()
     {
@@ -38,5 +43,15 @@ class PurchaseVendor
     {
         $this->name = $name;
     }
+	
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }			
 	
 }
