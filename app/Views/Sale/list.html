@@ -37,7 +37,7 @@
 			{% include '/Buttons/sale-status-button.html' with {'model': controller, 'entity': entity} %}	
 			{% include '/Buttons/invoice-button.html' with {'model': controller, 'id': entity.id} %}	
 			
-			{% if( purchase.id ) %}
+			{% if( entity.eBayOrderId ) %}
 				{% include '/Buttons/ebay-order-button.html' with {'model': controller, 'order_id': entity.eBayOrderId} %}		
 			{% endif %}				
 			</div>
