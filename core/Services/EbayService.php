@@ -304,7 +304,7 @@ class EbayService
 			
             foreach ($order->TransactionArray->Transaction as $transaction) {
 				
-				if(!empty($transaction->FinalValueFee){
+				if(!empty($transaction->FinalValueFee)){
 					$finalValueFee = $finalValueFee + $transaction->FinalValueFee->value;
 				}else{
 					$finalValueFee = 0;
