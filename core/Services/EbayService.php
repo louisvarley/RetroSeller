@@ -396,7 +396,7 @@ class EbayService
 				if(count($order->ShippingServiceSelected->ShippingPackageInfo) > 0 && $order->ShippingServiceSelected->ShippingPackageInfo[0]->ActualDeliveryTime){
 					$sale->setStatus(\app\Models\SaleStatus::Paid());
 				}
-				if($order->ShippedTime){
+				elseif($order->ShippedTime){
 					$sale->setStatus(\app\Models\SaleStatus::Dispatched());
 				}
 				elseif($order->OrderStatus == "Completed"){
