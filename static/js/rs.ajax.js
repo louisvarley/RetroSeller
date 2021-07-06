@@ -131,7 +131,13 @@ rs.init("purchase_image_upload_button", function(){
 		action: '/api/purchases/purchaseImage?purchaseId=' + id,
 		valid_extensions : ['jpg','png'],
 		onComplete: function(data) {
-			location.reload(); 
+	
+			if(data.code == 0){
+				location.reload(); 
+			}else{
+				rs.throwSuccess("Error...",data.error);
+			}
+
 		},
 		onStart: function() {
 			rs.throwSuccess("Uploading...","Started Upload...");
