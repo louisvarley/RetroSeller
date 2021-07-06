@@ -108,6 +108,7 @@ class Purchases extends \App\Controllers\Report
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
 					]);
 
+				}
 				elseif(($purchase->getValuation() - $purchase->getTotalSpend()) < getMetadata("undervalued_ebay")){
 					
 					array_push($transactions, [
