@@ -212,6 +212,19 @@ class Purchase
 
 	}
 	
+	public function getFull()
+	{
+
+		if($this->getImages()->count() == 0){
+
+			return "/static/img/place-holder.jpg";
+		}else{
+			
+			return $this->getImages()->first()->getUrl();
+		}
+
+	}	
+	
 
     public function setSale($sale)
     {

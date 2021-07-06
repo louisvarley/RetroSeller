@@ -8,7 +8,7 @@
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr style="background-color:{{ entity.category.color}}">		
-				<td data-label=""><a href="{{ entity.getThumbnail() }}"><div class="purchase-image thumbnail"><img src="{{ entity.thumbnail}}"></div></a></td>
+				<td data-label=""><a href="{{ entity.getFull() }}"><div class="purchase-image thumbnail"><img src="{{ entity.thumbnail}}"></div></a></td>
 				<td data-label="Name">{{ entity.name }}</td>	
 				<td data-label="Category">{{ entity.category.path }}</td>
 				<td data-label="Description">{{ entity.description }}</td>					
