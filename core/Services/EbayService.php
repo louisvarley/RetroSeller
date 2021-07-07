@@ -306,10 +306,8 @@ class EbayService
 				
 				if(!empty($transaction->FinalValueFee)){
 					$finalValueFee = $finalValueFee + $transaction->FinalValueFee->value;
-				}else{
-					$finalValueFee = 0;
 				}
-                
+				
 				$qty = $transaction->QuantityPurchased;
 				$fulfilled = 0; 
 				$item = $this->getItem($transaction->Item->ItemID);
