@@ -278,6 +278,22 @@ class EbayService
 		
 	}
 
+	/* SKUs could be single, or comma seperated, with or without a suffix we want to remove return as array */
+	public function SplitSKU($skus){
+		
+		$return = '';
+		
+		foreach(explode(",",$skus) as $sku){
+			$return .= ',' . explode("_",$sku)[0];
+		}
+		
+		$return = ltrim($return,",");
+		
+		return explode(",",$return);
+		
+	}
+
+
 	/*
 	
 	1. Loop all orders (service checks last 5 days)
@@ -299,53 +315,56 @@ class EbayService
         foreach ($this->getMyOrders()->Order as $order) {
 
             $finalValueFee = 0;
-            $skus = "";
 			
+			/* SKUs we have fulfilled this order */
+			$fulfilledSKUs = [];
 			
             foreach ($order->TransactionArray->Transaction as $transaction) {
-				
+
+				/* SKUs connected to this transaction item */
+				$transactionSKUs = [];
+
+				/* Handle Variations where SKU is within variation */
+				if($transaction->Variation){
+					$transactionSKUs = array_merge($transactionSKUs, $this->SplitSKU($transaction->Variation->SKU));
+				}else{
+					$transactionSKUs = array_merge($transactionSKUs, $this->SplitSKU($transaction->Item->SKU));					
+				}
+	
 				if(!empty($transaction->FinalValueFee)){
 					$finalValueFee = $finalValueFee + $transaction->FinalValueFee->value;
 				}
 				
-				$qty = $transaction->QuantityPurchased;
 				$fulfilled = 0; 
 				$item = $this->getItem($transaction->Item->ItemID);
 
 				/* If Quantity Available was more than 1 we will only pick SKUs up to the quantity purchased from SKUs without a SALE*/
 				if($item->Quantity > 1){
 					
-					foreach(explode(",",$transaction->Item->SKU) as $sku){
-						 $purchase = findEntity("purchase", $sku);
+					foreach($transactionSKUs as $transactionSKU){
+						
+						 $purchase = findEntity("purchase", $transactionSKU);
 						 if($purchase){
 							 if(empty($purchase->getSale())){
-								 if($fulfilled == $qty) continue;
+								 if($fulfilled == $transaction->QuantityPurchased) continue;
 								 $fulfilled++;
-								 $skus .= ',' . $sku;
+								 $fulfilledSKUs[] = $transactionSKU;
 							 }
 						 }
 					}
 					
 				}else{
-					$skus .= ',' . $transaction->Item->SKU;
+					
+					array_merge($fulfilledSKUs, $transactionSKUs);
 				}
             }
-
-            $skuArray = explode(",",rtrim(ltrim($skus,","),","));
-			
-			foreach($skuArray as $k => $v){
-				
-				$skuArray[$k] = explode("_", $v)[0]; /* Used to remove suffix eBay adds to variations */
-				
-			}
-			
 
             $sale = findBy("sale", ["ebay_order_id" => $order->OrderID]);
 			
 			/* if still empty try find by SKUs */
 			if(empty($sale)){
-				foreach($skuArray as $sku){
-				$purchase = findEntity("purchase",$sku);					
+				foreach($fulfilledSKUs as $fulfilledSKU){
+				$purchase = findEntity("purchase",$fulfilledSKU);					
 					if(!empty($purchase)){
 						if(!empty($purchase->getSale())){
 							$sale = $purchase->getSale();
@@ -369,10 +388,21 @@ class EbayService
 					$sale->setStatus(\app\Models\SaleStatus::UnPaid());
 				}						
 
-                foreach($skuArray as $sku){
-                    $purchase = findEntity("purchase", $sku);
+				$sale->getPurchases()->clear();
+
+                foreach($fulfilledSKUs as $fulfilledSKU){
+                    $purchase = findEntity("purchase", $fulfilledSKU);
                     if($purchase) {
                         $purchase->setSale($sale);
+						
+						if($order->OrderStatus == "Completed"){
+							$purchase->setStatus(\core\Models\PurchaseStatus::Sold());
+						}
+						
+						if($order->OrderStatus == "Cancelled"){
+							$purchase->setStatus(\core\Models\PurchaseStatus::ForSale());
+						}	
+						
 						$sale->getPurchases()->add($purchase);
                     }
 					
@@ -410,8 +440,30 @@ class EbayService
 				}
 				else{
 					$sale->setStatus(\app\Models\SaleStatus::Pending());
-				}					
+				}	
+				
+				$sale->getPurchases()->clear();
+										
+				foreach($fulfilledSKUs as $fulfilledSKU){
+					
+					$purchase = findEntity("purchase", $fulfilledSKU);
+					if($purchase) {
+						$purchase->setSale($sale);
+						
+						if($order->OrderStatus == "Completed"){
+							$purchase->setStatus(\core\Models\PurchaseStatus::Sold());
+						}
+						
+						if($order->OrderStatus == "Cancelled"){
+							$purchase->setStatus(\core\Models\PurchaseStatus::ForSale());
+						}	
+						
 
+						$sale->getPurchases()->add($purchase);
+					}	
+                }	
+				
+				$sale->setFeeCost($finalValueFee);
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setDate($order->CreatedTime);
