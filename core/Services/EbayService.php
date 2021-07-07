@@ -396,11 +396,11 @@ class EbayService
                         $purchase->setSale($sale);
 						
 						if($order->OrderStatus == "Completed"){
-							$purchase->setStatus(\core\Models\PurchaseStatus::Sold());
+							$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
 						}
 						
 						if($order->OrderStatus == "Cancelled"){
-							$purchase->setStatus(\core\Models\PurchaseStatus::ForSale());
+							$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
 						}	
 						
 						$sale->getPurchases()->add($purchase);
@@ -451,11 +451,11 @@ class EbayService
 						$purchase->setSale($sale);
 						
 						if($order->OrderStatus == "Completed"){
-							$purchase->setStatus(\core\Models\PurchaseStatus::Sold());
+							$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
 						}
 						
 						if($order->OrderStatus == "Cancelled"){
-							$purchase->setStatus(\core\Models\PurchaseStatus::ForSale());
+							$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
 						}	
 						
 
