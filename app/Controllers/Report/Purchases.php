@@ -42,7 +42,9 @@ class Purchases extends \App\Controllers\Report
 		$spreadsheet->getActiveSheet()->setCellValue('C1','Name');		
 		$spreadsheet->getActiveSheet()->setCellValue('D1','Valuation');
 		$spreadsheet->getActiveSheet()->setCellValue('E1','Current Spend');
-		$spreadsheet->getActiveSheet()->setCellValue('F1','Profit / Loss');
+		$spreadsheet->getActiveSheet()->setCellValue('F1','eBay Fees');		
+		$spreadsheet->getActiveSheet()->setCellValue('G1','Profit / Loss');
+		$spreadsheet->getActiveSheet()->setCellValue('H1','eBay Profit / Loss');		
 		
 		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(12);	
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(12);			
@@ -50,6 +52,8 @@ class Purchases extends \App\Controllers\Report
 		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(12);		
 		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(12);	
 		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(12);	
+		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(12);	
+		$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(12);			
 		
 		$spreadsheet->getActiveSheet()->getStyle("D")->applyFromArray([
 
@@ -78,6 +82,7 @@ class Purchases extends \App\Controllers\Report
 		
 		foreach($purchases as $purchase){
 			
+			$ebayFee = $ebaySaleVendor->calculateFee($purchase->getValuation()) + $ebayPaymentVendor->calculateFee($purchase->getValuation());
 			
 			if($purchase->getSale() == null && 
 				$purchase->getStatus() == \app\Models\PurchaseStatus::ForSale() &&
@@ -95,7 +100,9 @@ class Purchases extends \App\Controllers\Report
 						'name' => $purchase->getname(),						
 						'valuation' => $purchase->getValuation(),
 						'spend' => $purchase->getTotalSpend(),
+						'fees' => $ebayFee,
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
+						'profit_ebay' => $purchase->getValuation() - ($ebayFee + $purchase->getTotalSpend()),							
 					]);
 				
 				}
@@ -108,11 +115,13 @@ class Purchases extends \App\Controllers\Report
 						'name' => $purchase->getname(),
 						'valuation' => $purchase->getValuation(),
 						'spend' => $purchase->getTotalSpend(),
+						'fees' => $ebayFee,
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
+						'profit_ebay' => $purchase->getValuation() - ($ebayFee + $purchase->getTotalSpend()),							
 					]);
 
 				}
-				elseif(($purchase->getValuation() - $purchase->getTotalSpend()) < ($ebaySaleVendor->calculateFee($purchase->getValuation()) + $ebayPaymentVendor->calculateFee($purchase->getValuation()))){
+				elseif(($purchase->getValuation() - $purchase->getTotalSpend()) < ($ebayFee)){
 					
 					array_push($transactions, [
 						'type' => 'EBAY_LOSS',
@@ -120,11 +129,13 @@ class Purchases extends \App\Controllers\Report
 						'name' => $purchase->getname(),
 						'valuation' => $purchase->getValuation(),
 						'spend' => $purchase->getTotalSpend(),
+						'fees' => $ebayFee,						
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
+						'profit_ebay' => $purchase->getValuation() - ($ebayFee + $purchase->getTotalSpend()),							
 					]);
 
 				}
-				elseif(((($ebaySaleVendor->calculateFee($purchase->getValuation()) + $ebayPaymentVendor->calculateFee($purchase->getValuation())) + $purchase->getTotalSpend() / 100) * getMetadata("undervalued_percentage"))  > ($purchase->getValuation() - $purchase->getTotalSpend())){				
+				elseif(((($ebayFee + $purchase->getTotalSpend()) / 100) * getMetadata("undervalued_percentage"))  > ($purchase->getValuation() - $purchase->getTotalSpend())){				
 					
 					array_push($transactions, [
 						'type' => 'EBAY_LOW_PROFIT',
@@ -132,7 +143,9 @@ class Purchases extends \App\Controllers\Report
 						'name' => $purchase->getname(),
 						'valuation' => $purchase->getValuation(),
 						'spend' => $purchase->getTotalSpend(),
+						'fees' => $ebayFee,						
 						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
+						'profit_ebay' => $purchase->getValuation() - ($ebayFee + $purchase->getTotalSpend()),						
 					]);
 
 				}				
@@ -152,8 +165,10 @@ class Purchases extends \App\Controllers\Report
 			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['id']);
 			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $transaction['name']);
 			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $transaction['valuation']);
-			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['spend']);				
-			$spreadsheet->getActiveSheet()->setCellValue('F' . $x, $transaction['profit']);			
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['spend']);	
+			$spreadsheet->getActiveSheet()->setCellValue('F' . $x, $transaction['fees']);				
+			$spreadsheet->getActiveSheet()->setCellValue('G' . $x, $transaction['profit']);	
+			$spreadsheet->getActiveSheet()->setCellValue('H' . $x, $transaction['profit_ebay']);				
 		}
 	
 		
