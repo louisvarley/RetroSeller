@@ -53,15 +53,7 @@
 				'name': "#{controller}[undervalued_percentage]", 
 				'description': 'Percentage profit from valuation considered for low value report',
 				'value': settings.undervalued_percentage
-			}%}
-			
-			{% include "Forms/Elements/text-currency.html" with {
-				'label' : 'eBay Safe Margins',
-				'id': 'id', 
-				'name': "#{controller}[undervalued_ebay]", 
-				'description': 'Fixed amount for Fees considered low value for eBay Sales',
-				'value': settings.undervalued_ebay
-			}%}			
+			}%}		
 		
 		{% endblock %}
 	{% endembed %}

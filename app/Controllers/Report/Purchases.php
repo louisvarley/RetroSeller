@@ -32,6 +32,9 @@ class Purchases extends \App\Controllers\Report
 		header('Content-disposition: attachment; filename="Undervalued Purchases Report.xlsx"');
 		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		
+		$ebaySaleVendor = findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
+		$ebayPaymentVendor = findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));		
+		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 		
 		$spreadsheet->getActiveSheet()->setCellValue('A1','Type');
@@ -109,10 +112,10 @@ class Purchases extends \App\Controllers\Report
 					]);
 
 				}
-				elseif(($purchase->getValuation() - $purchase->getTotalSpend()) < getMetadata("undervalued_ebay")){
+				elseif(($purchase->getValuation() - $purchase->getTotalSpend()) < ($ebaySaleVendor->calculateFee($purchase->getValuation()) + $ebayPaymentVendor->calculateFee($purchase->getValuation()))){
 					
 					array_push($transactions, [
-						'type' => 'LOW_EBAY_PROFIT',
+						'type' => 'EBAY_LOSS',
 						'id' => $purchase->getId(),	
 						'name' => $purchase->getname(),
 						'valuation' => $purchase->getValuation(),
@@ -121,7 +124,18 @@ class Purchases extends \App\Controllers\Report
 					]);
 
 				}
-				
+				elseif(((($ebaySaleVendor->calculateFee($purchase->getValuation()) + $ebayPaymentVendor->calculateFee($purchase->getValuation())) + $purchase->getTotalSpend() / 100) * getMetadata("undervalued_percentage"))  > ($purchase->getValuation() - $purchase->getTotalSpend())){				
+					
+					array_push($transactions, [
+						'type' => 'EBAY_LOW_PROFIT',
+						'id' => $purchase->getId(),	
+						'name' => $purchase->getname(),
+						'valuation' => $purchase->getValuation(),
+						'spend' => $purchase->getTotalSpend(),
+						'profit' => $purchase->getValuation() - $purchase->getTotalSpend(),
+					]);
+
+				}				
 				
 				
 			}
