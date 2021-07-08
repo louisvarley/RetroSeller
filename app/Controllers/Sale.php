@@ -123,8 +123,8 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setPostageCost($data['sale']['postage_cost']);	
 		$sale->setPostageAmount($data['sale']['postage_amount']);
 		
-		$saleVendorFee = (($saleVendor->getPercentageFee() / 100) * $data['sale']['gross_amount']) + $saleVendor->getFixedFee();
-		$paymentVendorFee = (($paymentVendor->getPercentageFee() / 100) * $data['sale']['gross_amount']) + $paymentVendor->getFixedFee();
+		$saleVendorFee = $saleVendor->calculateFee($data['sale']['gross_amount']);
+		$paymentVendorFee = $paymentVendor->calculateFee($data['sale']['gross_amount']);
 		
 		$sale->setFeeCost($saleVendorFee + $paymentVendorFee);		
 		

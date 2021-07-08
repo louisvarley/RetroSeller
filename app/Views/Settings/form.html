@@ -14,6 +14,38 @@
 		{% endblock %}
 		
 		{% block form_body %}
+
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'eBay Import Settings',
+				'subtitle': 'Settings for eBay Sale importing', 
+				
+			}%}	
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'eBay Sale Vendor',		
+				'id': 'ebay_sale', 
+				'name': "#{controller}[ebay_sale_vendor_id]", 
+				'description': 'What vendor have you setup for eBay Sales?',
+				'required': 'required',
+				'value': settings.ebay_sale_vendor_id,
+				'options': saleVendors			
+			}%}		
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'eBay Management Payment Vendor',		
+				'id': 'ebay_payment', 
+				'name': "#{controller}[ebay_payment_vendor_id]", 
+				'description': 'What Vendor have you setup for eBay Management Payments?',
+				'required': 'required',
+				'value': settings.ebay_payment_vendor_id,
+				'options': paymentVendors			
+			}%}					
+		
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'Report Settings',
+				'subtitle': 'Settings used for report generation', 
+				
+			}%}			
 		
 			{% include "Forms/Elements/text-percentage.html" with {
 				'label' : 'Undervalued Percentage',

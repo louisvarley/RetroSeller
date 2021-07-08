@@ -83,4 +83,11 @@ class SaleVendor
     {
         $this->color = $color;
     }			
+	
+	
+	public function calculateFee($amount){
+	
+		return (($this->getPercentageFee() / 100) * $amount) + $this->getFixedFee();	
+	}
+	
 }

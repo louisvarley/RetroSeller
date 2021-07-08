@@ -39,7 +39,11 @@ class Settings extends \Core\Controller
 		View::renderTemplate('Settings/form.html', array_merge(
 				$this->route_params, 
 				$this->page_data,
-				['settings' => $settings]
+				['settings' => $settings],
+				["saleVendors" => createOptionSet('SaleVendor', 'id','name')],
+				["saleStatuses" => createOptionSet('SaleStatus', 'id','name')],
+				["purchaseStatuses" => createOptionSet('PurchaseStatus', 'id','name')],				
+				["paymentVendors" => createOptionSet('PaymentVendor', 'id','name')],						
 			));
 	} 
 
