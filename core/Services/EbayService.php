@@ -310,7 +310,10 @@ class EbayService
 
         $imports = 0;
 		$updates = 0;
-
+		
+		$ebaySaleVendor = findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
+		$ebayPaymentVendor = findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));
+		
         /* Now Loop for any sales that need creating */
         foreach ($this->getMyOrders()->Order as $order) {
 
@@ -411,11 +414,13 @@ class EbayService
 				/* We didnt find any SKUs to Purchases so Bail */
                 if($sale->getPurchases()->count() == 0) continue;
 				
-                $sale->setFeeCost($finalValueFee);
+                $sale->setFeeCost($ebaySaleVendor->calculateFee($order->AmountPaid->value) + $ebayPaymentVendor->calculateFee($order->AmountPaid->value));
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setPostageCost(0);
                 $sale->setDate($order->CreatedTime);
+				$sale->setSaleVendor($ebaySaleVendor);
+				$sale->setPaymentVendor($ebayPaymentVendor);
 
                 entityService()->persist($sale);
                 entityService()->flush();
@@ -463,7 +468,7 @@ class EbayService
 					}	
                 }	
 				
-				$sale->setFeeCost($finalValueFee);
+				$sale->setFeeCost($ebaySaleVendor->calculateFee($order->AmountPaid->value) + $ebayPaymentVendor->calculateFee($order->AmountPaid->value));
                 $sale->setGrossAmount($order->AmountPaid->value);
                 $sale->seteBayOrderId($order->OrderID);
                 $sale->setDate($order->CreatedTime);
