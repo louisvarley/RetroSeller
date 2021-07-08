@@ -178,3 +178,14 @@ margin-bottom:10px;
 .form-control:not(textarea)  {
     height: 40px;
 }
+
+.input-group .input-group-text {
+    height: 40px;
+}
+
+.input-group .btn{
+	height: 40px;
+	line-height: 0px;
+	border-radius: 0px .3rem .3rem 0px;
+	font-size: 12px;
+}

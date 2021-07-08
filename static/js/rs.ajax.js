@@ -29,6 +29,40 @@ rs.init("sale_status_button", function(){
 	
 })
 
+rs.init("calculate_fees_button", function(){
+	
+	jQuery('.btn-calculate-fees').click(function(){
+		
+		
+		var saleVendorId = jQuery('#' + jQuery(this).data("sale-vendor-element-id")).val();
+		var paymentVendorId = jQuery('#' + jQuery(this).data("payment-vendor-element-id")).val();
+		var amount = jQuery('#' + jQuery(this).data("amount-element-id")).val();
+		var input = jQuery('#' + jQuery(this).data("fee-input-id"));
+
+		
+		jQuery.ajax({
+			url: '/api/sales/saleCalculateFees?saleVendorId=' + saleVendorId + '&paymentVendorId=' + paymentVendorId + '&amount=' + amount,
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'GET',
+			type: 'GET',
+			success: function(data){
+				
+				jQuery(input).val(data.response.message);
+				return false;
+			},
+			fail: function(data){
+				rs.throwSuccess("Error...", data['response']['error']);
+			}
+		});
+		
+		
+		
+	});
+	
+})
+
 rs.init("account_image_upload_button", function(){
 
 	/* Handle Clicked Upload */

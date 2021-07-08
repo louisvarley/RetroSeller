@@ -80,7 +80,7 @@
 			
 			{% include "Forms/Elements/select.html" with {
 				'label' : 'Sale Vendor',		
-				'id': 'status', 
+				'id': 'sale_vendor', 
 				'name': "#{controller}[sale_vendor_id]", 
 				'description': 'Vendor this sale was made through?',
 				'required': 'required',
@@ -90,7 +90,7 @@
 
 			{% include "Forms/Elements/select.html" with {
 				'label' : 'Payment Vendor',		
-				'id': 'status', 
+				'id': 'payment_vendor', 
 				'name': "#{controller}[payment_vendor_id]", 
 				'description': 'Vendor this sale was paid through?',
 				'required': 'required',
@@ -132,12 +132,15 @@
 			
 			{% if( sale.id ) %}
 
-			{% include "Forms/Elements/text-currency.html" with {
+			{% include "Forms/Elements/text-fees.html" with {
 				'label' : 'Fee Amount',			
 				'id': 'amount', 
 				'name': "#{controller}[fee_cost]", 
 				'description': 'Fee amount charged by combined Sale and Payment Vendors',
 				'required': 'required',
+				'sale_vendor_element_id': 'sale_vendor',
+				'payment_vendor_element_id': 'payment_vendor',
+				'amount_element_id': 'gross_amount',
 				'value': sale.feeCost				
 			}%}	
 			

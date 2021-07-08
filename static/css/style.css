@@ -478,6 +478,19 @@ hr {
   height: 40px;
 }
 
+/* line 182, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.input-group .input-group-text {
+  height: 40px;
+}
+
+/* line 186, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_forms.scss */
+.input-group .btn {
+  height: 40px;
+  line-height: 0px;
+  border-radius: 0px .3rem .3rem 0px;
+  font-size: 12px;
+}
+
 /* line 4, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .dataTable .btn {
   margin-left: 5px;

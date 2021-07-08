@@ -1,0 +1,14 @@
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+
+
+
+  <span class="input-group-text">£</span>
+  <input autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}readonly{% endif %} id="{{ id }}" name="{{ name }}" type="text" {{ required }} value="{{ value }}" class="form-control {{classes}}">
+  <div class="input-group-append">
+    <button data-tooltip="Recalculate the Fees based on chosen vendors" data-fee-input-id="{{ id }}" data-amount-element-id="{{amount_element_id}}" data-sale-vendor-element-id="{{sale_vendor_element_id}}" data-payment-vendor-element-id="{{payment_vendor_element_id}}" class="btn btn btn-primary btn-calculate-fees" type="button">Re-Calculate</button>
+  </div>
+
+
+{% endblock %}
+{% endembed %}
