@@ -90,7 +90,7 @@ class Purchases extends \App\Controllers\Report
 				$purchase->getValuation() > 0
 				){
 				
-				/* Lose Money just from Spend */
+				/* Spend is Greater than Valuation */
 				if($purchase->getTotalSpend() > $purchase->getValuation()){
 				
 					/* Add Gross Amount */
@@ -106,7 +106,7 @@ class Purchases extends \App\Controllers\Report
 					]);
 				
 				}
-				/* Gain is less than 10%  */				
+				/* Profit Gained is less than the Undervalued Percentage */				
 				elseif((($purchase->getTotalSpend() / 100) * getMetadata("undervalued_percentage"))  > ($purchase->getValuation() - $purchase->getTotalSpend())){
 					
 					array_push($transactions, [
@@ -121,7 +121,9 @@ class Purchases extends \App\Controllers\Report
 					]);
 
 				}
-				elseif(($purchase->getValuation() - $purchase->getTotalSpend()) < ($ebayFee)){
+				
+				/* Total Spend Plus eBay fee is greater than Valuation */
+				elseif(($purchase->getTotalSpend() + $ebayFee) > $purchase->getValuation()){
 					
 					array_push($transactions, [
 						'type' => 'EBAY_LOSS',
@@ -135,6 +137,8 @@ class Purchases extends \App\Controllers\Report
 					]);
 
 				}
+				
+				/* Profit gained is less than UnderValued Percentage when spend includes eBay Fees */
 				elseif(((($ebayFee + $purchase->getTotalSpend()) / 100) * getMetadata("undervalued_percentage"))  > ($purchase->getValuation() - $purchase->getTotalSpend())){				
 					
 					array_push($transactions, [
