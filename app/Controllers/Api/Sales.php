@@ -41,7 +41,7 @@ class Sales extends \App\Controllers\Api
 			$paymentVendor = findEntity("paymentVendor",$this->get['paymentVendorId']);
 			$amount = $this->get['amount'];
 			
-			$feeAmount = $saleVendor->calculateFee($amount) + $paymentVendor->calculateFee($amount);
+			$feeAmount = round($saleVendor->calculateFee($amount) + $paymentVendor->calculateFee($amount),2);
 			
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => $feeAmount]);
 	
