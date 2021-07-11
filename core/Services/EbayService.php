@@ -214,8 +214,8 @@ class EbayService
     {
 
         $pst = new \DateTimeZone('Europe/London');
-        $createTimeFrom = new \DateTime("-5 days");
-        $createTimeTo = new \DateTime("-0 hours");
+        $createTimeFrom = new \DateTime("-10 days");
+        $createTimeTo = new \DateTime();
 
         $request = new \DTS\eBaySDK\Trading\Types\GetOrdersRequestType();
 
@@ -351,7 +351,7 @@ class EbayService
 				/* If Quantity Available was more than 1 we will only pick SKUs up to the quantity purchased from SKUs without a SALE*/
 				if($item->Quantity > 1){
 	
-					$logLine[] = "Obtaining SKUs for Quantity of " . $item->Quantity;
+					$logLine[] = "Obtaining SKUs for Multi-Quantity Listing " . $item->Quantity;
 	
 					foreach($transactionSKUs as $transactionSKU){
 						
@@ -367,10 +367,10 @@ class EbayService
 					
 				}else{
 					
-					array_merge($fulfilledSKUs, $transactionSKUs);
+					$fulfilledSKUs = array_merge($fulfilledSKUs, $transactionSKUs);
 				}
             }
-			
+
 			$logLine[] = ["SKUS" => $fulfilledSKUs];
 	
             $sale = findBy("sale", ["ebay_order_id" => $order->OrderID]);
