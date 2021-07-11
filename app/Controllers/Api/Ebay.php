@@ -17,7 +17,7 @@ class Ebay extends \App\Controllers\Api
 
 		try{
 			
-			$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0, "log" = array()];
+			$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0, "log" => array()];
 		
 			foreach(findAll("Integration") as $integration){
 				
