@@ -17,7 +17,7 @@ class Ebay extends \App\Controllers\Api
 
 		try{
 			
-			$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0];
+			$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0, $logs = array()];
 		
 			foreach(findAll("Integration") as $integration){
 				
@@ -29,7 +29,9 @@ class Ebay extends \App\Controllers\Api
 				
 				$r = ebayService($integration->getId())->CreateSalesFromOrders();
 				$result['new_sales'] = $result['new_sales'] + $r['imports'];
-				$result['updated_sales'] = $result['updated_sales'] + $r['updates'];			
+				$result['updated_sales'] = $result['updated_sales'] + $r['updates'];	
+				array_merge($result['log'], $r['log']);
+				
 			}
 
 			

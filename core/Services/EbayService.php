@@ -310,6 +310,7 @@ class EbayService
 
         $imports = 0;
 		$updates = 0;
+		$log = [];
 		
 		$ebaySaleVendor = findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
 		$ebayPaymentVendor = findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));
@@ -318,7 +319,7 @@ class EbayService
         foreach ($this->getMyOrders()->Order as $order) {
 
             $finalValueFee = 0;
-			
+
 			/* SKUs we have fulfilled this order */
 			$fulfilledSKUs = [];
 			
@@ -327,6 +328,8 @@ class EbayService
 				/* SKUs connected to this transaction item */
 				$transactionSKUs = [];
 
+				$log[] = "Processing: " . $transaction->Item->Title;
+				
 				/* Handle Variations where SKU is within variation */
 				if($transaction->Variation){
 					$transactionSKUs = array_merge($transactionSKUs, $this->SplitSKU($transaction->Variation->SKU));
@@ -380,7 +383,7 @@ class EbayService
             if(empty($sale)){
 
                 $sale = new \App\Models\Sale();
-				
+
 				if($order->OrderStatus == "Completed"){
 					$sale->setStatus(\app\Models\SaleStatus::Paid());
 				}
@@ -430,7 +433,7 @@ class EbayService
             }else{
 				
 				$sale = $sale[0];
-				
+
 				if(count($order->ShippingServiceSelected->ShippingPackageInfo) > 0 && $order->ShippingServiceSelected->ShippingPackageInfo[0]->ActualDeliveryTime){
 					$sale->setStatus(\app\Models\SaleStatus::Paid());
 				}
@@ -482,7 +485,7 @@ class EbayService
 
         }
 
-        return ["imports" => $imports, "updates" => $updates];
+        return ["imports" => $imports, "updates" => $updates, "log" => $log];
 
     }
 
