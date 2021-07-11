@@ -318,15 +318,18 @@ class EbayService
         /* Now Loop for any sales that need creating */
         foreach ($this->getMyOrders()->Order as $order) {
 			
+			/* Will hold logs for this order */
 			$logLine = [];
 
+			/* Will hold the final value fee */
             $finalValueFee = 0;
 
-			/* SKUs we have fulfilled this order */
+			/* Will Hold SKUs we have fulfilled this order */
 			$fulfilledSKUs = [];
 
 			$logLine[] = "Processing Order: " . $order->OrderID;
 			
+			/* For each transaction in the order */
             foreach ($order->TransactionArray->Transaction as $transaction) {
 
 				/* SKUs connected to this transaction item */
@@ -340,6 +343,8 @@ class EbayService
 				}else{
 					$transactionSKUs = array_merge($transactionSKUs, $this->SplitSKU($transaction->Item->SKU));					
 				}
+	
+				$logLine[] = ["TRANSACTION_SKUS" => $transactionSKUs];
 	
 				if(!empty($transaction->FinalValueFee)){
 					$finalValueFee = $finalValueFee + $transaction->FinalValueFee->value;
@@ -356,22 +361,23 @@ class EbayService
 					foreach($transactionSKUs as $transactionSKU){
 						
 						 $purchase = findEntity("purchase", $transactionSKU);
-						 if($purchase){
+						 if($purchase){ /* If we find a purchase for this SKU but it does not have a sale, we can use it for fulfilment */
 							 if(empty($purchase->getSale())){
-								 if($fulfilled == $transaction->QuantityPurchased) continue;
+								 if($fulfilled == $transaction->QuantityPurchased) continue; /* We can bail when we have fulfilled all */
 								 $fulfilled++;
 								 $fulfilledSKUs[] = $transactionSKU;
 							 }
 						 }
 					}
-					
+				
+				/* Otherwise add all SKUs */
 				}else{
 					
 					$fulfilledSKUs = array_merge($fulfilledSKUs, $transactionSKUs);
 				}
             }
 
-			$logLine[] = ["SKUS" => $fulfilledSKUs];
+			$logLine[] = ["FULFILLED_SKUS" => $fulfilledSKUs];
 	
             $sale = findBy("sale", ["ebay_order_id" => $order->OrderID]);
 			
