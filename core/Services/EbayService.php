@@ -325,7 +325,7 @@ class EbayService
 			/* SKUs we have fulfilled this order */
 			$fulfilledSKUs = [];
 
-			$logLine[] = "Processing Order: " . $order->OrderID
+			$logLine[] = "Processing Order: " . $order->OrderID;
 			
             foreach ($order->TransactionArray->Transaction as $transaction) {
 
