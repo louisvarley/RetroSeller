@@ -324,13 +324,15 @@ class EbayService
 
 			/* SKUs we have fulfilled this order */
 			$fulfilledSKUs = [];
+
+			$logLine[] = "Processing Order: " . $order->OrderID
 			
             foreach ($order->TransactionArray->Transaction as $transaction) {
 
 				/* SKUs connected to this transaction item */
 				$transactionSKUs = [];
 
-				$logLine[] = "Processing: " . $transaction->Item->Title;
+				$logLine[] = "Processing Transaction: " . $transaction->Item->Title;
 				
 				/* Handle Variations where SKU is within variation */
 				if($transaction->Variation){
@@ -348,7 +350,9 @@ class EbayService
 
 				/* If Quantity Available was more than 1 we will only pick SKUs up to the quantity purchased from SKUs without a SALE*/
 				if($item->Quantity > 1){
-					
+	
+					$logLine[] = "Obtaining SKUs for Quantity of " . $item->Quantity;
+	
 					foreach($transactionSKUs as $transactionSKU){
 						
 						 $purchase = findEntity("purchase", $transactionSKU);
@@ -366,7 +370,9 @@ class EbayService
 					array_merge($fulfilledSKUs, $transactionSKUs);
 				}
             }
-
+			
+			$logLine[] = ["SKUS" => $fulfilledSKUs];
+	
             $sale = findBy("sale", ["ebay_order_id" => $order->OrderID]);
 			
 			/* if still empty try find by SKUs */
@@ -376,14 +382,13 @@ class EbayService
 					if(!empty($purchase)){
 						if(!empty($purchase->getSale())){
 							$sale = $purchase->getSale();
+							$logLine[] = "Found Sale By SKU";
 							continue;
 						}
 					}
 				}
 			}
 			
-			$logLine[] = ["skus" => $fulfilledSKUs];
-	
             if(empty($sale)){
 				
 				$logLine[] = "Creating New Sale";
