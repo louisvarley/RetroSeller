@@ -317,6 +317,8 @@ class EbayService
 		
         /* Now Loop for any sales that need creating */
         foreach ($this->getMyOrders()->Order as $order) {
+			
+			$logLine = [];
 
             $finalValueFee = 0;
 
@@ -328,7 +330,7 @@ class EbayService
 				/* SKUs connected to this transaction item */
 				$transactionSKUs = [];
 
-				$log[] = "Processing: " . $transaction->Item->Title;
+				$logLine[] = "Processing: " . $transaction->Item->Title;
 				
 				/* Handle Variations where SKU is within variation */
 				if($transaction->Variation){
@@ -379,9 +381,13 @@ class EbayService
 					}
 				}
 			}
-
+			
+			$logLine[] = ["skus" => $fulfilledSKUs];
+	
             if(empty($sale)){
-
+				
+				$logLine[] = "Creating New Sale";
+				
                 $sale = new \App\Models\Sale();
 
 				if($order->OrderStatus == "Completed"){
@@ -415,7 +421,13 @@ class EbayService
                 }
 
 				/* We didnt find any SKUs to Purchases so Bail */
-                if($sale->getPurchases()->count() == 0) continue;
+                if($sale->getPurchases()->count() == 0){
+					
+					$logLine[] = "No Matching SKUs were found";
+					
+					continue;
+					
+				}
 				
                 $sale->setFeeCost($ebaySaleVendor->calculateFee($order->AmountPaid->value) + $ebayPaymentVendor->calculateFee($order->AmountPaid->value));
                 $sale->setGrossAmount($order->AmountPaid->value);
@@ -431,7 +443,9 @@ class EbayService
                 $imports++;
 				
             }else{
-				
+
+				$logLine[] = "Updating Sale";
+	
 				$sale = $sale[0];
 
 				if(count($order->ShippingServiceSelected->ShippingPackageInfo) > 0 && $order->ShippingServiceSelected->ShippingPackageInfo[0]->ActualDeliveryTime){
@@ -481,7 +495,7 @@ class EbayService
 				$updates++;
 			}
 
-
+			$log[] = $logLine;
 
         }
 
