@@ -63,7 +63,6 @@ class EbayService
 				'appId' => $this->integration()->getAppId(),
 				'certId' => $this->integration()->getCertId(),
 			],
-			'oauthUserToken' => $this->integration()->getAuthToken(),
 			'ruName' => $this->integration()->getRuName(),
 		];
 		
