@@ -64,6 +64,12 @@ class Integration extends \App\Controllers\ManagerController
 			
 			$integration = findEntity($this->route_params['controller'], $this->get['state']);
 			
+			if($intergration == null){
+				 
+				die("No Intergration found with ID " . $this->get['state']);
+				
+			}
+			
 			$response = $integration->requestAccessToken($this->get['code']);
 			
 			if($response->getStatusCode() !== 200){
