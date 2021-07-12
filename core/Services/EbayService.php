@@ -99,7 +99,7 @@ class EbayService
     public function oAuthService(){
 		 return new \DTS\eBaySDK\OAuth\Services\OAuthService([
 			'credentials' => $this->config()['credentials'],
-			'ruName'      => 'Louis_Varey-LouisVar-RetroS-uwurhjxxy',
+			'ruName'      => $this->config()['ruName'],
 			'sandbox'     => false
 		]);		
     }
