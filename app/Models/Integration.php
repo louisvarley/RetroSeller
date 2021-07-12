@@ -42,6 +42,15 @@ class Integration
     */
     protected $auth_token;
 	
+	/**
+    * @ORM\Column(type="text", nullable="false")
+    */
+    protected $refresh_token;	
+	
+	/**
+    * @ORM\Column(type="text", nullable="false")
+    */
+    protected $access_token;	
 	
     public function getId()
     {
@@ -97,4 +106,91 @@ class Integration
     {
         $this->auth_token = $auth_token;
     }	
+	
+    public function getRefreshToken()
+    {
+        return $this->refresh_token;
+    }
+
+    public function setRefreshToken($refresh_token)
+    {
+        $this->refresh_token = $refresh_token;
+    }	
+	
+    public function getAccessToken()
+    {
+        return $this->access_token;
+    }
+
+    public function setAccessToken($access_token)
+    {
+        $this->access_token = $access_token;
+    }	
+	
+	public function ebay(){
+		
+		return ebayService($this->getId());
+		
+	}
+	
+	public function getStatus(){
+		
+		
+		if($this->getAccessToken() == null){
+			return "Un-Authenticated";
+			
+		}
+		
+		$response = $this->eBay()->refreshToken();	
+		
+		if($response->getStatusCode() !== 200){
+			return "Un-Authenticated";
+		}else{
+			return "Active";
+		}
+		
+	}
+	
+	public function refreshToken(){
+		
+		$response = $this->eBay()->refreshToken();
+		
+		if($response->getStatusCode() !== 200){
+			
+			return $response;
+			
+		} else {
+			
+			$this->setAccessToken($response->access_token);
+						
+			entityService()->persist($this);
+			entityService()->flush();
+			
+			return $response;
+			
+		}
+		
+	}
+
+	public function requestAccessToken($code){
+
+		$response = $this->eBay()->getUserToken($code);
+
+		if($response->getStatusCode() !== 200){
+			
+			return $response;
+			
+		} else {
+			
+			$this->setRefreshToken($response->refresh_token);
+			$this->setAccessToken($response->access_token);
+						
+			entityService()->persist($this);
+			entityService()->flush();
+			
+			return $response;
+			
+		}
+
+	}		
 }

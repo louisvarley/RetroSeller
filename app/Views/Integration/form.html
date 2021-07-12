@@ -61,17 +61,7 @@
 				'description': 'eBay Certificate ID',
 				'value': integration.certId
 			}%}		
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Auth Token',
-				'id': 'eBayAuthToken', 
-				'name': "#{controller}[authToken]", 
-				'description': 'eBay User Auth Token',
-				'value': integration.authToken
-			}%}					
-			
-			
-					
+						
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

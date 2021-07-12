@@ -43,5 +43,33 @@ class Ebay extends \App\Controllers\Api
 			return new \Core\Classes\ApiResponse(500, 0, ['message' => $e->getMessage()]);
 		}
 	}
+	
+	protected function refreshTokensGetAction(){
+
+		try{
+			
+			$log = [];
+		
+			foreach(findAll("Integration") as $integration){
+				
+				$response = $integration->refreshToken();
+				
+				
+				if($response->getStatusCode() !== 200){
+					$log[] = ['error' => $response->error, 'error_description' => $response->error_description];
+				}else{
+					
+					$log[] = ['response' => 'Integration ' . $integration->getId() . ' was refreshed successfully'];
+				}
+
+			}
+			
+			return new \Core\Classes\ApiResponse(200, 0, ['message' => "Completed", 'response' => $log]);
+	
+		}
+		catch (Exception $e) {
+			return new \Core\Classes\ApiResponse(500, 0, ['message' => $e->getMessage()]);
+		}
+	}	
 
 }

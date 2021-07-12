@@ -57,4 +57,31 @@ class Integration extends \App\Controllers\ManagerController
 		
 	}	
 	
+	/* Authenticate an Intergration */
+	public function authAction(){
+		
+		if(isset($this->get['state'])){
+			
+			$integration = findEntity($this->route_params['controller'], $this->get['state']);
+			
+			$response = $integration->requestAccessToken($this->get['code']);
+			
+			if($response->getStatusCode() !== 200){
+				
+				toastService()->throwSuccess($response->error, $response->error_description);
+			}else{
+				
+				toastService()->throwSuccess("Success...", "You Authenticated eBay to use your RetroSeller App");
+			}
+			
+			header('Location: /integration/list');
+			
+		}else{
+				
+			header("Location:" . ebayService($this->route_params['id'])->authUrl($this->route_params['id']));
+			
+		}
+		
+	}
+	
 }

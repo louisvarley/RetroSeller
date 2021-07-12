@@ -4,13 +4,15 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","User",""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","User","Status",""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td>{{ entity.id }}</td>
-			<td>{{ entity.userId }}</td>			
+			<td>{{ entity.userId }}</td>	
+			<td>{{ entity.status }}</td>				
 			<td>
+			{% include '/Buttons/ebay-auth-button.html' with {'model': controller, 'id': entity.id} %}			
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
 			</td>				
