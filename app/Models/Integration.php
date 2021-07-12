@@ -36,6 +36,11 @@ class Integration
     * @ORM\Column(type="string", nullable="false")
     */
     protected $cert_id;	
+	
+	/**
+    * @ORM\Column(type="string", nullable="false")
+    */
+    protected $ru_name;	
 
 	/**
     * @ORM\Column(type="text", nullable="false")
@@ -97,16 +102,6 @@ class Integration
         $this->cert_id = $cert_id;
     }		
 
-    public function getAuthToken()
-    {
-        return $this->auth_token;
-    }
-
-    public function setAuthToken($auth_token)
-    {
-        $this->auth_token = $auth_token;
-    }	
-	
     public function getRefreshToken()
     {
         return $this->refresh_token;
@@ -126,6 +121,18 @@ class Integration
     {
         $this->access_token = $access_token;
     }	
+	
+	public function getRuName(){
+		
+		return $this->ru_name;
+		
+	}
+	
+	public function setRuName($ru_name){
+		
+		$this->ru_name = $ru_name;
+		
+	}
 	
 	public function ebay(){
 		

@@ -33,8 +33,8 @@ class Integration extends \App\Controllers\ManagerController
 		$integration->setDevId($data['integration']['devId']);
 		$integration->setAppId($data['integration']['appId']);
 		$integration->setCertId($data['integration']['certId']);
-		$integration->setAuthToken($data['integration']['authToken']);
-		
+		$integration->setRuName($data['integration']['ruName']);
+	
 		entityService()->persist($integration);
 		entityService()->flush();
 		
@@ -47,8 +47,8 @@ class Integration extends \App\Controllers\ManagerController
 		$integration->setUserId($data['integration']['userId']);
 		$integration->setDevId($data['integration']['devId']);
 		$integration->setAppId($data['integration']['appId']);
-		$integration->setCertId($data['integration']['certId']);
-		$integration->setAuthToken($data['integration']['authToken']);		
+		$integration->setCertId($data['integration']['certId']);	
+		$integration->setRuName($data['integration']['ruName']);
 		
 		entityService()->persist($integration);
 		entityService()->flush();
@@ -57,7 +57,7 @@ class Integration extends \App\Controllers\ManagerController
 		
 	}	
 	
-	/* Authenticate an Intergration */
+	/* Authenticate an Integration */
 	public function authAction(){
 		
 		if(isset($this->get['state'])){

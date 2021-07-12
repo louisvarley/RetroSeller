@@ -37,6 +37,14 @@
 				'description': 'eBay Username',
 				'value': integration.userId
 			}%}
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Redirect URL Name',
+				'id': 'ebayRuName', 
+				'name': "#{controller}[ruName]", 
+				'description': 'Redirect URL Name',
+				'value': integration.ruName
+			}%}
 		
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'Dev ID',
