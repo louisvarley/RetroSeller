@@ -323,7 +323,10 @@ class EbayService
     {
 
 		$request = new \DTS\eBaySDK\Fulfillment\Types\GetOrdersRestRequest();
-        $response = $this->fulfillmentService()->getOrders($request);
+        
+		$request->fieldGroups("TAX_BREAKDOWN");
+		$response = $this->fulfillmentService()->getOrders($request);
+		
 
 		if($response->getStatusCode() !== 200){
 			
@@ -390,7 +393,7 @@ class EbayService
 			foreach($order->lineItems as $lineItem){
 				
 				$lineSKUs = $this->SplitSKU($lineItem->sku);
-				$fufilled = 0;
+				$fulfilled = 0;
 				
 				foreach($lineSKUs as $SKU){
 					
@@ -434,10 +437,10 @@ class EbayService
 			elseif($order->orderPaymentStatus == "PAID"){
 				$sale->setStatus(\app\Models\SaleStatus::Paid());
 			}
-			elseif($order->OrderStatus == "FAILED"){
+			elseif($order->orderPaymentStatus == "FAILED"){
 				$sale->setStatus(\app\Models\SaleStatus::Cancelled());
 			}
-			elseif($order->OrderStatus == "FULLY_REFUNDED"){
+			elseif($order->orderPaymentStatus == "FULLY_REFUNDED"){
 				$sale->setStatus(\app\Models\SaleStatus::Cancelled());
 			}				
 			else{
@@ -451,13 +454,15 @@ class EbayService
 				if($purchase) {
 					$purchase->setSale($sale);
 					
-					if($order->OrderStatus == "Completed"){
+					if($order->orderPaymentStatus == "PAID"){
 						$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
 					}
-					
-					if($order->OrderStatus == "Cancelled"){
+					elseif($order->orderPaymentStatus == "FULLY_REFUNDED"){
 						$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
-					}	
+					}
+					elseif($order->orderPaymentStatus == "FAILED"){
+						$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
+					}
 					
 					$sale->getPurchases()->add($purchase);
 				}
@@ -469,7 +474,7 @@ class EbayService
 				continue;
 			}
 			
-			$sale->setFeeCost($order->totalMarketplaceFee);
+			$sale->setFeeCost($order->paymentSummary->totalMarketplaceFee);
 			$sale->setGrossAmount($order->pricingSummary->priceSubtotal);
 			$sale->setPostageAmount($order->pricingSummary->deliveryCost);
 			
