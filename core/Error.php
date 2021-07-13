@@ -44,11 +44,14 @@ class Error
         http_response_code($code);
 
         if (_SHOW_ERRORS) {
+			
+			echo "<div style='font-family: Arial, Helvetica, sans-serif; text-align:center'>";
             echo "<h1>Fatal error</h1>";
             echo "<p id='class'>Class: '" . get_class($exception) . "'</p>";
             echo "<p id='message'>Error: '" . $exception->getMessage() . "'</p>";
             echo "<p id='stack'>Stack trace:<pre>" . $exception->getTraceAsString() . "</pre></p>";
             echo "<p id='file'>Thrown in '" . $exception->getFile() . "' on line " . $exception->getLine() . "</p>";
+			echo "</div>";
         } else {
             $log = dirname(__DIR__) . '/logs/' . date('Y-m-d') . '.txt';
             ini_set('error_log', $log);

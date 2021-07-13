@@ -12,6 +12,9 @@ use Doctrine\ORM\Query\ResultSetMapping;
  * Config
  */
  
+/* Enable or Disable Errors from being displayed */ 
+define('_SHOW_ERRORS', true); 
+  
 define("_URL_ROOT", (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://") . $_SERVER['HTTP_HOST']); 
  
 /* Directories */
@@ -70,15 +73,10 @@ if(php_sapi_name() !== 'cli'){
 	define("_URL", ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 }
 
-define('_SHOW_ERRORS', true); 
- 
+
 if(file_exists(dirname(dirname(__FILE__)) . "/app/Config.php")){
 	require(dirname(dirname(__FILE__)) . "/app/Config.php");
 }
-
-
-
-
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
 	// Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one

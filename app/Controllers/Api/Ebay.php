@@ -21,13 +21,13 @@ class Ebay extends \App\Controllers\Api
 		
 			foreach(findAll("Integration") as $integration){
 				
-				$result['updated_purchases'] = $result['updated_purchases'] + ebayService($integration->getId())->updatePurchasesWithAuctions();
+				$result['updated_purchases'] = $result['updated_purchases'] + $integration->eBay()->updatePurchasesWithAuctions();
 			}
 			
 		
 			foreach(findAll("Integration") as $integration){
 				
-				$r = ebayService($integration->getId())->CreateSalesFromOrders();
+				$r = $integration->eBay()->CreateSalesFromOrders();
 				$result['new_sales'] = $result['new_sales'] + $r['imports'];
 				$result['updated_sales'] = $result['updated_sales'] + $r['updates'];	
 				
