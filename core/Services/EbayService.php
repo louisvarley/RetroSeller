@@ -7,7 +7,6 @@ use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use \DTS\eBaySDK\Trading\Enums;
 
-
 namespace Core\Services;
 
 class EbayService
@@ -78,6 +77,28 @@ class EbayService
 			'authorization' => $this->integration()->getAccessToken()
         ]);		
 	}
+	
+    /**
+     *
+     * @return AnalyticsService Instance
+     */
+	public function analyticsService(){
+
+        return new \DTS\eBaySDK\Analytics\Services\AnalyticsService([
+			'authorization' => $this->integration()->getAccessToken()
+        ]);		
+	}
+
+    /**
+     *
+     * @return IdentityService Instance
+     */
+	public function accountService(){
+
+        return new \DTS\eBaySDK\Account\Services\AccountService([
+			'authorization' => $this->integration()->getAccessToken()
+        ]);		
+	}	
 	
     /**
      *
@@ -163,6 +184,22 @@ class EbayService
 	
 	}
 	
+	public function userTokenIsValid(){
+
+		$response = $this->accountService()->getAccountPrivileges();
+		
+		if($response->getStatusCode() !== 200){
+			
+			return false;
+			
+		} else {
+
+			return true;
+			
+		}
+		
+	}
+	
 	/**
      * Return Response for Refresh UserToken
      * @return RefreshUserTokenRestResponse Instance
@@ -214,9 +251,6 @@ class EbayService
         $request->SortingOrder = \DTS\eBaySDK\Trading\Enums\SortOrderCodeType::C_DESCENDING;
         $request->OrderIDArray = new \DTS\eBaySDK\Trading\Types\OrderIDArrayType();
         $request->OrderIDArray->OrderID[] = $orderId;
-
-        $response = $this->tradingService()->getOrders($request);
-
 
         $response = $this->tradingService()->getOrders($request);
 
@@ -290,7 +324,6 @@ class EbayService
 		$request = new \DTS\eBaySDK\Trading\Types\GetItemRequestType();
 
         $request->RequesterCredentials = new \DTS\eBaySDK\Trading\Types\CustomSecurityHeaderType();
-        $request->RequesterCredentials->eBayAuthToken = $this->config()['oauthUserToken'];
 
         $request->ItemID = $itemId;
 
@@ -323,10 +356,7 @@ class EbayService
     {
 
 		$request = new \DTS\eBaySDK\Fulfillment\Types\GetOrdersRestRequest();
-        
-		$request->fieldGroups("TAX_BREAKDOWN");
 		$response = $this->fulfillmentService()->getOrders($request);
-		
 
 		if($response->getStatusCode() !== 200){
 			
@@ -347,7 +377,9 @@ class EbayService
      */		
 	public function updatePurchasesWithAuctions()
 	{
-		
+
+		return 0;
+
 		$updates = 0;
 
         foreach ($this->getMyActiveAuctions()->ItemArray->Item as $activeAuction) {
@@ -369,67 +401,100 @@ class EbayService
 		
 	}
 
-	
+
+
 
     /**
      * Takes all orders and creates / updates sales
      * @return array[imports, updated, log] 
      */	
     public function CreateSalesFromOrders(){
-
+		
         $imports = 0;
 		$updates = 0;
+		$result = [];
 
 		/* Save Vendors we will use later */
 		$ebaySaleVendor = findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
 		$ebayPaymentVendor = findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));
 		
-        /* Now Loop for any sales that need creating */
+        /* Start By Looping all our orders */
         foreach ($this->getMyOrdersRest() as $order) {
 			
-			$fulfilledSKUs = [];
+			/* These are any purchases this order fulfilled */
+			$fulfilledPurchaseIds = [];
 			
 			/* GET all SKUs for this line */
 			foreach($order->lineItems as $lineItem){
 				
-				$lineSKUs = $this->SplitSKU($lineItem->sku);
 				$fulfilled = 0;
 				
-				foreach($lineSKUs as $SKU){
+				/* Get the Item Itself */
+				$item = $this->getItem($lineItem->legacyItemId);
+				
+				/* All SKUs in this Line Split and Cleaned */
+				$lineSkus = $this->SplitSKU($lineItem->sku);
+							
+				foreach($lineSkus as $sku){
 					
-					$purchase = findEntity("purchase", $SKU);
+					/* Find a purchase for this given SKU */
+					$purchase = findEntity("purchase", $sku);
 
-					if($purchase && empty($purchase->getSale())){
-						$fulfilled++;
-						$fulfilledSKUs[] = $SKU;
-						if($fulfilled == $lineItem->quantity) continue; 
-					}
-					
-				}
-			}
-			
-			/* Find Sale By Order ID */
-			$sales = findBy("sale", ["ebay_order_id" => $order->orderId]);
-			
-			/* Find Sale By One of the SKUs */
-			if(empty($sales)){
-				foreach($fulfilledSKUs as $SKU){
-				$purchase = findEntity("purchase",$SKU);					
-					if(!empty($purchase)){
-						if(!empty($purchase->getSale())){
-							$sale = $purchase->getSale();
-							continue;
+					/* If we found a Matched Purchase */
+					if($purchase){
+						
+						/* If more than 1 was for sale, and this SKU has sold, move to next */
+						if($item->quantity > 1 && $purchase->getSale() != null) continue;
+						
+						/* We can only fulfill the SKU if not already sold */
+						if($purchase->getSale() == null){
+
+							/* We can bail if we have already fulfilled */
+							if($fulfilled < $lineItem->quantity){
+
+								/* add purchase ID to fulfilled purchases */
+								$fulfilledPurchaseIds[] = $purchase->getId();
+								
+								/* Increment fulfilled count */
+								$fulfilled++;
+							}						
+
 						}
 					}
 				}
-			}else{
-				$sale = $sales[0];
 			}
 			
-			/* New Sale */
+			/* If at this point, we fulfilled nothing, then continue */
+			if(empty($fulfilledPurchaseIds)) continue;
+			
+			/* Find Sales where the ebay_order_id matches our order ID */
+			$sales = findBy("sale", ["ebay_order_id" => $order->orderId]);
+			
+			/* Found the sale by its orderId */
+			if(!empty($sales)){
+				
+				$sale = $sales[0];
+
+			/* Try and find the sale by SKU Instead */
+			}else{
+				
+				/* Try and find the sale by one of it's SKUs */
+				foreach($fulfilledPurchaseIds as $purchaseId){
+					
+					$purchase = findEntity("purchase", $purchaseId);
+					
+					if(!empty($purchase) && !empty($purchase->getSale())){
+						$sale = $purchase->getSale();
+					}
+				}
+			}
+			
+			/* If we still did not match, then its a New Sale */
 			if(empty($sale)){
 				$sale = new \App\Models\Sale();
 			}
+			
+			/* Sale is either now an existing or new sale */
 			
 			if($order->orderFulfillmentStatus == "FULFILLED"){
 				$sale->setStatus(\app\Models\SaleStatus::Dispatched());
@@ -447,11 +512,16 @@ class EbayService
 				$sale->setStatus(\app\Models\SaleStatus::UnPaid());
 			}						
 
+			/* Clear all purchases */
 			$sale->getPurchases()->clear();
 
-			foreach($fulfilledSKUs as $SKU){
-				$purchase = findEntity("purchase", $SKU);
-				if($purchase) {
+			/* Attach Purchases to the Sale */
+			foreach($fulfilledPurchaseIds as $purchaseId){
+				
+				$purchase = findEntity("purchase", $purchaseId);
+				
+				if($purchase){
+
 					$purchase->setSale($sale);
 					
 					if($order->orderPaymentStatus == "PAID"){
@@ -465,8 +535,8 @@ class EbayService
 					}
 					
 					$sale->getPurchases()->add($purchase);
-				}
 				
+				}
 			}
 
 			/* We didnt find any SKUs to Purchases so Bail */
@@ -474,28 +544,43 @@ class EbayService
 				continue;
 			}
 			
-			$sale->setFeeCost($order->paymentSummary->totalMarketplaceFee);
-			$sale->setGrossAmount($order->pricingSummary->priceSubtotal);
-			$sale->setPostageAmount($order->pricingSummary->deliveryCost);
+			/* Total Fees */
+			$sale->setFeeCost(0);
 			
-			$sale->seteBayOrderId($order->OrderID);
-			$sale->setPostageCost($order->pricingSummary->deliveryCost);
-			$sale->setDate($order->creationDate);
+			/* Gross Amount (Without Postage */
+			$sale->setGrossAmount($order->pricingSummary->priceSubtotal->value);
+			
+			/* Postage Amount */
+			$sale->setPostageAmount($order->pricingSummary->deliveryCost->value);
+			
+			/* Postage Cost */
+			$sale->setPostageCost($order->pricingSummary->deliveryCost->value);
+			
+			/* Order ID */
+			$sale->seteBayOrderId($order->orderId);
+			
+			/* Created Date */
+			$sale->setDate(new \DateTime($order->creationDate)); 
+			
+			/* Vendors */
 			$sale->setSaleVendor($ebaySaleVendor);
 			$sale->setPaymentVendor($ebayPaymentVendor);
 
 			if($sale->getId()) $updates++;
-			if(empty($sale->getId())) $imports++;			
+			if(empty($sale->getId())) $imports++;		
 
-			entityService()->persist($sale);
-			entityService()->flush();
-
-
+			if($sale->getId()) $result[] = "Updated Sale " . $sale->getId();
+			if(empty($sale->getId())) $result[] = "New Sale";
 			
+			//entityService()->persist($sale);
+			//entityService()->flush();
+			
+			unset($sale);
+
 		}
 		
 
-        return ["imports" => $imports, "updates" => $updates];
+        return ["imports" => $imports, "updates" => $updates, "result" => $result];
 
     }
 

@@ -142,20 +142,11 @@ class Integration
 	
 	public function getStatus(){
 		
-		
 		if($this->getAccessToken() == null){
-			return "Un-Authenticated";
-			
+			return "unauthenticated";
 		}
 		
-		$response = $this->eBay()->refreshToken();	
-		
-		if($response->getStatusCode() !== 200){
-			return "Un-Authenticated";
-		}else{
-			return "Active";
-		}
-		
+		return $this->accessTokenValid() ? 'authenticated' : 'expired' ;
 	}
 	
 	public function refreshToken(){
@@ -199,5 +190,12 @@ class Integration
 			
 		}
 
-	}		
+	}	
+
+
+	public function accessTokenValid(){
+		
+		return $this->ebay()->userTokenIsValid();		
+		
+	}
 }

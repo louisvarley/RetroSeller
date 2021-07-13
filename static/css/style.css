@@ -691,7 +691,25 @@ table th {
   color: #fff;
 }
 
-/* line 91, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+/* line 92, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+.badge-integration.expired {
+  background-color: #e51c23;
+  color: #fff;
+}
+
+/* line 97, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+.badge-integration.authenticated {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+/* line 102, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
+.badge-integration.unauthenticated {
+  background-color: #777b80;
+  color: #fff;
+}
+
+/* line 111, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-float {
   position: relative;
   top: -15px;
