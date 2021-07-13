@@ -74,7 +74,8 @@ class EbayService
 	public function fulfillmentService(){
 
         return new \DTS\eBaySDK\Fulfillment\Services\FulfillmentService([
-			'authorization' => $this->integration()->getAccessToken()
+			'authorization' => $this->integration()->getAccessToken(),
+            'siteId' => \DTS\eBaySDK\Constants\SiteIds::GB				
         ]);		
 	}
 	
@@ -420,7 +421,7 @@ class EbayService
 		
         /* Start By Looping all our orders */
         foreach ($this->getMyOrdersRest() as $order) {
-			
+
 			/* These are any purchases this order fulfilled */
 			$fulfilledPurchaseIds = [];
 			
@@ -437,38 +438,86 @@ class EbayService
 							
 				foreach($lineSkus as $sku){
 					
+					/* Find the Quantity Avaliable for Sale quantitys of more than 1, imply each SKU is one of the quantity, otherwise, all SKUs are included*/
+					
+					if(!empty($item->Variations)){
+					
+						foreach($item->Variations->Variation as $variation){
+							
+							foreach($this->SplitSKU($variation->SKU) as $variationSku){
+								
+								if($variationSku == $sku){
+									$quantity = $variation->Quantity;
+								}
+							}
+						}
+					
+					}else{
+						
+						$quantity = $item->Quantity;
+						
+					}
+			
 					/* Find a purchase for this given SKU */
 					$purchase = findEntity("purchase", $sku);
 
 					/* If we found a Matched Purchase */
 					if($purchase){
-						
-						/* If more than 1 was for sale, and this SKU has sold, move to next */
-						if($item->quantity > 1 && $purchase->getSale() != null) continue;
-						
-						/* We can only fulfill the SKU if not already sold */
-						if($purchase->getSale() == null){
+							
+						/* If Listing was a multi-quantity listing we have to do some fulfilment counting */
+						if($quantity > 1){
 
-							/* We can bail if we have already fulfilled */
-							if($fulfilled < $lineItem->quantity){
+							/* Stop when we have fulfilled the correct quantity */
+							if($fulfilled == $lineItem->quantity) continue;
+
+							/* If this is a new sale and purchase has no sale  */
+							if($purchase->getSale() == null){
 
 								/* add purchase ID to fulfilled purchases */
 								$fulfilledPurchaseIds[] = $purchase->getId();
-								
-								/* Increment fulfilled count */
 								$fulfilled++;
-							}						
+														
+							/* If it was an existing sale, add anyway */
+							}
 
-						}
+						/* Otherwise we can just safely add it */
+						}else{
+
+							$fulfilledPurchaseIds[] = $purchase->getId();
+
+						}							
+
 					}
+				}
+			}
+
+			/* Are we dealing with an existing sale? */
+			$sales = findBy("sale", ["ebay_order_id" => $order->orderId]);
+			
+			if(!empty($sales)){
+				$sale = $sales[0];
+			}
+			
+			/* We didnt match purchases above using SKUs but we do have a matched sale */
+			if(empty($fulfilledPurchaseIds) && !empty($sale)){
+				
+				foreach($sale->getPurchases() as $purchase){
+					$fulfilledPurchaseIds[] = $purchase->getId();
 				}
 			}
 			
 			/* If at this point, we fulfilled nothing, then continue */
-			if(empty($fulfilledPurchaseIds)) continue;
+			if(empty($fulfilledPurchaseIds) && empty($sale)){
+				$result[] = [
+					"type" => "error", 
+					"error" => "No Fulfillable Purchases Found",
+					"saleId" => null, 
+					"orderId" => $order->orderId,
+					"lineSkus" => $lineSkus
+				];
+				continue;
+			}
 			
-			/* Find Sales where the ebay_order_id matches our order ID */
-			$sales = findBy("sale", ["ebay_order_id" => $order->orderId]);
 			
 			/* Found the sale by its orderId */
 			if(!empty($sales)){
@@ -541,20 +590,27 @@ class EbayService
 
 			/* We didnt find any SKUs to Purchases so Bail */
 			if($sale->getPurchases()->count() == 0){
+				$result[] = [
+					"type" => "error", 
+					"error" => "Sale had no purchases attached",
+					"saleId" => null, 
+					"orderId" => $order->orderId,
+					"lineSkus" => $lineSkus
+					];
 				continue;
 			}
 			
 			/* Total Fees */
-			$sale->setFeeCost(0);
-			
+			//$sale->setFeeCost(0);
+
 			/* Gross Amount (Without Postage */
-			$sale->setGrossAmount($order->pricingSummary->priceSubtotal->value);
+			$sale->setGrossAmount($order->pricingSummary->priceSubtotal->convertedFromValue);
 			
 			/* Postage Amount */
-			$sale->setPostageAmount($order->pricingSummary->deliveryCost->value);
+			$sale->setPostageAmount($order->pricingSummary->deliveryCost->convertedFromValue);
 			
 			/* Postage Cost */
-			$sale->setPostageCost($order->pricingSummary->deliveryCost->value);
+			//$sale->setPostageCost($order->pricingSummary->deliveryCost->convertedFromValue);
 			
 			/* Order ID */
 			$sale->seteBayOrderId($order->orderId);
@@ -565,22 +621,43 @@ class EbayService
 			/* Vendors */
 			$sale->setSaleVendor($ebaySaleVendor);
 			$sale->setPaymentVendor($ebayPaymentVendor);
+			
+			
 
 			if($sale->getId()) $updates++;
 			if(empty($sale->getId())) $imports++;		
 
-			if($sale->getId()) $result[] = "Updated Sale " . $sale->getId();
-			if(empty($sale->getId())) $result[] = "New Sale";
+			if($sale->getId()) $result[] = [
+				"type" => "updated", 
+				"saleId" => $sale->getId(), 
+				"orderId" => $order->orderId, 
+				"purchases" => $fulfilledPurchaseIds, 
+				"title" => $sale->getPurchasesString(),				
+				"grossAmount" => $sale->getGrossAmount(),
+				"postageAmount" => $sale->getPostageAmount(),
+				"postageCost" => $sale->getPostageCost()
+			];
 			
-			//entityService()->persist($sale);
-			//entityService()->flush();
+			if(empty($sale->getId())) $result[] = [
+				"type" => "new", 
+				"saleId" => null, 
+				"orderId" => $order->orderId, 
+				"purchases" => $fulfilledPurchaseIds, 
+				"title" => $sale->getPurchasesString(),
+				"grossAmount" => $sale->getGrossAmount(),
+				"postageAmount" => $sale->getPostageAmount(),
+				"postageCost" => $sale->getPostageCost()
+			];
+			
+			entityService()->persist($sale);
+			entityService()->flush();
 			
 			unset($sale);
 
 		}
 		
 
-        return ["imports" => $imports, "updates" => $updates, "result" => $result];
+        return ["imports" => $imports, "updates" => $updates, "log" => $result];
 
     }
 

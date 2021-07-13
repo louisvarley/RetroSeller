@@ -70,7 +70,7 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setPaymentVendor($paymentVendor);		
 		$sale->setSaleVendor($saleVendor);
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));
-
+		$sale->seteBayOrderId($data['sale']['ebay_order_id'])
 		
 		entityService()->persist($sale);
 		
@@ -108,7 +108,7 @@ class Sale extends \App\Controllers\ManagerController
 			$purchase = findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
 			
-			if($sale->isComplete()){
+			if($sale->isPaid()){
 				$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
 			}		
 			
@@ -122,7 +122,8 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
 		$sale->setPostageCost($data['sale']['postage_cost']);	
 		$sale->setPostageAmount($data['sale']['postage_amount']);
-		
+		$sale->seteBayOrderId($data['sale']['ebay_order_id'])
+
 		$saleVendorFee = $saleVendor->calculateFee($data['sale']['gross_amount']);
 		$paymentVendorFee = $paymentVendor->calculateFee($data['sale']['gross_amount']);
 		

@@ -130,8 +130,16 @@
 				'value': sale.postageCost				
 			}%}	
 			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'ebay Order Number',			
+				'id': 'ebay_order_id', 
+				'name': "#{controller}[ebay_order_id]", 
+				'description': 'eBay Order Number Links sale to eBay Order',
+				'value': sale.eBayOrderId				
+			}%}					
+			
 			{% if( sale.id ) %}
-
+						
 			{% include "Forms/Elements/text-fees.html" with {
 				'label' : 'Fee Amount',			
 				'id': 'amount', 
