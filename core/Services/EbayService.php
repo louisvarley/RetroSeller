@@ -73,7 +73,7 @@ class EbayService
      */
 	public function fulfillmentService(){
 
-        return new \Extensions\eBaySDK\Fulfillment\Services\FulfillmentExtService([
+		 return new \DTS\eBaySDK\Fulfillment\Services\FulfillmentService([
 			'authorization' => $this->integration()->getAccessToken(),
             'siteId' => \DTS\eBaySDK\Constants\SiteIds::GB				
         ]);		
@@ -357,8 +357,14 @@ class EbayService
     {
 
 		$request = new \DTS\eBaySDK\Fulfillment\Types\GetOrdersRestRequest();
+		
+		$time = strtotime("-5 day");
+		$tMicro = sprintf("%03d",($time - floor($time)) * 1000);
+		$tUtc = gmdate('Y-m-d\TH:i:s.', $time).$tMicro.'Z';
+		$request->filter = "creationdate:%5B" . $tUtc . "511Z..%5D";
+		
 		$response = $this->fulfillmentService()->getOrders($request);
-
+		
 		if($response->getStatusCode() !== 200){
 			
 			return $response;
