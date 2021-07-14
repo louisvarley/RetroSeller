@@ -73,7 +73,7 @@ class EbayService
      */
 	public function fulfillmentService(){
 
-        return new \DTS\eBaySDK\Fulfillment\Services\FulfillmentService([
+        return new \Extensions\eBaySDK\Fulfillment\Services\FulfillmentExtService([
 			'authorization' => $this->integration()->getAccessToken(),
             'siteId' => \DTS\eBaySDK\Constants\SiteIds::GB				
         ]);		
@@ -428,14 +428,16 @@ class EbayService
 			/* GET all SKUs for this line */
 			foreach($order->lineItems as $lineItem){
 				
+				/* All SKUs in this Line Split and Cleaned */
+				$lineSkus = $this->SplitSKU($lineItem->sku);
+				
+				if(empty($lineSkus)) continue;
+				
 				$fulfilled = 0;
 				
 				/* Get the Item Itself */
 				$item = $this->getItem($lineItem->legacyItemId);
-				
-				/* All SKUs in this Line Split and Cleaned */
-				$lineSkus = $this->SplitSKU($lineItem->sku);
-							
+						
 				foreach($lineSkus as $sku){
 					
 					/* Find the Quantity Avaliable for Sale quantitys of more than 1, imply each SKU is one of the quantity, otherwise, all SKUs are included*/
