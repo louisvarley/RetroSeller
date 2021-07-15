@@ -612,11 +612,19 @@ class EbayService
 			//$sale->setFeeCost(0);
 
 			/* Gross Amount (Without Postage */
-			$sale->setGrossAmount($order->pricingSummary->priceSubtotal->convertedFromValue);
+			if(null == $order->pricingSummary->priceSubtotal->convertedFromValue){
+				$sale->setGrossAmount($order->pricingSummary->priceSubtotal->value);
+			}else{
+				$sale->setGrossAmount($order->pricingSummary->priceSubtotal->convertedFromValue);
+			}
 			
 			/* Postage Amount */
-			$sale->setPostageAmount($order->pricingSummary->deliveryCost->convertedFromValue);
-			
+			if(null == $order->pricingSummary->deliveryCost->convertedFromValue){
+				$sale->setPostageAmount($order->pricingSummary->deliveryCost->value);
+			}else{
+				$sale->setPostageAmount($order->pricingSummary->deliveryCost->convertedFromValue);
+			}			
+
 			/* Postage Cost */
 			//$sale->setPostageCost($order->pricingSummary->deliveryCost->convertedFromValue);
 			

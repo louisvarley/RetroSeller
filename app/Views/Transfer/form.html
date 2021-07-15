@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Transfer{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( transfer.id ) %}
+			
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'ID',
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'description': 'ID of this transfer',
+					'readonly': 'readonly',
+					'value': transfer.id
+				}%}
+				
+				<hr class="my-4">		
+
+			{% endif %}		
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Name',
+				'id': 'name', 
+				'name': "#{controller}[name]", 
+				'description': 'Transfer Name',
+				'value': transfer.name
+			}%}			
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Account From',		
+				'id': 'account_from_id', 
+				'name': "#{controller}[account_from_id]", 
+				'description': 'Account making this transaction?',
+				'required': 'required',
+				'value': transfer.accountFrom.id,
+				'options': accounts						
+			}%}
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Account To',		
+				'id': 'account_to_id', 
+				'name': "#{controller}[account_to_id]", 
+				'description': 'Account making this transaction?',
+				'required': 'required',
+				'value': transfer.accountTo.id,
+				'options': accounts						
+			}%}			
+			
+			{% include "Forms/Elements/text-date.html" with {
+				'label' : 'Date',	
+				'id': 'date', 
+				'name': "#{controller}[date]", 
+				'description': 'Date this transfer was made',
+				'required': 'required',
+				'value' : transfer.date				
+			}%}				
+
+		
+			{% include "Forms/Elements/text-currency.html" with {
+				'label' : 'Amount',			
+				'id': 'amount', 
+				'name': "#{controller}[amount]", 
+				'description': 'Price paid for this transfer',
+				'required': 'required',
+				'value': transfer.amount				
+			}%}			
+					
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -46,15 +46,17 @@ class Accounts extends \App\Controllers\Report
 		
 		$spreadsheet->getActiveSheet()->setCellValue('A1','Date');
 		$spreadsheet->getActiveSheet()->setCellValue('B1','Type');
-		$spreadsheet->getActiveSheet()->setCellValue('C1','Description');
-		$spreadsheet->getActiveSheet()->setCellValue('D1','Amount');	
-		$spreadsheet->getActiveSheet()->setCellValue('E1','Balance');
+		$spreadsheet->getActiveSheet()->setCellValue('C1','In/Out');		
+		$spreadsheet->getActiveSheet()->setCellValue('D1','Description');
+		$spreadsheet->getActiveSheet()->setCellValue('E1','Amount');	
+		$spreadsheet->getActiveSheet()->setCellValue('F1','Balance');
 		
 		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);		
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);			
 		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25);	
-		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(35);	
-		
+		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(50);	
+		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(35);			
+		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(25);
 
 		$spreadsheet->getActiveSheet()->getStyle("D")->applyFromArray([
 
@@ -74,15 +76,16 @@ class Accounts extends \App\Controllers\Report
 			
 		$x = 1;		
 			
-		foreach($transactions as $traasaction){
+		foreach($transactions as $transaction){
 			
 			$x++;
 
-			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $traasaction['date']);
-			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $traasaction['type']);
-			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $traasaction['description']);				
-			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $traasaction['amount']);		
-			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $traasaction['balance']);	
+			$spreadsheet->getActiveSheet()->setCellValue('A' . $x, $transaction['date']);
+			$spreadsheet->getActiveSheet()->setCellValue('B' . $x, $transaction['type']);
+			$spreadsheet->getActiveSheet()->setCellValue('C' . $x, $transaction['direction']);			
+			$spreadsheet->getActiveSheet()->setCellValue('D' . $x, $transaction['description']);				
+			$spreadsheet->getActiveSheet()->setCellValue('E' . $x, $transaction['amount']);		
+			$spreadsheet->getActiveSheet()->setCellValue('F' . $x, round($transaction['balance'],2));	
 		}
 	
 		

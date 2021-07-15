@@ -242,6 +242,38 @@ class Account
 		
 		$transactions = [];
 		
+		
+		foreach(findAll("transfer") as $transfer){
+			
+			
+			if($transfer->getAccountFrom()->getId() == $this->getId()){
+				
+				/* Add Transfer OUT */
+				array_push($transactions, [
+				'date' => $transfer->getDate(),
+				'type' => 'TRANSFER',
+				'direction' => 'OUT',
+				'description' => "TO: " . $transfer->getAccountTo()->getName() . "," . $transfer->getName(),
+				'amount' => 0 - $transfer->getAmount()
+				]);				
+			}
+
+			if($transfer->getAccountTo()->getId() == $this->getId()){
+				
+				/* Add Transfer OUT */
+				array_push($transactions, [
+				'date' => $transfer->getDate(),
+				'type' => 'TRANSFER',
+				'direction' => 'IN',
+				'description' => "FROM: " . $transfer->getAccountFrom()->getName() . "," . $transfer->getName(),
+				'amount' => $transfer->getAmount()
+				]);					
+				
+			}
+			
+			
+		}
+		
 		/* For Each Sale */
 		foreach($this->getSales() as $sale){
 			
@@ -263,7 +295,8 @@ class Account
 									/* Add Expense */
 									array_push($transactions, [
 									'date' => $sale->getDate(),
-									'type' => 'EXPENSE_PAY_OUT',
+									'type' => 'EXPENSE',
+									'direction' => 'IN',
 									'description' => $expense->getName(),
 									'amount' => $expense->getAmount() / $expense->getPurchases()->count()
 									]);
@@ -276,7 +309,8 @@ class Account
 				/* Add Profit From This Sale */
 				array_push($transactions, [
 				'date' => $sale->getDate(),
-				'type' => "PROFIT_PAY_OUT",
+				'type' => "PROFIT_IN",
+				'direction' => 'IN',				
 				'description' => $sale->getPurchasesString(),
 				'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
 				]);
@@ -296,7 +330,8 @@ class Account
 					
 						array_push($transactions, [
 						'date' => $buyout->getDate(),
-						'type' => "BUYOUT_PAY_OUT",
+						'type' => "BUYOUT",
+						'direction' => 'IN',						
 						'description' => $buyout->getPurchase()->getName() . ' buyout from ' . $buyout->getAccount()->getName(),
 						'amount' => $expense->getAmount() / $expense->getPurchases()->count()
 						]);
@@ -307,7 +342,8 @@ class Account
 					/* Otherwise, you are paying the buyout */
 					array_push($transactions, [
 					'date' => $buyout->getDate(),
-					'type' => "BUYOUT_PAY_IN",
+					'type' => "BUYOUT",
+					'direction' => 'OUT',					
 					'description' => $buyout->getPurchase()->getName() . ' buyout paid to ' . $expense->getAccount()->getName(),
 					'amount' => 0 - $expense->getAmount() / $expense->getPurchases()->count()
 					]);
@@ -324,6 +360,7 @@ class Account
 				array_push($transactions, [
 					'date' => $withdrawal->getDate(),
 					'type' => "WITHDRAW",
+					'direction' => 'OUT',
 					'description' =>$withdrawal->getDescription(),
 					'amount' => 0 - $withdrawal->getAmount()
 					]);
