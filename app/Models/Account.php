@@ -214,7 +214,7 @@ class Account
 		
 		foreach($this->getTransactions() as $transaction){
 			
-			if($transaction['type'] == 'PROFIT_PAY_OUT'){
+			if($transaction['type'] == 'PROFIT' && $transaction['direction'] == 'IN'){
 				$amount = $amount + $transaction['amount'];
 			}
 			
@@ -309,7 +309,7 @@ class Account
 				/* Add Profit From This Sale */
 				array_push($transactions, [
 				'date' => $sale->getDate(),
-				'type' => "PROFIT_IN",
+				'type' => "PROFIT",
 				'direction' => 'IN',				
 				'description' => $sale->getPurchasesString(),
 				'amount' => $sale->getProfitAmount() / $sale->getAccounts()->count()
