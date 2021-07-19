@@ -215,6 +215,29 @@ hr {
   padding: 5px;
 }
 
+/* line 238, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.sale-purchase-collapse .card {
+  background: none;
+  box-shadow: none;
+  padding: 3px;
+}
+
+/* line 244, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.sale-purchase-collapse ul, .sale-purchase-collapse li {
+  list-style: none;
+  padding-left: 0px;
+}
+
+/* line 249, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.sale-purchase-collapse a {
+  text-decoration: none;
+}
+
+/* line 254, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
+.expand-sale-purchases {
+  font-size: 9px;
+}
+
 /* Toasts */
 /* line 3, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_toast.scss */
 .toast {

@@ -231,3 +231,26 @@ background-image: var(--bs-gradient);
 .dropdown-menu {
     padding: 5px;
 }
+
+
+.sale-purchase-collapse{
+
+.card{
+	background: none;
+	box-shadow: none;
+	padding: 3px;
+	
+	}
+	ul, li{
+	list-style: none;
+	padding-left: 0px;
+	}
+	
+	a{
+		text-decoration: none;
+	}
+}
+
+.expand-sale-purchases{
+	font-size:9px;
+}
