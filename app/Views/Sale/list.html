@@ -38,7 +38,7 @@
 					{% for purchase in entity.purchases |slice(0, 1) %}
 						<a target="_blank" href="/purchase/edit/{{purchase.getId}}">{{ purchase.getName }}</a>
 					{% endfor %}
-					 <a class="expand-sale-purchases" data-toggle="collapse" href="#collapse-purchase-{{ entity.id }}" role="button" aria-expanded="false" aria-controls="collapse-purchase-{{ entity.id }}"><small>({{ entity.purchases | length - 2}} More)</small></a>
+					 <a class="expand-sale-purchases" data-toggle="collapse" href="#collapse-purchase-{{ entity.id }}" role="button" aria-expanded="false" aria-controls="collapse-purchase-{{ entity.id }}"><small>({{ entity.purchases | length - 1}} More)</small></a>
 					<div class="sale-purchase-collapse collapse" id="collapse-purchase-{{ entity.id }}">
 					  <div class="card card-body">
 					   <ul>
