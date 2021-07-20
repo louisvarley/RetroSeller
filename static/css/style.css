@@ -219,7 +219,7 @@ hr {
 .sale-purchase-collapse .card {
   background: none;
   box-shadow: none;
-  padding: 3px;
+  padding: 0px;
 }
 
 /* line 244, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
@@ -235,7 +235,7 @@ hr {
 
 /* line 254, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_style.scss */
 .expand-sale-purchases {
-  font-size: 9px;
+  font-size: 12px;
 }
 
 /* Toasts */
@@ -619,7 +619,7 @@ table th {
   white-space: break-spaces !important;
 }
 
-/* line 103, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+/* line 104, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
 .table a {
   text-decoration: none;
 }
