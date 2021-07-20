@@ -619,6 +619,11 @@ table th {
   white-space: break-spaces !important;
 }
 
+/* line 103, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_datatables.scss */
+.table a {
+  text-decoration: none;
+}
+
 /* line 1, ../Users/louis.varley/Documents/GitHub/RetroSeller/Static/scss/_badges.scss */
 .badge-primary {
   background-color: #007bff;
