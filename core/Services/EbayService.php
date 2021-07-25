@@ -608,9 +608,6 @@ class EbayService
 				continue;
 			}
 			
-			/* Total Fees */
-			//$sale->setFeeCost(0);
-
 			/* Gross Amount (Without Postage */
 			if(null == $order->pricingSummary->priceSubtotal->convertedFromValue){
 				$sale->setGrossAmount($order->pricingSummary->priceSubtotal->value);
@@ -638,8 +635,12 @@ class EbayService
 			$sale->setSaleVendor($ebaySaleVendor);
 			$sale->setPaymentVendor($ebayPaymentVendor);
 			
-			
-
+			/* Fees */
+			$saleVendorFee = $ebaySaleVendor->calculateFee($sale->getGrossAmount());
+			$paymentVendorFee = $ebayPaymentVendor->calculateFee($sale->getGrossAmount());
+		
+			$sale->setFeeCost($saleVendorFee + $paymentVendorFee);		
+								
 			if($sale->getId()) $updates++;
 			if(empty($sale->getId())) $imports++;		
 
