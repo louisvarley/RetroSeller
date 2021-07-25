@@ -13,21 +13,12 @@ use \App\Models\Purchase;
 class Update extends \App\Controllers\Api
 {
 
-	public function GitGetAction(){
+	public function CurrentVersionGetAction(){
 		$message = "";
-		$output = shell_exec('git checkout ' . DIR_ROOT);
-		$message .= $output;
-
-		$output = shell_exec('git fetch ' . DIR_ROOT);
-		$message .= $output;
 		
-		$output = shell_exec('git pull '  . DIR_ROOT);
-		$message .= $output;		
-		
-		$output = shell_exec('chmod +x '  . DIR_ROOT . '/.update.sh');
-		$message .= $output;			
+		$version = file_get_contents(DIR_ROOT . '/.git/FETCH_HEAD');		
 
-		return new \Core\Classes\ApiResponse(200, 0, ['message' => $message]);
+		return new \Core\Classes\ApiResponse(200, 0, ['version' => $version]);
 
 	}
 
