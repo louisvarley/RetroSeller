@@ -170,7 +170,7 @@ define('_DB_DUMPER','mysqldump');";
 		}
 		
 		entityService()->flush();
-		toastService()->throwSuccess("Ready to Rock and Roll...", "You are fully Updated");	
+		toastService()->throwSuccess("Ready to Rock and Roll...", 	"Updated to Version " .  updateService()->currentVersion());	
 		
 		header('Location: /');
 				

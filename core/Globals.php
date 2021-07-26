@@ -245,7 +245,6 @@ function setMetadata($key, $value){
 
 }
 
-
 function toastService(){	
 	return \Core\Services\ToastService::instance();
 }
@@ -268,6 +267,10 @@ function eBayService($intergrationId){
 
 function notificationService(){	
 	return \Core\Services\NotificationService::instance();
+}
+
+function updateService(){	
+	return \Core\Services\UpdateService::instance();
 }
 
 function dbCheck(){

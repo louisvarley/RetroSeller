@@ -10,18 +10,23 @@ use \App\Models\Purchase;
  *
  * PHP version 7.0
  */
+
 class Update extends \App\Controllers\Api
 {
 
 	public function CurrentVersionGetAction(){
-		$message = "";
-		
-		$version = file_get_contents(DIR_ROOT . '/.git/FETCH_HEAD');
-		$version = explode("\\", $version)[0];
 
-		return new \Core\Classes\ApiResponse(200, 0, ['version' => $version]);
+
+		return new \Core\Classes\ApiResponse(200, 0, ['version' => updateService()->currentVersion()]);
 
 	}
+	
+	public function RemoteVersionGetAction(){
+
+
+		return new \Core\Classes\ApiResponse(200, 0, ['version' => updateService()->remoteVersion()]);
+
+	}	
 
 
 }

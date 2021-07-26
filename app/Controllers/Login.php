@@ -32,7 +32,13 @@ class Login extends \Core\Controller
 			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
 				
 				authenticationService()->login($user[0]);
-				header('Location: /');
+				if($this->get['redirect']){
+					header('Location:' . urldecode($this->get['redirect']));
+					die();
+				}else{
+					header('Location: /');
+				}
+				
 				
 			}else{
 			

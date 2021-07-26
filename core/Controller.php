@@ -60,7 +60,8 @@ abstract class Controller
 		if($this->authentication){
 
 			if(!authenticationService()->loggedIn()){
-				header('Location: /login');
+			
+				header('Location: /login?redirect=' . urlencode($_SERVER['REQUEST_URI']));
 				die();
 			}
 		}
