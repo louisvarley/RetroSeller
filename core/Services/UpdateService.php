@@ -40,7 +40,7 @@ class UpdateService{
 
 		$context = stream_context_create($opts);
 		
-		$build = file_get_contents("https://raw.githubusercontent.com/louisvarley/RetroSeller/main/build", false, $context);
+		$build = file_get_contents("https://raw.githubusercontent.com/louisvarley/RetroSeller/main/build?flush_cache=True", false, $context);
 
 		return $build;
 						
