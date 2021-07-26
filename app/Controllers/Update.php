@@ -26,16 +26,21 @@ class Update extends \Core\Controller
 	
 	public function installAction(){
 		
+		$current = updateService()->currentVersion();
+		
 		shell_exec('cd ' . DIR_ROOT);
-		shell_exec('git checkout ' . DIR_ROOT);
-		shell_exec('git fetch');
-		shell_exec('git pull');
-		shell_exec('chmod +x ' . DIR_ROOT . '/.update.sh');
-		shell_exec('chmod +x ' . DIR_ROOT . '/.composer.sh');
 		shell_exec('/.update.sh');
-		shell_exec('/.composer.sh');
+		
+		$new = updateService()->currentVersion();
+		
+		if($current != $new){
+			header("location:" . "/setup");		
+		}else{
+			toastService()->throwError("Update Failed", "Update failed to pull correctly, run .update.sh to manually update");
+			header("location:" . "/");			
+		}
 
-		header("location:" . "/setup");
+
 		
 	}
 	
