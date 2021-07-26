@@ -20,7 +20,7 @@ class Update extends \Core\Controller
     public function indexAction()
     {
 		
-		View::renderTemplate('Update/update.html', ['version' => ['current' => updateService()->currentVersion(), 'remote' => updateService()->remoteVersion()]]);
+		View::renderTemplate('Update/update.html', ['version' => ['updatable' => updateService()->hasNewVersion(), 'current' => updateService()->currentVersion(), 'remote' => updateService()->remoteVersion()]]);
 		
     }
 	

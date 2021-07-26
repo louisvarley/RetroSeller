@@ -29,8 +29,15 @@
 				'readonly': true,
 			}%}			
 			
+			{% if( account.id ) %}
 			
-			{% include '/Buttons/update-button.html' %}
+				{% include '/Buttons/update-button.html' %}
+			
+			{% else %}
+			
+				<h5>You are up-to-date</h5>
+			
+			{% endif %}		
 									
 		{% endblock %}
 	{% endembed %}
