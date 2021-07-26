@@ -1,0 +1,37 @@
+name: Increment Build
+
+on: 
+    push:
+        branches:
+            - develop  
+    
+jobs:
+
+  increment-build:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    
+    # Increments the build number when a push is made
+   
+    steps:
+    - uses: actions/checkout@v2            
+        
+    # Increment the Build
+    
+    - name: Increment BUILD
+      run:  sh ./.increment_build.sh 
+      
+    - name: Sets BUILD
+      run:  'echo ::set-env name=BUILD::$( cat build )'
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'      
+
+    - uses: stefanzweifel/git-auto-commit-action@v4.0.0     
+      with:
+        commit_message: Build ${{ env.BUILD }}
+        branch: ${{ github.head_ref }}   
+        commit_user_name: landscapeinstitute-bot
+        commit_user_email: admin@landscapeinstitute.org
+        commit_author: Landscape Institute GitBot <admin@landscapeinstitute.org> 
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'        
