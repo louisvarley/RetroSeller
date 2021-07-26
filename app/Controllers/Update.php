@@ -32,6 +32,8 @@ class Update extends \Core\Controller
 		shell_exec('git pull');
 		shell_exec('chmod +x ' . DIR_ROOT . '/.update.sh');
 		shell_exec('chmod +x ' . DIR_ROOT . '/.composer.sh');
+		shell_exec('/.update.sh');
+		shell_exec('/.composer.sh');
 
 		header("location:" . "/setup");
 		
