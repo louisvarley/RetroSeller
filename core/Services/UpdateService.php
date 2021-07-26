@@ -21,7 +21,7 @@ class UpdateService{
 	
 	public function currentVersion(){
 		
-		$version = file_get_contents(DIR_ROOT . '/.git/FETCH_HEAD');
+		$version = file_get_contents(DIR_ROOT . '/build');
 		$version = substr($version,0,40);
 		
 		return $version;
@@ -40,13 +40,10 @@ class UpdateService{
 
 		$context = stream_context_create($opts);
 		
-		$commits = json_decode(file_get_contents("https://api.github.com/repos/louisvarley/RetroSeller/commits", false, $context));
+		$build = file_get_contents("https://raw.githubusercontent.com/louisvarley/RetroSeller/main/build", false, $context);
 
-		$current_commit = $commits[1]->sha;
-		
-		return $current_commit;
-				
-		
+		return $build;
+						
 	}
 	
 	public function hasNewVersion(){

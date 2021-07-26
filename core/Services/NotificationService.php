@@ -10,6 +10,8 @@ class NotificationService
 
 	protected static $instance = null;
 	
+	public $notifications  = array();
+	
 	/**
 	 * 
 	 * @return CLASS INSTANCE
@@ -25,16 +27,21 @@ class NotificationService
 
 	public function fetch(){
 		
-		$notifications = array();
-		
+
 		$sales = findBy("sale", ["status" => findEntity('saleStatus', _SALE_STATUSES['PAID']['id'])]);
 		
 		foreach($sales as $sale){
-			$notifications[] = ['title' => 'Order ' . $sale->getId() . ' ready for dispatch', 'link' => 'https://www.google.com', 'icon' => 'truck'];
+			$this->notifications[] = ['title' => 'Order ' . $sale->getId() . ' ready for dispatch', 'link' => 'https://www.google.com', 'icon' => 'truck'];
 		}
 		
-		return $notifications;
+		return $this->notifications;
 		
+	}
+	
+	public function addNotification($title, $link, $icon){
+		
+		
+		$this->notifications[] = ['title' => $title, 'link' => $link, 'icon' => $icon];
 	}
 }
 

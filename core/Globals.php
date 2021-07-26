@@ -289,6 +289,10 @@ if(php_sapi_name() !== 'cli'){
 	dbCheck();
 }
 
+
+
 sessionService()->start();
 
-
+if(updateService()->hasNewVersion()){
+	NotificationService()->addNotification("New Update Available: " .  updateService()->remoteVersion(),"/update","globe-europe");
+}
