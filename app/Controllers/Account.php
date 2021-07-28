@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,14 +21,14 @@ class Account extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
 			'countries' => \Core\Classes\Countries::fetch(),
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$account = findEntity($this->route_params['controller'], $id);
+		$account = Entities::findEntity($this->route_params['controller'], $id);
 		$account->setName($data['account']['name']);
 		$account->setColor($data[$this->route_params['controller']]['color']);		
 
@@ -42,7 +42,7 @@ class Account extends \App\Controllers\ManagerController
 			
 				if($account->getBusinessAddress() == null){
 					$account->setBusinessAddress(new \app\Models\Address());
-					entityService()->persist($account->getBusinessAddress());
+					Entities::persist($account->getBusinessAddress());
 				}
 				$account->getBusinessAddress()->setLine1($data['account']['address']['line1']);	
 				$account->getBusinessAddress()->setLine2($data['account']['address']['line2']);	
@@ -52,8 +52,8 @@ class Account extends \App\Controllers\ManagerController
 				$account->getBusinessAddress()->setCountry($data['account']['address']['country']);				
 		}
 
-		entityService()->persist($account);
-		entityService()->flush();
+		Entities::persist($account);
+		Entities::flush();
 		
 	}
 	
@@ -72,7 +72,7 @@ class Account extends \App\Controllers\ManagerController
 			
 				if($account->getBusinessAddress() == null){
 					$account->setBusinessAddress(new \app\Models\Address());
-					entityService()->persist($account->getBusinessAddress());
+					Entities::persist($account->getBusinessAddress());
 				}
 				$account->getBusinessAddress()->setLine1($data['account']['address']['line1']);	
 				$account->getBusinessAddress()->setLine2($data['account']['address']['line2']);	
@@ -82,8 +82,8 @@ class Account extends \App\Controllers\ManagerController
 				$account->getBusinessAddress()->setCountry($data['account']['address']['country']);					
 		}				
 				
-		entityService()->persist($account);
-		entityService()->flush();
+		Entities::persist($account);
+		Entities::flush();
 
 		return $account->getId();
 		

@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models;
+use \Core\Services\ToastService as Toast;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -30,7 +32,7 @@ class ManagerController extends \Core\Controller
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => entityService()->find(_MODELS . $this->route_params['controller'], $id)
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id)
 		);	
 	} 
 	
@@ -59,8 +61,8 @@ class ManagerController extends \Core\Controller
      */		
 	public function deleteEntity($entity){
 		
-		entityService()->remove($entity);
-		entityService()->flush();
+		Entities::remove($entity);
+		Entities::flush();
 		
 	}
     
@@ -100,7 +102,7 @@ class ManagerController extends \Core\Controller
 		/* ON GET */
 		if($this->isGET()){
 			
-			$entity = findEntity($this->route_params['controller'], $this->route_params['id']);
+			$entity = Entities::findEntity($this->route_params['controller'], $this->route_params['id']);
 			$this->deleteEntity($entity);
 			header('Location: /'. $this->route_params['controller'] . '/list');
 			die();
@@ -118,7 +120,7 @@ class ManagerController extends \Core\Controller
 		/* ON UPDATE */
 		if($this->isPOST() && array_key_exists("id", $this->route_params)){
 			$this->updateEntity($this->route_params['id'], $this->post);
-			toastService()->throwSuccess("Saved...", "Your changes were saved");
+			toast::throwSuccess("Saved...", "Your changes were saved");
 			header('Location: /'. $this->route_params['controller'] . '/edit/' . $this->route_params['id']);
 			die();
 		}			
@@ -139,7 +141,7 @@ class ManagerController extends \Core\Controller
 		$orderBy = isset($_GET['orderby']) ? $_GET['orderby'] : "id";
 		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
 		
-		$this->render($this->route_params['controller'] . '/list.html', array("entities" => findAll($this->route_params['controller'], $orderBy, $order)));
+		$this->render($this->route_params['controller'] . '/list.html', array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order)));
 
 	}	
 		

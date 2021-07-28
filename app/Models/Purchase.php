@@ -5,6 +5,7 @@ use \App\Models\PurchaseVendor;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use \Core\Services\entityService as Entities;
 
 /**
  * @ORM\Entity
@@ -269,7 +270,7 @@ class Purchase
 		
 		$accounts = [];
 		
-		foreach(findAll("Account") as $account){
+		foreach(Entities::findAll("Account") as $account){
 			
 			$accounts[$account->getId()] = [
 			'id' => $account->getId(),

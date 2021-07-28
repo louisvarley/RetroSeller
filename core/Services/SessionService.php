@@ -4,33 +4,8 @@ namespace Core\Services;
 
 class SessionService{
 	
-	protected static $instance = null;
-	
-	public function __construct(){
-	
-		
-	}
-	
-	public static function start(){
-		if (session_status() === PHP_SESSION_NONE) {
-			session_start();
-		}	
-	}
-	
-	/**
-	 * 
-	 * @return CLASS INSTANCE
-	 */ 
-    public static function instance() {
 
-        if ( null == static::$instance ) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }	
-	
-	public function isset($key){
+	public static function isset($key){
 		if(isset($_SESSION[$key])){
 			return true;
 		}
@@ -38,34 +13,38 @@ class SessionService{
 	
 	}
 	
-	public function activity(){
+	public static function activity(){
 		
-		$this->save("activity", time());
+		self::save("activity", time());
 	}
 	
-	public function save($key, $value){
+	public static function save($key, $value){
 		$_SESSION[$key] = $value;
 	}
 	
-	public function append($key, $value){
-		if($this->isset($key)){
+	public static function append($key, $value){
+		if(self::isset($key)){
 			array_push($_SESSION[$key], $value);			
 		}else{
-			$this->save($key, $value);
+			self::save($key, $value);
 		}
 		
 	}		
 	
-	public function load($key){
-		if($this->isset($key)){
+	public static function load($key){
+		if(self::isset($key)){
 			return $_SESSION[$key];	
 		}
 	}
 	
-	public function destroy(){
+	public static function destroy(){
 		$_SESSION = array();
 		session_destroy();
 		session_start();			
+	}
+
+	public static function start(){
+		session_start();
 	}	
 	
 }

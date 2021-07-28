@@ -4,6 +4,8 @@ namespace Core;
 
 
 use Twig\Extra\Intl\IntlExtension;
+use \Core\Services\ToastService as Toast;
+use \Core\Services\pluginService as Plugins;
 
 /**
  * View
@@ -56,8 +58,18 @@ class View
 			}
 		}
 
+
+		$templateDirs = [];
+		
+		$templateDirs[] = DIR_VIEWS;
+		
+		/* Include all plugins as template dirs */
+		foreach(Plugins::list() as $plugin){
+			$templateDirs[] = $plugin->directory . '/' . 'views';
+		}
+
         if ($twig === null) {
-            $loader = new \Twig\Loader\FilesystemLoader(DIR_VIEWS);
+            $loader = new \Twig\Loader\FilesystemLoader($templateDirs);
 			$twig = new \Twig\Environment($loader, [
 				'debug' => true,
 			]);
@@ -83,7 +95,7 @@ class View
         echo $twig->render($template, $args);
 
 		/* We can clear any toasts now we have rendered */
-		toastService()->clear();
+		Toast::clear();
     }
 	
     /**

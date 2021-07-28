@@ -4,22 +4,8 @@ namespace Core\Services;
 
 class UpdateService{
 	
-	protected static $instance = null;
-		
-	/**
-	 * 
-	 * @return CLASS INSTANCE
-	 */ 
-    public static function instance() {
 
-        if ( null == static::$instance ) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }	
-	
-	public function currentVersion(){
+	public static function currentVersion(){
 		
 		$version = file_get_contents(DIR_ROOT . '/build');
 		$version = substr($version,0,40);
@@ -27,7 +13,7 @@ class UpdateService{
 		return $version;
 	}
 	
-	public function remoteVersion(){
+	public static function remoteVersion(){
 
 		$opts = [
 				'http' => [
@@ -46,10 +32,10 @@ class UpdateService{
 						
 	}
 	
-	public function hasNewVersion(){
+	public static function hasNewVersion(){
 		
 		
-		if($this->currentVersion() != $this->remoteVersion()){
+		if(self::currentVersion() != self::remoteVersion()){
 			
 			return true;
 		}

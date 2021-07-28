@@ -2,28 +2,17 @@
 
 namespace Core\Services;
 
+use \Core\Services\ToastService as Toast;
+use \Core\Services\SessionService as Session;
+use \Core\Services\entityService as Entities;
+
 class AuthenticationService{
-	
-	protected static $instance = null;
 		
-	/**
-	 * 
-	 * @return CLASS INSTANCE
-	 */ 
-    public static function instance() {
-
-        if ( null == static::$instance ) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }	
-	
-	public function validApiKey(){
+	public static function validApiKey(){
 			
 		if(!isset($_GET['apikey'])) return false;
 		
-		if(count(findBy("user", ["apikey" => $_GET['apikey']])) > 0){
+		if(count(Entities::findBy("user", ["apikey" => $_GET['apikey']])) > 0){
 			return true;
 		}
 		
@@ -31,37 +20,37 @@ class AuthenticationService{
 		
 	}
 	
-	public function loggedIn(){
+	public static function loggedIn(){
 		
 		
-		if(false == sessionService()->isset("user"))
+		if(false == Session::isset("user"))
 			return false;
 			
-		if(sessionService()->isset("user") && time() - sessionService()->load("activity") > 1800){
-			$this->logout();
-			toastService()->throwError("Logged Out", "Logged Out due to idle activity");
+		if(Session::isset("user") && time() - Session::load("activity") > 1800){
+			self::logout();
+			Toast::throwError("Logged Out", "Logged Out due to idle activity");
 		}
 		
-		if(sessionService()->isset("user")){
+		if(Session::isset("user")){
 			return true;
 		}
 		
 	}
 	
-	public function login($user){
-		sessionService()->save("user", $user);		
+	public static function login($user){
+		Session::save("user", $user);		
 	}
 	
-	public function logout(){
-		sessionService()->destroy();
+	public static function logout(){
+		Session::destroy();
 	}
 
-	public function me(){
+	public static function me(){
 
-		if($this->loggedIn()){
+		if(self::loggedIn()){
 			
 
-			return findEntity("user",sessionService()->load("user")->getId());
+			return Entities::findEntity("user",Session::load("user")->getId());
 		}
 
 	}

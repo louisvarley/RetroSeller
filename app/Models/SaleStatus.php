@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use \Core\Services\entityService as Entities;
 
 /**
  * @ORM\Entity
@@ -11,10 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 class SaleStatus
 {
 	/* Static Statuses */
-	public static function Paid() {return findEntity("SaleStatus", _SALE_STATUSES['PAID']['id']);}
-	public static function Pending() {return findEntity("SaleStatus", _SALE_STATUSES['PENDING']['id']);}	
-	public static function Cancelled() {return findEntity("SaleStatus", _SALE_STATUSES['CANCELLED']['id']);}	
-	public static function Dispatched() {return findEntity("SaleStatus", _SALE_STATUSES['DISPATCHED']['id']);}
+	public static function Paid() {return Entities::findEntity("SaleStatus", _SALE_STATUSES['PAID']['id']);}
+	public static function Pending() {return Entities::findEntity("SaleStatus", _SALE_STATUSES['PENDING']['id']);}	
+	public static function Cancelled() {return Entities::findEntity("SaleStatus", _SALE_STATUSES['CANCELLED']['id']);}	
+	public static function Dispatched() {return Entities::findEntity("SaleStatus", _SALE_STATUSES['DISPATCHED']['id']);}
 	
 	/**
     * @ORM\Id

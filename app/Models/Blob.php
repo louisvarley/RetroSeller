@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use \Core\Services\entityService as Entities;
 
 /**
  * @ORM\Entity
@@ -76,8 +77,8 @@ class Blob
 		ob_end_clean(); 	
 		
 		$this->setData($imageBase64);
-		entityService()->persist($this);
-		entityService()->flush();
+		Entities::persist($this);
+		Entities::flush();
 
 	}
 

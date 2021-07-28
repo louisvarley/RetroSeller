@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -20,19 +20,19 @@ class Expense extends \App\Controllers\ManagerController
 
 	public function getEntity($id = 0){
 
-		$soldStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);
+		$soldStatus = Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
-			"purchases" => createOptionSet('purchase', 'id',['id','name','date']),				
-			"accounts" => createOptionSet('Account', 'id','name'),				
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
+			"purchases" => Entities::createOptionSet('purchase', 'id',['id','name','date']),				
+			"accounts" => Entities::createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$expense = findEntity($this->route_params['controller'], $id);
-		$account = findEntity("Account", $data['expense']['account_id']);
+		$expense = Entities::findEntity($this->route_params['controller'], $id);
+		$account = Entities::findEntity("Account", $data['expense']['account_id']);
 		
 		$expense->setName($data['expense']['name']);
 		$expense->setAmount($data['expense']['amount']);
@@ -42,11 +42,11 @@ class Expense extends \App\Controllers\ManagerController
 		
 
 		foreach($data['expense']['purchases'] as $purchase_id){
-			$expense->getPurchases()->add(findEntity("Purchase", $purchase_id));
+			$expense->getPurchases()->add(Entities::findEntity("Purchase", $purchase_id));
 		}
 
-		entityService()->persist($expense);
-		entityService()->flush();
+		Entities::persist($expense);
+		Entities::flush();
 		
 	}
 	
@@ -54,7 +54,7 @@ class Expense extends \App\Controllers\ManagerController
 
 		$expense = new \App\Models\Expense();
 
-		$account = findEntity("Account", $data['expense']['account_id']);
+		$account = Entities::findEntity("Account", $data['expense']['account_id']);
 		
 		$expense->setName($data['expense']['name']);
 		$expense->setAmount($data['expense']['amount']);
@@ -62,11 +62,11 @@ class Expense extends \App\Controllers\ManagerController
 		$expense->setAccount($account);
 		
 		foreach($data['expense']['purchases'] as $purchase_id){
-			$expense->getPurchases()->add(findEntity("Purchase", $purchase_id));
+			$expense->getPurchases()->add(Entities::findEntity("Purchase", $purchase_id));
 		}
 		
-		entityService()->persist($expense);
-		entityService()->flush();
+		Entities::persist($expense);
+		Entities::flush();
 
 		return $expense->getId();
 		

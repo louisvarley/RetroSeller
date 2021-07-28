@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -22,7 +22,7 @@ class Blob extends \App\Controllers\ManagerController
 		
 		header('Content-type:image/jpg');
 
-		$blob = findEntity($this->route_params['controller'], $this->route_params['id']);
+		$blob = Entities::findEntity($this->route_params['controller'], $this->route_params['id']);
 
 		if(array_key_exists("size", $this->route_params)){
 			
@@ -42,7 +42,7 @@ class Blob extends \App\Controllers\ManagerController
 		
 		header('Content-type:image/jpg');
 	
-		$purchase = findEntity("purchase", $this->route_params['id']);
+		$purchase = Entities::findEntity("purchase", $this->route_params['id']);
 		
 		$blob = $purchase->getImages()->first();
 		

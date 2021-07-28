@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,32 +21,32 @@ class Sale extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
-			"saleVendors" => createOptionSet('SaleVendor', 'id','name'),
-			"saleStatuses" => createOptionSet('SaleStatus', 'id','name'),
-			"paymentVendors" => createOptionSet('PaymentVendor', 'id','name'),		
-			"accounts" => createOptionSet('Account', 'id','name'),					
-			"purchases" => ($id > 0 ? createOptionSet('purchase', 'id',['id','name','date']) : createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => \App\Models\PurchaseStatus::ForSale()->getId()]])),			
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
+			"saleVendors" => Entities::createOptionSet('SaleVendor', 'id','name'),
+			"saleStatuses" => Entities::createOptionSet('SaleStatus', 'id','name'),
+			"paymentVendors" => Entities::createOptionSet('PaymentVendor', 'id','name'),		
+			"accounts" => Entities::createOptionSet('Account', 'id','name'),					
+			"purchases" => ($id > 0 ? Entities::createOptionSet('purchase', 'id',['id','name','date']) : Entities::createOptionSet('purchase', 'id',['id','name','date'], ['status' => ['comparison' => '=', 'match' => \App\Models\PurchaseStatus::ForSale()->getId()]])),			
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$sale = findEntity($this->route_params['controller'], $id);
-		$saleVendor = findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
-		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
-		$purchases = findBy("Purchase", ['sale' => $sale]);
+		$sale = Entities::findEntity($this->route_params['controller'], $id);
+		$saleVendor = Entities::findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
+		$paymentVendor = Entities::findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);
+		$purchases = Entities::findBy("Purchase", ['sale' => $sale]);
 		
-		$sale->setStatus(findEntity("SaleStatus", $data['sale']['status']));	
+		$sale->setStatus(Entities::findEntity("SaleStatus", $data['sale']['status']));	
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
 			$purchase->setStatus(\app\Models\PurchaseStatus::ForSale());
-			entityService()->persist($purchase);
+			Entities::persist($purchase);
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
-			$purchase = findEntity("Purchase", $purchase_id);
+			$purchase = Entities::findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
 			if($sale->isPaid()){
 				$purchase->setStatus(\app\Models\PurchaseStatus::Sold());
@@ -60,7 +60,7 @@ class Sale extends \App\Controllers\ManagerController
 		
 		$sale->getAccounts()->clear();	
 		foreach($data['sale']['accounts'] as $account_id){
-			$sale->getAccounts()->add(findEntity("Account", $account_id));
+			$sale->getAccounts()->add(Entities::findEntity("Account", $account_id));
 		}				
 		
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
@@ -72,7 +72,7 @@ class Sale extends \App\Controllers\ManagerController
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));
 		$sale->seteBayOrderId($data['sale']['ebay_order_id']);
 		
-		entityService()->persist($sale);
+		Entities::persist($sale);
 		
 		if(isset($data['note']) &&  $data['note'] != ""){
 
@@ -81,31 +81,31 @@ class Sale extends \App\Controllers\ManagerController
 			$note->setNote($data['note']);
 			$note->setDate(new \DateTime('now'));
 			$note->setUser();
-			entityService()->persist($note);
+			Entities::persist($note);
 
 		}
 
-		entityService()->flush();
+		Entities::flush();
 		
 	}
 	
 	public function insertEntity($data){
 		
-		$saleVendor = findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
-		$paymentVendor = findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);	
+		$saleVendor = Entities::findEntity("SaleVendor", $data['sale']['sale_vendor_id']);
+		$paymentVendor = Entities::findEntity("PaymentVendor", $data['sale']['payment_vendor_id']);	
 		$sale = new \App\Models\Sale();
 		
-		$sale->setStatus(findEntity("SaleStatus", $data['sale']['status']));	
+		$sale->setStatus(Entities::findEntity("SaleStatus", $data['sale']['status']));	
 		
-		$purchases = findBy("Purchase", ['sale' => $sale]);
+		$purchases = Entities::findBy("Purchase", ['sale' => $sale]);
 		
 		foreach($purchases as $purchase){
 			$purchase->setSale(null);
-			entityService()->persist($purchase);
+			Entities::persist($purchase);
 		}
 
 		foreach($data['sale']['purchases'] as $purchase_id){
-			$purchase = findEntity("Purchase", $purchase_id);
+			$purchase = Entities::findEntity("Purchase", $purchase_id);
 			$purchase->setSale($sale);
 			
 			if($sale->isPaid()){
@@ -116,7 +116,7 @@ class Sale extends \App\Controllers\ManagerController
 		
 		$sale->getAccounts()->clear();	
 		foreach($data['sale']['accounts'] as $account_id){
-			$sale->getAccounts()->add(findEntity("Account", $account_id));
+			$sale->getAccounts()->add(Entities::findEntity("Account", $account_id));
 		}				
 		
 		$sale->setGrossAmount($data['sale']['gross_amount']);		
@@ -134,8 +134,8 @@ class Sale extends \App\Controllers\ManagerController
 
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));	
 		
-		entityService()->persist($sale);
-		entityService()->flush();
+		Entities::persist($sale);
+		Entities::flush();
 		
 		return $sale->getId();
 		
@@ -152,7 +152,7 @@ class Sale extends \App\Controllers\ManagerController
 		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
 		
 		$this->render($this->route_params['controller'] . '/list.html', 
-			array("entities" => findAll($this->route_params['controller'], $orderBy, $order), 'saleStatuses' => findAll("saleStatus"))
+			array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order), 'saleStatuses' => Entities::findAll("saleStatus"))
 			
 		);
 

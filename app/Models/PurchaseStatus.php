@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use \Core\Services\entityService as Entities;
 
 /**
  * @ORM\Entity
@@ -12,12 +13,12 @@ class PurchaseStatus
 {
 	
 	/* Static Statuses */
-	public static function ForSale() {return findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);}
-	public static function Held() {return findEntity("PurchaseStatus", _PURCHASE_STATUSES['HELD']['id']);}	
-	public static function WrittenOff() {return findEntity("PurchaseStatus", _PURCHASE_STATUSES['WRITTEN_OFF']['id']);}	
-	public static function RequiresRepair() {return findEntity("PurchaseStatus", _PURCHASE_STATUSES['REQUIRES_REPAIR']['id']);}	
-	public static function Sold() {return findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);}	
-	public static function BoughtOut() {return findEntity("PurchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']);}		
+	public static function ForSale() {return Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);}
+	public static function Held() {return Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['HELD']['id']);}	
+	public static function WrittenOff() {return Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['WRITTEN_OFF']['id']);}	
+	public static function RequiresRepair() {return Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['REQUIRES_REPAIR']['id']);}	
+	public static function Sold() {return Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['SOLD']['id']);}	
+	public static function BoughtOut() {return Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['BOUGHT_OUT']['id']);}		
 		
 	
 	/**

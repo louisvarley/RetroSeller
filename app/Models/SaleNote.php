@@ -70,7 +70,7 @@ class SaleNote
 	
 	public function setUser()
 	{
-		$this->user = authenticationService()->me();
+		$this->user = Authentication::me();
 	}
    
 	public function getNote()

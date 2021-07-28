@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use \Core\Services\entityService as Entities;
 
 /**
  * @ORM\Entity
@@ -243,7 +244,7 @@ class Account
 		$transactions = [];
 		
 		
-		foreach(findAll("transfer") as $transfer){
+		foreach(Entities::findAll("transfer") as $transfer){
 			
 			
 			if($transfer->getAccountFrom()->getId() == $this->getId()){
@@ -320,7 +321,7 @@ class Account
 		}
 		
 		/*  For each Buyout */
-		foreach(findAll("buyout") as $buyout){
+		foreach(Entities::findAll("buyout") as $buyout){
 
 			/* For Each Purchase In Buyout */
 			foreach($buyout->getPurchase()->getExpenses() as $expense){
@@ -352,7 +353,7 @@ class Account
 		}
 
 		/* For each Withdrawl */
-		foreach(findAll("withdrawal") as $withdrawal){
+		foreach(Entities::findAll("withdrawal") as $withdrawal){
 			
 			/* If withdrawl is yours */
 			if($withdrawal->getAccount()->getId() == $this->getId()){

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \Core\Services\AuthenticationService as Authentication;
 
 /**
  * Home controller
@@ -21,7 +22,7 @@ class Logout extends \Core\Controller
     {
 		
 		
-		authenticationService()->logout();
+		Authentication::logout();
 		
 		header('Location: /');
 		

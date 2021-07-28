@@ -5,6 +5,8 @@ namespace App\Controllers;
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 
+use \App\Plugins\eBayImport\Services\EbayService as eBay;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -25,9 +27,9 @@ class Auction extends \Core\Controller
 
 		$auctions = [];
 		
-		foreach(findAll("integration") as $integration){
+		foreach(Entities::findAll("integration") as $integration){
 				
-			$auctions[$integration->getUserId()] = eBayService($integration->getId())->getMyActiveAuctions();
+			$auctions[$integration->getUserId()] = eBay::withIntegration($integration->getId())::getMyActiveAuctions();
 		}
 
 
@@ -42,8 +44,8 @@ class Auction extends \Core\Controller
 		$results = [];
 		
 		/* Check all Intergrations */
-		foreach(findAll("integration") as $integration){
-			$results[] = eBayService($integration->getId())->getOrder($id);
+		foreach(Entities::findAll("integration") as $integration){
+			$results[] = eBay::withIntegration($integration->getId())::getOrder($id);
 		}
 		
 		if($results){

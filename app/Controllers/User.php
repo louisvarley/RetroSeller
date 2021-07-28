@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\ToastService as Toast;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,27 +22,27 @@ class User extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id)			
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id)			
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$user = findEntity($this->route_params['controller'], $id);
+		$user = Entities::findEntity($this->route_params['controller'], $id);
 		$user->setEmail($data['user']['email']);
 		
 		if(isset($data['user']['password']) && strlen($data['user']['password']) > 5){
 			
 			if($data['user']['password'] != $data['user']['password_confirm']){
-				toastService()->throwError("Error...", "Password Mismatch");
+				toast::throwError("Error...", "Password Mismatch");
 				return;
 			}
 			
 			$user->setPassword($data['user']['password']);
 		}
 
-		entityService()->persist($user);
-		entityService()->flush();
+		Entities::persist($user);
+		Entities::flush();
 		
 	}
 	
@@ -52,15 +53,15 @@ class User extends \App\Controllers\ManagerController
 		$user->setEmail($data['user']['email']);
 		
 		if($data['user']['password'] != $data['user']['password_confirm']){
-			toastService()->throwError("Error...", "Password Mismatch");
+			toast::throwError("Error...", "Password Mismatch");
 			return;
 		}
 		
 		$user->setPassword($data['user']['password']);
 		$user->generateApiKey();
 		
-		entityService()->persist($user);
-		entityService()->flush();
+		Entities::persist($user);
+		Entities::flush();
 
 		return $user->getId();
 		

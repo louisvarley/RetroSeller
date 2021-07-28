@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use \Core\View;
 use \App\Models\Purchase;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -22,15 +23,15 @@ class Accounts extends \App\Controllers\Api
 			$imageData = file_get_contents($imageLocation);
 			$imageBase64 = base64_encode($imageData);
 
-			$account = findEntity("account",$this->get['accountId']);
+			$account = Entities::findEntity("account",$this->get['accountId']);
 
 			$image = new \App\Models\Blob();
 			$image->setData($imageBase64);
-			entityService()->persist($image);
+			Entities::persist($image);
 
 			$account->setLogo($image);
 
-			entityService()->flush();
+			Entities::flush();
 
 			return new \Core\Classes\ApiResponse(200, 0, ['blobId' => $image->getId(), 'message' => 'Image Saved']);
 	
@@ -45,13 +46,13 @@ class Accounts extends \App\Controllers\Api
 
 		try{
 
-			$account = findEntity("account", $this->get['accountId']);
-			$image = findEntity("blob", $this->get['blobId']);
+			$account = Entities::findEntity("account", $this->get['accountId']);
+			$image = Entities::findEntity("blob", $this->get['blobId']);
 
-			entityService()->remove($account->getLogo());
+			Entities::remove($account->getLogo());
 			$account->setLogo(null);
 			
-			entityService()->flush();
+			Entities::flush();
 			
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Image deleted']);
 
@@ -68,7 +69,7 @@ class Accounts extends \App\Controllers\Api
 
 		
 		$blobId = $this->get['blobId'];
-		$image = findEntity("blob", $blobId);
+		$image = Entities::findEntity("blob", $blobId);
 		$image->rotate();
 	
 		return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Image Saved']);

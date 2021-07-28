@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,21 +21,21 @@ class PurchaseCategory extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),
-			"categories" => createOptionSet('purchaseCategory', 'id', 'path'),	
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
+			"categories" => Entities::createOptionSet('purchaseCategory', 'id', 'path'),	
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$category = findEntity($this->route_params['controller'], $id);
+		$category = Entities::findEntity($this->route_params['controller'], $id);
 
 		$category->setName($data[$this->route_params['controller']]['name']);
 		$category->setColor($data[$this->route_params['controller']]['color']);
-		$category->setParent(findEntity($this->route_params['controller'], $data[$this->route_params['controller']]['parent_id']));
+		$category->setParent(Entities::findEntity($this->route_params['controller'], $data[$this->route_params['controller']]['parent_id']));
 	
-		entityService()->persist($category);
-		entityService()->flush();
+		Entities::persist($category);
+		Entities::flush();
 		
 		$this->updatePaths();
 		
@@ -47,10 +47,10 @@ class PurchaseCategory extends \App\Controllers\ManagerController
 
 		$category->setName($data[$this->route_params['controller']]['name']);
 		$category->setColor($data[$this->route_params['controller']]['color']);
-		$category->setParent(findEntity($this->route_params['controller'], $data[$this->route_params['controller']]['parent_id']));
+		$category->setParent(Entities::findEntity($this->route_params['controller'], $data[$this->route_params['controller']]['parent_id']));
 	
-		entityService()->persist($category);
-		entityService()->flush();
+		Entities::persist($category);
+		Entities::flush();
 
 		$this->updatePaths();
 
@@ -105,7 +105,7 @@ class PurchaseCategory extends \App\Controllers\ManagerController
 		';
 		
 
-        $statement = entityService()->getConnection()->prepare($sql);
+        $statement = Entities::em()->getConnection()->prepare($sql);
         $statement->execute();
 
 	}

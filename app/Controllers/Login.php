@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \Core\Services\AuthenticationService as Authentication;
+use \Core\Services\ToastService as Toast;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -22,16 +25,16 @@ class Login extends \Core\Controller
     public function indexAction()
     {
 		
-		if(authenticationService()->loggedIn())
+		if(Authentication::loggedIn())
 			header('Location: /');
 		
 		if($this->isPOST()){
 
-			$user = findBy("User", ['email' => $this->post['email']]);
+			$user = Entities::findBy("User", ['email' => $this->post['email']]);
 			 
 			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
 				
-				authenticationService()->login($user[0]);
+				Authentication::login($user[0]);
 				if($this->get['redirect']){
 					header('Location:' . urldecode($this->get['redirect']));
 					die();
@@ -42,7 +45,7 @@ class Login extends \Core\Controller
 				
 			}else{
 			
-				toastService()->throwError("Error...", "Your login details were incorrect or not found");
+				Toast::throwError("Error...", "Your login details were incorrect or not found");
 			
 			}
 		}

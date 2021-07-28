@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Controllers\Api;
+namespace App\Plugins\eBayImport\Controllers\Api;
+
 
 use \Core\View;
 use \App\Models\Purchase;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -19,15 +21,15 @@ class Ebay extends \App\Controllers\Api
 			
 			$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0, "log" => array()];
 		
-			foreach(findAll("Integration") as $integration){
+			foreach(Entities::findAll("Integration") as $integration){
 				
-				$result['updated_purchases'] = $result['updated_purchases'] + $integration->eBay()->updatePurchasesWithAuctions();
+				$result['updated_purchases'] = $result['updated_purchases'] + $integration->eBay()::updatePurchasesWithAuctions();
 			}
 			
 		
-			foreach(findAll("Integration") as $integration){
+			foreach(Entities::findAll("Integration") as $integration){
 				
-				$r = $integration->eBay()->CreateSalesFromOrders();
+				$r = $integration->eBay()::CreateSalesFromOrders();
 				$result['new_sales'] = $result['new_sales'] + $r['imports'];
 				$result['updated_sales'] = $result['updated_sales'] + $r['updates'];	
 				
@@ -50,7 +52,7 @@ class Ebay extends \App\Controllers\Api
 			
 			$log = [];
 		
-			foreach(findAll("Integration") as $integration){
+			foreach(Entities::findAll("Integration") as $integration){
 				
 				$response = $integration->refreshToken();
 				

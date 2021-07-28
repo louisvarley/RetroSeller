@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * The namespaces provided by the SDK.
@@ -34,9 +34,9 @@ class Stock extends \App\Controllers\ManagerController
      */
 	public function listAction(){
 		
-		$forSaleStatus = findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);	
+		$forSaleStatus = Entities::findEntity("PurchaseStatus", _PURCHASE_STATUSES['FOR_SALE']['id']);	
 		
-		$stock = findBy("Purchase", ["status" => $forSaleStatus ],["category" => "desc"]);
+		$stock = Entities::findBy("Purchase", ["status" => $forSaleStatus ],["category" => "desc"]);
 
 		$this->render($this->route_params['controller'] . '/list.html', array("entities" => $stock));	
 	

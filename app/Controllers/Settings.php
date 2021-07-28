@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -27,7 +27,7 @@ class Settings extends \Core\Controller
 		}
 
 
-		$setingsEntities = findAll("Metadata");
+		$setingsEntities = Entities::findAll("Metadata");
 
 		$settings = [];
 
@@ -40,10 +40,10 @@ class Settings extends \Core\Controller
 				$this->route_params, 
 				$this->page_data,
 				['settings' => $settings],
-				["saleVendors" => createOptionSet('SaleVendor', 'id','name')],
-				["saleStatuses" => createOptionSet('SaleStatus', 'id','name')],
-				["purchaseStatuses" => createOptionSet('PurchaseStatus', 'id','name')],				
-				["paymentVendors" => createOptionSet('PaymentVendor', 'id','name')],						
+				["saleVendors" => Entities::createOptionSet('SaleVendor', 'id','name')],
+				["saleStatuses" => Entities::createOptionSet('SaleStatus', 'id','name')],
+				["purchaseStatuses" => Entities::createOptionSet('PurchaseStatus', 'id','name')],				
+				["paymentVendors" => Entities::createOptionSet('PaymentVendor', 'id','name')],						
 			));
 	} 
 

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,15 +21,15 @@ class Withdrawal extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id)	,
-			"accounts" => createOptionSet('Account', 'id','name'),				
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id)	,
+			"accounts" => Entities::createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$withdrawal = findEntity($this->route_params['controller'], $id);
-		$account = findEntity("Account", $data['withdrawal']['account_id']);
+		$withdrawal = Entities::findEntity($this->route_params['controller'], $id);
+		$account = Entities::findEntity("Account", $data['withdrawal']['account_id']);
 		
 		
 		$withdrawal->setAccount($account);
@@ -37,8 +37,8 @@ class Withdrawal extends \App\Controllers\ManagerController
 		$withdrawal->setDescription($data['withdrawal']['description']);
 		$withdrawal->setDate(date_create_from_format('d/m/Y', $data['withdrawal']['date']));	
 
-		entityService()->persist($withdrawal);
-		entityService()->flush();
+		Entities::persist($withdrawal);
+		Entities::flush();
 		
 	}
 	
@@ -46,7 +46,7 @@ class Withdrawal extends \App\Controllers\ManagerController
 
 		$withdrawal = new \App\Models\Withdrawal();
 
-		$account = findEntity("Account", $data['withdrawal']['account_id']);
+		$account = Entities::findEntity("Account", $data['withdrawal']['account_id']);
 		
 		
 		$withdrawal->setAccount($account);
@@ -54,8 +54,8 @@ class Withdrawal extends \App\Controllers\ManagerController
 		$withdrawal->setDescription($data['withdrawal']['description']);
 		$withdrawal->setDate(date_create_from_format('d/m/Y', $data['withdrawal']['date']));	
 		
-		entityService()->persist($withdrawal);
-		entityService()->flush();
+		Entities::persist($withdrawal);
+		Entities::flush();
 
 		return $withdrawal->getId();
 		

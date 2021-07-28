@@ -1,13 +1,12 @@
 <?php
+namespace App\Plugins\eBayImport\Services;
 
 use App\Config;
-
 use \DTS\eBaySDK\Constants;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use \DTS\eBaySDK\Trading\Enums;
-
-namespace Core\Services;
+use \Core\Services\entityService as Entities;
 
 class EbayService
 {
@@ -15,7 +14,8 @@ class EbayService
 	/* Holds all Instances */
     protected static $instance;
 
-	public $integrationId = 0;
+	private static $integrationId;
+
 
     /**
      *
@@ -30,22 +30,23 @@ class EbayService
         return static::$instance;
     }
 
-    /**
-     *
-     * @return VOID
-     */
-	public function __construct($integrationId){
+
+	public static function withIntegration($intergrationId){
 		
-		$this->integrationId = $integrationId;
+		
+		self::$integrationId = $intergrationId;
+		
+		return __CLASS__;
+		
 	}
 
     /**
      *
      * @return Integration Entity
      */
-	public function integration(){
+	public static function integration(){
 		
-		return findEntity("integration", $this->integrationId);
+		return Entities::findEntity("integration", self::$integrationId);
 		
 	}
 
@@ -53,16 +54,16 @@ class EbayService
      *
      * @return Array
      */
-    public function config(){
+    public static function config(){
 
 		return [
 
 			'credentials' => [
-				'devId' => $this->integration()->getDevId(),
-				'appId' => $this->integration()->getAppId(),
-				'certId' => $this->integration()->getCertId(),
+				'devId' => self::integration()->getDevId(),
+				'appId' => self::integration()->getAppId(),
+				'certId' => self::integration()->getCertId(),
 			],
-			'ruName' => $this->integration()->getRuName(),
+			'ruName' => self::integration()->getRuName(),
 		];
 		
     }
@@ -71,10 +72,10 @@ class EbayService
      *
      * @return FulfillmentService Instance
      */
-	public function fulfillmentService(){
+	public static function fulfillmentService(){
 
 		 return new \DTS\eBaySDK\Fulfillment\Services\FulfillmentService([
-			'authorization' => $this->integration()->getAccessToken(),
+			'authorization' => self::integration()->getAccessToken(),
             'siteId' => \DTS\eBaySDK\Constants\SiteIds::GB				
         ]);		
 	}
@@ -83,10 +84,10 @@ class EbayService
      *
      * @return AnalyticsService Instance
      */
-	public function analyticsService(){
+	public static function analyticsService(){
 
         return new \DTS\eBaySDK\Analytics\Services\AnalyticsService([
-			'authorization' => $this->integration()->getAccessToken()
+			'authorization' => self::integration()->getAccessToken()
         ]);		
 	}
 
@@ -94,10 +95,10 @@ class EbayService
      *
      * @return IdentityService Instance
      */
-	public function accountService(){
+	public static function accountService(){
 
         return new \DTS\eBaySDK\Account\Services\AccountService([
-			'authorization' => $this->integration()->getAccessToken()
+			'authorization' => self::integration()->getAccessToken()
         ]);		
 	}	
 	
@@ -105,11 +106,11 @@ class EbayService
      *
      * @return Trading Service Instance
      */
-    public function tradingService(){
+    public static function tradingService(){
 
 		return new \DTS\eBaySDK\Trading\Services\TradingService([
-            'credentials' => $this->config()['credentials'],		
-			'authorization' => $this->integration()->getAccessToken(),
+            'credentials' => self::config()['credentials'],		
+			'authorization' => self::integration()->getAccessToken(),
             'siteId' => \DTS\eBaySDK\Constants\SiteIds::GB			
         ]);	
     }
@@ -118,10 +119,10 @@ class EbayService
      *
      * @return oAuth Service Instance
      */	
-    public function oAuthService(){
+    public static function oAuthService(){
 		 return new \DTS\eBaySDK\OAuth\Services\OAuthService([
-			'credentials' => $this->config()['credentials'],
-			'ruName'      => $this->config()['ruName'],
+			'credentials' => self::config()['credentials'],
+			'ruName'      => self::config()['ruName'],
 			'sandbox'     => false
 		]);		
     }
@@ -130,7 +131,7 @@ class EbayService
      * Splits a string of SKUs into an Array of SKUs
      * @return array
      */	
-	public function SplitSKU($skus){
+	public static function SplitSKU($skus){
 		
 		$return = '';
 		
@@ -148,9 +149,9 @@ class EbayService
      * Return the Authentication Url for this Integration
      * @return String
      */	
-    public function authUrl($state){
+    public static function authUrl($state){
 
-        return $this->oAuthService()->redirectUrlForUser([
+        return self::oAuthService()->redirectUrlForUser([
             'state' => $state,
             'scope' => [
 				'https://api.ebay.com/oauth/api_scope',
@@ -175,19 +176,19 @@ class EbayService
      * Return Response for UserToken Request
      * @return UserTokenRestResponse Instance
      */	
-	public function getUserToken($code){
+	public static function getUserToken($code){
 		
 		
 		$request = new \DTS\eBaySDK\OAuth\Types\GetUserTokenRestRequest();
 		$request->code = $code;
 
-		return $this->oAuthService()->getUserToken($request);
+		return self::oAuthService()->getUserToken($request);
 	
 	}
 	
-	public function userTokenIsValid(){
+	public static function userTokenIsValid(){
 
-		$response = $this->accountService()->getAccountPrivileges();
+		$response = self::accountService()->getAccountPrivileges();
 		
 		if($response->getStatusCode() !== 200){
 			
@@ -205,10 +206,10 @@ class EbayService
      * Return Response for Refresh UserToken
      * @return RefreshUserTokenRestResponse Instance
      */	
-	public function refreshToken(){
+	public static function refreshToken(){
 
-		$response =  $this->oAuthService()->refreshUserToken(new \DTS\eBaySDK\OAuth\Types\RefreshUserTokenRestRequest([
-		'refresh_token' => $this->integration()->getRefreshToken(),
+		$response =  self::oAuthService()->refreshUserToken(new \DTS\eBaySDK\OAuth\Types\RefreshUserTokenRestRequest([
+		'refresh_token' => self::integration()->getRefreshToken(),
 		'scope' => [
 					'https://api.ebay.com/oauth/api_scope',
 					'https://api.ebay.com/oauth/api_scope/sell.marketing.readonly',
@@ -236,7 +237,7 @@ class EbayService
      * Single eBay Order By OrderID
      * @return Order
      */	
-	public function getOrder($orderId){
+	public static function getOrder($orderId){
 
         $pst = new \DateTimeZone('Europe/London');
         $createTimeFrom = new \DateTime("-5 days");
@@ -253,7 +254,7 @@ class EbayService
         $request->OrderIDArray = new \DTS\eBaySDK\Trading\Types\OrderIDArrayType();
         $request->OrderIDArray->OrderID[] = $orderId;
 
-        $response = $this->tradingService()->getOrders($request);
+        $response = self::tradingService()->getOrders($request);
 
         if (isset($response->Errors)) {
             foreach ($response->Errors as $error) {
@@ -278,7 +279,7 @@ class EbayService
      * Instance of Active Auctions
      * @return Order
      */	
-    public function getMyActiveAuctions($pageNum = 1){
+    public static function getMyActiveAuctions($pageNum = 1){
 
         $request = new \DTS\eBaySDK\Trading\Types\GetMyeBaySellingRequestType();
 
@@ -293,7 +294,7 @@ class EbayService
         /**
          * Send the request.
          */
-        $response = $this->tradingService()->getMyeBaySelling($request);
+        $response = self::tradingService()->getMyeBaySelling($request);
 
         if (isset($response->Errors)) {
             foreach ($response->Errors as $error) {
@@ -319,7 +320,7 @@ class EbayService
      * Return a single eBay Item by ItemId
      * @return Item
      */	
-	public function getItem($itemId){
+	public static function getItem($itemId){
 		
 		
 		$request = new \DTS\eBaySDK\Trading\Types\GetItemRequestType();
@@ -328,7 +329,7 @@ class EbayService
 
         $request->ItemID = $itemId;
 
-        $response = $this->tradingService()->getItem($request);
+        $response = self::tradingService()->getItem($request);
 
         if (isset($response->Errors)) {
             foreach ($response->Errors as $error) {
@@ -353,7 +354,7 @@ class EbayService
      * Return all active orders
      * @return Instance of ActiveOrders
      */		
-    public function getMyOrdersRest()
+    public static function getMyOrdersRest()
     {
 
 		$request = new \DTS\eBaySDK\Fulfillment\Types\GetOrdersRestRequest();
@@ -363,7 +364,7 @@ class EbayService
 		$tUtc = gmdate('Y-m-d\TH:i:s.', $time).$tMicro.'Z';
 		$request->filter = "creationdate:%5B" . $tUtc . "511Z..%5D";
 		
-		$response = $this->fulfillmentService()->getOrders($request);
+		$response = self::fulfillmentService()->getOrders($request);
 		
 		if($response->getStatusCode() !== 200){
 			
@@ -382,24 +383,24 @@ class EbayService
      * Updates all purchases with their respective eBay Item ID using SKUs
      * @return int # of purchases updated
      */		
-	public function updatePurchasesWithAuctions()
+	public static function updatePurchasesWithAuctions()
 	{
 
 		return 0;
 
 		$updates = 0;
 
-        foreach ($this->getMyActiveAuctions()->ItemArray->Item as $activeAuction) {
+        foreach (self::getMyActiveAuctions()->ItemArray->Item as $activeAuction) {
 
             foreach (explode(",", $activeAuction->SKU) as $sku) {
 
-                $purchase = findEntity("purchase", $sku);
+                $purchase = Entities::findEntity("purchase", $sku);
 
                 if ($purchase) {
                     $purchase->seteBayItemId($activeAuction->ItemID);
-                    entityService()->persist($purchase);
+                    Entities::persist($purchase);
 					$updates++;
-                    entityService()->flush();
+                    Entities::flush();
                 }
             }
         }
@@ -415,18 +416,18 @@ class EbayService
      * Takes all orders and creates / updates sales
      * @return array[imports, updated, log] 
      */	
-    public function CreateSalesFromOrders(){
+    public static function CreateSalesFromOrders(){
 		
         $imports = 0;
 		$updates = 0;
 		$result = [];
 
 		/* Save Vendors we will use later */
-		$ebaySaleVendor = findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
-		$ebayPaymentVendor = findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));
+		$ebaySaleVendor = Entities::findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
+		$ebayPaymentVendor = Entities::findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));
 		
         /* Start By Looping all our orders */
-        foreach ($this->getMyOrdersRest() as $order) {
+        foreach (self::getMyOrdersRest() as $order) {
 
 			/* These are any purchases this order fulfilled */
 			$fulfilledPurchaseIds = [];
@@ -435,14 +436,14 @@ class EbayService
 			foreach($order->lineItems as $lineItem){
 				
 				/* All SKUs in this Line Split and Cleaned */
-				$lineSkus = $this->SplitSKU($lineItem->sku);
+				$lineSkus = self::SplitSKU($lineItem->sku);
 				
 				if(empty($lineSkus)) continue;
 				
 				$fulfilled = 0;
 				
 				/* Get the Item Itself */
-				$item = $this->getItem($lineItem->legacyItemId);
+				$item = self::getItem($lineItem->legacyItemId);
 						
 				foreach($lineSkus as $sku){
 					
@@ -452,7 +453,7 @@ class EbayService
 					
 						foreach($item->Variations->Variation as $variation){
 							
-							foreach($this->SplitSKU($variation->SKU) as $variationSku){
+							foreach(self::SplitSKU($variation->SKU) as $variationSku){
 								
 								if($variationSku == $sku){
 									$quantity = $variation->Quantity;
@@ -467,7 +468,7 @@ class EbayService
 					}
 			
 					/* Find a purchase for this given SKU */
-					$purchase = findEntity("purchase", $sku);
+					$purchase = Entities::findEntity("purchase", $sku);
 
 					/* If we found a Matched Purchase */
 					if($purchase){
@@ -500,7 +501,7 @@ class EbayService
 			}
 
 			/* Are we dealing with an existing sale? */
-			$sales = findBy("sale", ["ebay_order_id" => $order->orderId]);
+			$sales = Entities::findBy("sale", ["ebay_order_id" => $order->orderId]);
 			
 			if(!empty($sales)){
 				$sale = $sales[0];
@@ -538,7 +539,7 @@ class EbayService
 				/* Try and find the sale by one of it's SKUs */
 				foreach($fulfilledPurchaseIds as $purchaseId){
 					
-					$purchase = findEntity("purchase", $purchaseId);
+					$purchase = Entities::findEntity("purchase", $purchaseId);
 					
 					if(!empty($purchase) && !empty($purchase->getSale())){
 						$sale = $purchase->getSale();
@@ -575,7 +576,7 @@ class EbayService
 			/* Attach Purchases to the Sale */
 			foreach($fulfilledPurchaseIds as $purchaseId){
 				
-				$purchase = findEntity("purchase", $purchaseId);
+				$purchase = Entities::findEntity("purchase", $purchaseId);
 				
 				if($purchase){
 
@@ -666,8 +667,8 @@ class EbayService
 				"postageCost" => $sale->getPostageCost()
 			];
 			
-			entityService()->persist($sale);
-			entityService()->flush();
+			Entities::persist($sale);
+			Entities::flush();
 			
 			unset($sale);
 

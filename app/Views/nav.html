@@ -33,7 +33,27 @@
 			</div>
 		</li>	
 	
-	  <li class="nav-item dropdown">
+
+	  
+{% for item in nav %}
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="{{item.link}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  {{item.title}}
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			{% for subitem in item.subitems %}
+				{% if( subitem.type == "item" ) %}
+					<a class="dropdown-item" href="{{subitem.link}}">{{subitem.title}}</a>
+				{% endif %}	
+
+				{% if( subitem.type == "divider" ) %}
+					<div class="dropdown-divider"></div>	
+				{% endif %}				
+			{% endfor %}
+			</div>
+		</li>
+{% endfor %}	  
+	  <!--
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  Sales
 		</a>
@@ -135,7 +155,10 @@
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		  <a class="dropdown-item" target="_blank" href="https://github.com/louisvarley/RetroSeller/wiki">Wiki</a>			  
 		</div>
-	  </li>		  
+	  </li>		
+
+-->
+	  
 	</ul>
 	
 	

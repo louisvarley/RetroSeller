@@ -3,6 +3,7 @@
 namespace App\Controllers\Report;
 
 use \Core\View;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -32,12 +33,12 @@ class Accounts extends \App\Controllers\Report
 		if(empty($this->post['account_id'])){
 			
 			
-			$this->render('Report/account_statement.html', array("accounts" => createOptionSet('Account', 'id','name')));
+			$this->render('Report/account_statement.html', array("accounts" => Entities::createOptionSet('Account', 'id','name')));
 			return ;
 			
 		}
 
-		$account = findEntity("account", $this->post['account_id']);
+		$account = Entities::findEntity("account", $this->post['account_id']);
 
 		header('Content-disposition: attachment; filename="' . $account->getName() . ' Statement' . '.xlsx"');
 		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

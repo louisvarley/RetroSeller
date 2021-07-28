@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use \Core\Services\entityService as Entities;
+
 class TwigFilters {
 
 	public static function Apply($twig){
@@ -29,8 +31,8 @@ class TwigFilters {
 			$str = "";
 
 			foreach(explode(',',$customSKUs) as $customSKU){				
-				if(findEntity("purchase", $customSKU)){
-					$purchase = findEntity("purchase",$customSKU);
+				if(Entities::findEntity("purchase", $customSKU)){
+					$purchase = Entities::findEntity("purchase",$customSKU);
 					$str .= '<a href="/purchase/edit/' . $purchase->getId() . '">' . $purchase->getName() . '</a>';
 				}
 			}

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,18 +21,18 @@ class PurchaseVendor extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id)			
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id)			
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$vendor = findEntity($this->route_params['controller'], $id);
+		$vendor = Entities::findEntity($this->route_params['controller'], $id);
 		$vendor->setName($data[$this->route_params['controller']]['name']);
 		$vendor->setColor($data[$this->route_params['controller']]['color']);
 
-		entityService()->persist($vendor);
-		entityService()->flush();
+		Entities::persist($vendor);
+		Entities::flush();
 		
 	}
 	
@@ -43,8 +43,8 @@ class PurchaseVendor extends \App\Controllers\ManagerController
 		$vendor->setName($data[$this->route_params['controller']]['name']);
 		$vendor->setColor($data[$this->route_params['controller']]['color']);
 		
-		entityService()->persist($vendor);
-		entityService()->flush();
+		Entities::persist($vendor);
+		Entities::flush();
 
 		return $vendor->getId();
 		

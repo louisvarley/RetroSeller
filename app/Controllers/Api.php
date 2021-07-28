@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use \Core\Services\AuthenticationService as Authentication;
+use \Core\Services\SessionService as Session;
+
 /**
  * Home controller
  *
@@ -17,7 +20,7 @@ class Api extends \Core\Controller
 	
 	public function apiCheck(){
 		
-		if(authenticationService()->validApiKey()){
+		if(Authentication::validApiKey()){
 			return true;
 		}
 		
@@ -46,14 +49,14 @@ class Api extends \Core\Controller
 		$reflection = new \ReflectionMethod($this, $method);		
 		
 		/* Update Last Activity Time */
-		sessionService()->activity();
+		Session::activity();
 		
 		/* Method Not Found */
         if (!method_exists($this, $method)) {
 			$response = new \Core\Classes\ApiResponse(404, 404, ['message' => "API Method $method not found in " . get_class($this)]);
 			
 		/* Method found, but protected and no authentication or API Key */	
-		}elseif($reflection->isProtected() && (!$this->apiCheck() && !authenticationService()->loggedIn())){
+		}elseif($reflection->isProtected() && (!$this->apiCheck() && !Authentication::loggedIn())){
 			$response = new \Core\Classes\ApiResponse(401, 401, ['message' => "UnAuthorised or invalid API Key "]);
 			
 		/* Fine to Run */

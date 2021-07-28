@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \Core\Services\ToastService as Toast;
+use \Core\Services\UpdateService as Update
 
 /**
  * Home controller
@@ -20,23 +22,23 @@ class Update extends \Core\Controller
     public function indexAction()
     {
 		
-		View::renderTemplate('Update/update.html', ['version' => ['updatable' => updateService()->hasNewVersion(), 'current' => updateService()->currentVersion(), 'remote' => updateService()->remoteVersion()]]);
+		View::renderTemplate('Update/update.html', ['version' => ['updatable' => Update::hasNewVersion(), 'current' => Update::currentVersion(), 'remote' => Update::remoteVersion()]]);
 		
     }
 	
 	public function installAction(){
 		
-		$current = updateService()->currentVersion();
+		$current = Update::currentVersion();
 		
 		shell_exec('cd ' . DIR_ROOT);
-		shell_exec('/.update.sh');
+		shell_exec('./.update.sh');
 		
-		$new = updateService()->currentVersion();
+		$new = Update::currentVersion();
 		
 		if($current != $new){
 			header("location:" . "/setup");		
 		}else{
-			toastService()->throwError("Update Failed", "Update failed to pull correctly, run .update.sh to manually update");
+			toast::throwError("Update Failed", "Update failed to pull correctly, run .update.sh to manually update");
 			header("location:" . "/");			
 		}
 

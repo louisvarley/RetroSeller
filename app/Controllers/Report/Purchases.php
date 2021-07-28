@@ -3,6 +3,7 @@
 namespace App\Controllers\Report;
 
 use \Core\View;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -32,8 +33,8 @@ class Purchases extends \App\Controllers\Report
 		header('Content-disposition: attachment; filename="Undervalued Purchases Report.xlsx"');
 		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		
-		$ebaySaleVendor = findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
-		$ebayPaymentVendor = findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));		
+		$ebaySaleVendor = Entities::findEntity("saleVendor", getMetadata("ebay_sale_vendor_id"));
+		$ebayPaymentVendor = Entities::findEntity("paymentVendor", getMetadata("ebay_payment_vendor_id"));		
 		
 		$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 		
@@ -76,7 +77,7 @@ class Purchases extends \App\Controllers\Report
 			]
 		]);		
 
-		$purchases = findAll("purchase");
+		$purchases = Entities::findAll("purchase");
 		
 		$transactions = [];
 		

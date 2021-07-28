@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Plugins\eBayImport\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use \Core\Services\ToastService as Toast;
+
+use \App\Plugins\eBayImport\Services\EbayService as eBay;
+use \Core\Services\entityService as Entities;
 
 
 /**
@@ -21,13 +25,13 @@ class Integration extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 		
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id)			
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id)			
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$integration = findEntity($this->route_params['controller'], $id);
+		$integration = Entities::findEntity($this->route_params['controller'], $id);
 
 		$integration->setUserId($data['integration']['userId']);
 		$integration->setDevId($data['integration']['devId']);
@@ -35,8 +39,8 @@ class Integration extends \App\Controllers\ManagerController
 		$integration->setCertId($data['integration']['certId']);
 		$integration->setRuName($data['integration']['ruName']);
 	
-		entityService()->persist($integration);
-		entityService()->flush();
+		Entities::persist($integration);
+		Entities::flush();
 		
 	}
 	
@@ -50,8 +54,8 @@ class Integration extends \App\Controllers\ManagerController
 		$integration->setCertId($data['integration']['certId']);	
 		$integration->setRuName($data['integration']['ruName']);
 		
-		entityService()->persist($integration);
-		entityService()->flush();
+		Entities::persist($integration);
+		Entities::flush();
 
 		return $integration->getId();
 		
@@ -62,7 +66,7 @@ class Integration extends \App\Controllers\ManagerController
 		
 		if(isset($this->get['state'])){
 			
-			$integration = findEntity($this->route_params['controller'], $this->get['state']);
+			$integration = Entities::findEntity($this->route_params['controller'], $this->get['state']);
 			
 			if($integration == null){
 				die("No Integration found with ID " . $this->get['state']);
@@ -72,17 +76,17 @@ class Integration extends \App\Controllers\ManagerController
 			
 			if($response->getStatusCode() !== 200){
 				
-				toastService()->throwSuccess($response->error, $response->error_description);
+				toast::throwSuccess($response->error, $response->error_description);
 			}else{
 				
-				toastService()->throwSuccess("Success...", "You Authenticated eBay to use your RetroSeller App");
+				toast::throwSuccess("Success...", "You Authenticated eBay to use your RetroSeller App");
 			}
 			
 			header('Location: /integration/list');
 			
 		}else{
 				
-			header("Location:" . ebayService($this->route_params['id'])->authUrl($this->route_params['id']));
+			header("Location:" . eBay::withIntegration($this->route_params['id'])::authUrl($this->route_params['id']));
 			
 		}
 		

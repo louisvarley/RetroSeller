@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -28,7 +28,7 @@ class Invoice extends \Core\Controller
 			
 		
 			$this->render('Invoice/index.html', array(
-				"accounts" => createOptionSet('Account', 'id','name'),	
+				"accounts" => Entities::createOptionSet('Account', 'id','name'),	
 			));
 		
 		}
@@ -42,8 +42,8 @@ class Invoice extends \Core\Controller
 	
 	public function generate(){
 		
-		$sale = findEntity("sale", $this->route_params['id']);
-		$account = findEntity("account", $this->post['invoice']['account']);		
+		$sale = Entities::findEntity("sale", $this->route_params['id']);
+		$account = Entities::findEntity("account", $this->post['invoice']['account']);		
 			
 
 		$invoice = new \Konekt\PdfInvoice\InvoicePrinter("A4","£");

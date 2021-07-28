@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use \Core\View;
 use \App\Models\Purchase;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -17,12 +18,12 @@ class Sales extends \App\Controllers\Api
 
 		try{
 
-			$sale = findEntity("sale",$this->get['saleId']);
-			$status = findEntity("saleStatus",$this->get['saleStatusId']);
+			$sale = Entities::findEntity("sale",$this->get['saleId']);
+			$status = Entities::findEntity("saleStatus",$this->get['saleStatusId']);
 			
 			$sale->setStatus($status);
 			
-			entityService()->flush();
+			Entities::flush();
 
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Status Changed']);
 	
@@ -37,8 +38,8 @@ class Sales extends \App\Controllers\Api
 		
 		try{
 
-			$saleVendor = findEntity("saleVendor",$this->get['saleVendorId']);
-			$paymentVendor = findEntity("paymentVendor",$this->get['paymentVendorId']);
+			$saleVendor = Entities::findEntity("saleVendor",$this->get['saleVendorId']);
+			$paymentVendor = Entities::findEntity("paymentVendor",$this->get['paymentVendorId']);
 			$amount = $this->get['amount'];
 			
 			$feeAmount = round($saleVendor->calculateFee($amount) + $paymentVendor->calculateFee($amount),2);

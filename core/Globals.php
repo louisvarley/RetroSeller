@@ -1,9 +1,10 @@
 <?php
 
-use Core\EntityManager;
-use Core\SessionManager;
-use Core\ToastManager;
-use Core\Services\eBayService;
+use \Core\Services\NotificationService as Notifications;
+use \Core\Services\SessionService as Session;
+use \Core\Services\UpdateService as Update;
+use \Core\Services\pluginService as Plugins;
+use \Core\Services\entityService as Entities;
 
 use Doctrine\ORM\Query\ResultSetMapping;
 
@@ -28,6 +29,8 @@ define("DIR_PROXIES", DIR_CORE  . '/Proxies');
 define("DIR_VIEWS", DIR_APP . '/Views');	
 define("DIR_CONTROLLERS", DIR_APP . '/Controllers');	
 define("DIR_MODELS", DIR_APP . '/Models');	
+
+define("DIR_PLUGINS", DIR_APP . '/Plugins');	
 
 define("WWW_STATIC", '/static');	
 define("WWW_JS", WWW_STATIC  . '/js');		
@@ -79,18 +82,15 @@ if(file_exists(dirname(dirname(__FILE__)) . "/app/Config.php")){
 }
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
-	// Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
-	// you want to allow, and if so:
 	header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 	header('Access-Control-Allow-Credentials: true');
-	header('Access-Control-Max-Age: 86400');    // cache for 1 day
+	header('Access-Control-Max-Age: 86400');   
 }
 
 // Access-Control headers are received during OPTIONS requests
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	
 	if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-		// may also be using PUT, PATCH, HEAD etc
 		header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
 	
 	if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
  */
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+
 /**
  * First Launch
  */
@@ -116,103 +117,10 @@ if(!defined("_FIRST_LAUNCH")){
 	return false;
 }
 
-/**
-* Global Functions
-*/
-
-
-
-/* Find a Single Entity by ID */
-function findEntity($model, $id){
-	$model = ucfirst($model);	
-	return entityService()->find(_MODELS . $model, $id);	
-}
-
-/* Find Multiple Entities By a Matching Criteria */
-function findBy($model, $criteria, $orderBy = null, $limit = null, $offset = null){
-	$model = ucfirst($model);
-	return entityService()->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
-}
-
-/* Find Multiple Entities By a Not Matching Criteria */
-function findByNot($model, $criteria, $orderBy = null, $limit = null, $offset = null){
-	$model = ucfirst($model);	
-	return entityService()->findByNot(_MODELS . $model, $criteria, $orderBy, $limit, $offset);	
-}
-
-/* Find All Entities */
-function findAll($model, $orderBy = null, $order = "ASC" ){
-	$model = ucfirst($model);	
-	
-	if(!empty($orderBy)){
-		return entityService()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
-	}else{
-		return entityService()->getRepository(_MODELS . $model)->findAll();	
-	}
-	
-}
-
-/* Create a Query from Scratch */
-function createQuery($query){	
-	return entityService()->createQuery($query);
-}
-
-/* Create Query Builder From Scratch */
-function createQueryBuilder($fields = null){	
-	return entityService()->createQueryBuilder($fields);
-}
-
-/* Create a Named Query */
-function createdNamedQuery($model, $namedQuery){
-	return entityService()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
-}
-
-/* Create an Optionset */
-function createOptionSet($model, $valueField, $textField, $criteria = null){
-	
-	$qb = entityService()->createQueryBuilder($model);
-	$qb->from(_MODELS . $model, "u");
-	$qb->addSelect("u" . '.' . $valueField . ' AS value');
-
-	if(!is_array($textField)){
-		$qb->addSelect("u" . '.' . $textField . ' AS text');
-		$qb->orderBy("u" . '.' . $textField, 'ASC');
-	}else{
-		
-		/* handles turning multiple columns into a JSON array for select2 to display */
-		$c = "";
-		foreach($textField as $field){		
-			$c = $c. "'\"" . $field . "\":\"',". "u" . '.' . $field . "," . "'\",',";	
-		}
-
-		$c = rtrim($c,",'") . "'";
-		$c = "CONCAT('{'," . $c . ",'}') as text";	
-	
-		$qb->addSelect($c);
-		$qb->orderBy("u" . '.' . $textField[0], 'ASC');
-
-	}
-	
-	if($criteria != null){
-	
-		foreach($criteria as $key => $value){
-			$qb->Where('u.' . $key . ' ' . $value['comparison'] . ' :value');
-			$qb->setParameter('value', $value['match']);
-			
-		}
-
-	}
-		
-	$query = $qb->getQuery();
-	
-	$res = $query->getResult();
-	
-	return $res;
-}
 
 function getMetadata($key){
 
-	$meta = findBy("metadata",["key" => $key]);
+	$meta = Entities::findBy("metadata",["key" => $key]);
 
 	if($meta){
 		return $meta[0]->getValue();
@@ -224,9 +132,9 @@ function getMetadata($key){
 
 function setMetadata($key, $value){
 
-	if(findBy("metadata",["key" => $key])){
+	if(Entities::findBy("metadata",["key" => $key])){
 
-		$meta = findBy("metadata",["key" => $key])[0];
+		$meta = Entities::findBy("metadata",["key" => $key])[0];
 		$meta->setValue($value);
 	
 
@@ -239,38 +147,10 @@ function setMetadata($key, $value){
 
 	}
 
-	entityService()->persist($meta);
-	entityService()->flush();
+	Entities::persist($meta);
+	Entities::flush();
 
 
-}
-
-function toastService(){	
-	return \Core\Services\ToastService::instance();
-}
-
-function sessionService(){	
-	return \Core\Services\SessionService::instance();
-}
-
-function authenticationService(){	
-	return \Core\Services\AuthenticationService::instance();
-}
-
-function EntityService(){	
-	return \Core\Services\EntityService::instance()->EntityManager;
-}
-
-function eBayService($intergrationId){	
-	return \Core\Services\EbayService::instance($intergrationId);
-}
-
-function notificationService(){	
-	return \Core\Services\NotificationService::instance();
-}
-
-function updateService(){	
-	return \Core\Services\UpdateService::instance();
 }
 
 function dbCheck(){
@@ -285,14 +165,16 @@ function dbCheck(){
 
 }
 
+Entities::load();
+Plugins::load();
+
 if(php_sapi_name() !== 'cli'){
 	dbCheck();
 }
 
 
+Session::start();
 
-sessionService()->start();
-
-if(updateService()->hasNewVersion()){
-	NotificationService()->addNotification("New Update Available: " .  updateService()->remoteVersion(),"/update","globe-europe");
+if(Update::hasNewVersion()){
+	Notifications::addNotification("New Update Available: " .  Update::remoteVersion(),"/update","globe-europe");
 }

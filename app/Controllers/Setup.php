@@ -4,6 +4,10 @@ namespace App\Controllers;
 
 use \Core\View;
 
+use \Core\Services\ToastService as Toast;
+use \Core\Services\UpdateService as Update
+use \Core\Services\entityService as Entities;
+
 /**
  * Home controller
  *
@@ -24,7 +28,7 @@ class Setup extends \Core\Controller
 		/* Config File Exists, Update */
 		if(file_exists(_CONFIG_FILE)){
 			
-			if(authenticationService()->loggedIn()){
+			if(Authentication::loggedIn()){
 				$this->update();
 			}
 			
@@ -47,7 +51,7 @@ class Setup extends \Core\Controller
 		$connection = @fsockopen($this->post['db_host'], $this->post['db_port']);
 
 		if(!is_resource($connection)){
-			toastService()->throwError("Error...", ("MySQL Connection failed: Host Server not Found"));
+			toast::throwError("Error...", ("MySQL Connection failed: Host Server not Found"));
 			View::renderTemplate('Setup/index.html');
 		}
 	
@@ -56,7 +60,7 @@ class Setup extends \Core\Controller
 			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
 		} catch (mysqli_sql_exception $e) {
-			toastService()->throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
+			toast::throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
 			View::renderTemplate('Setup/index.html');
 			return;			
 		}
@@ -67,7 +71,7 @@ class Setup extends \Core\Controller
 
 		if ($row == null) {	
 			$conn->close();
-			toastService()->throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
+			toast::throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
 			View::renderTemplate('Setup/index.html');
 			return;
 		}
@@ -95,27 +99,27 @@ define('_DB_DUMPER','mysqldump');";
 
 		require(_CONFIG_FILE);
 		
-		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(EntityService());
-		$classes = entityService()->getMetadataFactory()->getAllMetadata();
+		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities));
+		$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
 		$schemaTool->createSchema($classes);					
 						
 
-		$proxyFactory = entityService()->getProxyFactory();
-		$metadatas = entityService()->getMetadataFactory()->getAllMetadata();
+		$proxyFactory = Entities::em()-getProxyFactory();
+		$metadatas = Entities::em()-getMetadataFactory()->getAllMetadata();
 		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 		
 
 		$user = new \App\Models\User();
 		$user->setEmail($this->post['user_email']);	
 		$user->setPassword($this->post['user_password']);
-		entityService()->persist($user);
+		Entities::persist($user);
 		
 		
 		foreach(_PURCHASE_STATUSES as $purchaseStatus){
 			
 			$status = new \App\Models\PurchaseStatus();
 			$status->setname($purchaseStatus['name']);
-			entityService()->persist($status);
+			Entities::persist($status);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
@@ -123,13 +127,13 @@ define('_DB_DUMPER','mysqldump');";
 
 			$status = new \App\Models\SaleStatus();
 			$status->setname($saleStatus['name']);
-			entityService()->persist($status);
+			Entities::persist($status);
 			
 		}
 		
-		entityService()->flush();
+		Entities::flush();
 		
-		toastService()->throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
+		toast::throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
 		header('Location: /login');
 		
 		
@@ -142,7 +146,7 @@ define('_DB_DUMPER','mysqldump');";
 		
 		foreach(_PURCHASE_STATUSES as $purchaseStatus){
 			
-			$pStatus = findEntity("purchaseStatus", $purchaseStatus['id']);
+			$pStatus = Entities::findEntity("purchaseStatus", $purchaseStatus['id']);
 			
 			if($pStatus){
 				$pStatus->setName($purchaseStatus['name']);			
@@ -151,12 +155,12 @@ define('_DB_DUMPER','mysqldump');";
 				$pStatus->setName($purchaseStatus['name']);
 			}
 			
-			entityService()->persist($pStatus);
+			Entities::persist($pStatus);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
 			
-			$sStatus = findEntity("saleStatus", $saleStatus['id']);
+			$sStatus = Entities::findEntity("saleStatus", $saleStatus['id']);
 			
 			if($sStatus){
 				$sStatus->setName($saleStatus['name']);			
@@ -165,12 +169,12 @@ define('_DB_DUMPER','mysqldump');";
 				$sStatus->setName($saleStatus['name']);
 			}
 			
-			entityService()->persist($sStatus);	
+			Entities::persist($sStatus);	
 
 		}
 		
-		entityService()->flush();
-		toastService()->throwSuccess("Ready to Rock and Roll...", 	"Updated to Version " .  updateService()->currentVersion());	
+		Entities::flush();
+		toast::throwSuccess("Ready to Rock and Roll...", 	"Updated to Version " .  Update::currentVersion());	
 		
 		header('Location: /');
 				

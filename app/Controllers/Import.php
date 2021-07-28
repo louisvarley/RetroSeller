@@ -3,7 +3,8 @@
 namespace App\Controllers;
 
 use \Core\View;
-
+use \Core\Services\ToastService as Toast;
+use \Core\Services\entityService as Entities;
 /**
  * Home controller
  *
@@ -31,22 +32,22 @@ class Import extends \Core\Controller
 		
 		$result = ["new_sales" => 0, "updated_sales" => 0, "updated_purchases" => 0];
 	
-		foreach(findAll("Integration") as $integration){
+		foreach(Entities::findAll("Integration") as $integration){
 			
-			$result['updated_purchases'] = $result['updated_purchases'] + $integration->eBay()->updatePurchasesWithAuctions();
+			$result['updated_purchases'] = $result['updated_purchases'] + $integration->eBay()::updatePurchasesWithAuctions();
 		}
 		
 	
-		foreach(findAll("Integration") as $integration){
+		foreach(Entities::findAll("Integration") as $integration){
 			
-			$r = $integration->eBay()->CreateSalesFromOrders();
+			$r = $integration->eBay()::CreateSalesFromOrders();
 			$result['new_sales'] = $result['new_sales'] + $r['imports'];
 			$result['updated_sales'] = $result['updated_sales'] + $r['updates'];			
 		}
 			
-		toastService()->throwSuccess("Saved...", "Imported " . $result['new_sales'] . " New Sales from eBay");
-		toastService()->throwSuccess("Saved...", "Updated " . $result['updated_sales'] . " Sales from eBay");
-		toastService()->throwSuccess("Saved...", "Updated " . $result['updated_purchases'] . " Purchases from eBay");		
+		toast::throwSuccess("Saved...", "Imported " . $result['new_sales'] . " New Sales from eBay");
+		toast::throwSuccess("Saved...", "Updated " . $result['updated_sales'] . " Sales from eBay");
+		toast::throwSuccess("Saved...", "Updated " . $result['updated_purchases'] . " Purchases from eBay");		
 		header('Location: /');
 
 		
@@ -91,9 +92,9 @@ class Import extends \Core\Controller
 			if($key > 0){
 				$count++;
 			
-				$purchaseVendor = findBy("PurchaseVendor", ["name" => $value[4]])[0];
-				$purchaseStatus = findBy("PurchaseStatus", ["name" => $value[3]])[0];
-				$purchaseCategory = findBy("PurchaseCategory", ["path" => $value[2]])[0];
+				$purchaseVendor = Entities::findBy("PurchaseVendor", ["name" => $value[4]])[0];
+				$purchaseStatus = Entities::findBy("PurchaseStatus", ["name" => $value[3]])[0];
+				$purchaseCategory = Entities::findBy("PurchaseCategory", ["path" => $value[2]])[0];
 	
 				$purchase = new \App\Models\Purchase();
 				$purchase->setName($value[0]);
@@ -104,15 +105,15 @@ class Import extends \Core\Controller
 				$purchase->setValuation($value[1]);
 				$purchase->setCategory($purchaseCategory);	
 
-				entityService()->persist($purchase);
+				Entities::persist($purchase);
 							
 			}
 		};
 		
 	
-		entityService()->flush();
+		Entities::flush();
 		
-		toastService()->throwSuccess("Saved...", "Imported " . $count . " New Purchases");
+		toast::throwSuccess("Saved...", "Imported " . $count . " New Purchases");
 		
 		
 

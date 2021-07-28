@@ -1,8 +1,12 @@
 <?php
-namespace App\Models;
+
+namespace App\Plugins\eBayImport\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+
+use \App\Plugins\eBayImport\Services\EbayService as eBay;
+use \Core\Services\entityService as Entities;
 
 /**
  * @ORM\Entity
@@ -136,7 +140,7 @@ class Integration
 	
 	public function ebay(){
 		
-		return ebayService($this->getId());
+		return eBay::withIntegration($this->getId());
 		
 	}
 	
@@ -151,7 +155,7 @@ class Integration
 	
 	public function refreshToken(){
 		
-		$response = $this->eBay()->refreshToken();
+		$response = $this->eBay()::refreshToken();
 		
 		if($response->getStatusCode() !== 200){
 			
@@ -161,8 +165,8 @@ class Integration
 			
 			$this->setAccessToken($response->access_token);
 						
-			entityService()->persist($this);
-			entityService()->flush();
+			Entities::persist($this);
+			Entities::flush();
 			
 			return $response;
 			
@@ -172,7 +176,7 @@ class Integration
 
 	public function requestAccessToken($code){
 
-		$response = $this->eBay()->getUserToken($code);
+		$response = $this->eBay()::getUserToken($code);
 
 		if($response->getStatusCode() !== 200){
 			
@@ -183,8 +187,8 @@ class Integration
 			$this->setRefreshToken($response->refresh_token);
 			$this->setAccessToken($response->access_token);
 						
-			entityService()->persist($this);
-			entityService()->flush();
+			Entities::persist($this);
+			Entities::flush();
 			
 			return $response;
 			
@@ -195,7 +199,7 @@ class Integration
 
 	public function accessTokenValid(){
 		
-		return $this->ebay()->userTokenIsValid();		
+		return $this->ebay()::userTokenIsValid();		
 		
 	}
 }

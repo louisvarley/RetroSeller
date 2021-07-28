@@ -3,6 +3,7 @@
 namespace App\Controllers\Report;
 
 use \Core\View;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -53,7 +54,7 @@ class Sales extends \App\Controllers\Report
 			]
 		]);
 
-		$sales = findAll("sale");
+		$sales = Entities::findAll("sale");
 		
 		$transactions = [];
 		

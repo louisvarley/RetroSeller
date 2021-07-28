@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use \Core\View;
 use \App\Models\Purchase;
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -22,15 +23,15 @@ class Purchases extends \App\Controllers\Api
 			$imageData = file_get_contents($imageLocation);
 			$imageBase64 = base64_encode($imageData);
 
-			$purchase = findEntity("purchase",$this->get['purchaseId']);
+			$purchase = Entities::findEntity("purchase",$this->get['purchaseId']);
 
 			$image = new \App\Models\Blob();
 			$image->setData($imageBase64);
-			entityService()->persist($image);
+			Entities::persist($image);
 
 			$purchase->getImages()->add($image);
 
-			entityService()->flush();
+			Entities::flush();
 
 			return new \Core\Classes\ApiResponse(200, 0, ['blobId' => $image->getId(), 'message' => 'Image Saved']);
 	
@@ -45,13 +46,13 @@ class Purchases extends \App\Controllers\Api
 
 		try{
 
-			$purchase = findEntity("purchase", $this->get['purchaseId']);
-			$image = findEntity("blob", $this->get['blobId']);
+			$purchase = Entities::findEntity("purchase", $this->get['purchaseId']);
+			$image = Entities::findEntity("blob", $this->get['blobId']);
 
 			$purchase->getImages()->removeElement($image);
 
-			entityService()->remove($image);
-			entityService()->flush();
+			Entities::remove($image);
+			Entities::flush();
 
 			
 			return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Image deleted']);
@@ -69,7 +70,7 @@ class Purchases extends \App\Controllers\Api
 
 		
 		$blobId = $this->get['blobId'];
-		$image = findEntity("blob", $blobId);
+		$image = Entities::findEntity("blob", $blobId);
 		$image->rotate();
 	
 		return new \Core\Classes\ApiResponse(200, 0, ['message' => 'Image Saved']);
@@ -92,7 +93,7 @@ class Purchases extends \App\Controllers\Api
     ])
     ->withIndexColumn('u.id')
     ->withQueryBuilder(
-        entityService()->createQueryBuilder()
+        Entities::createQueryBuilder()
             ->select('u')
             ->from(_MODELS . "purchase", 'u')
 			->join('u.status', 's')

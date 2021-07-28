@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
+use \Core\Services\entityService as Entities;
 
 /**
  * Home controller
@@ -21,16 +21,16 @@ class Transfer extends \App\Controllers\ManagerController
 	public function getEntity($id = 0){
 
 		return array(
-			$this->route_params['controller'] => findEntity($this->route_params['controller'], $id),			
-			"accounts" => createOptionSet('Account', 'id','name'),				
+			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),			
+			"accounts" => Entities::createOptionSet('Account', 'id','name'),				
 		);	
 	} 
 
 	public function updateEntity($id, $data){
 		
-		$transfer = findEntity($this->route_params['controller'], $id);
-		$accountTo = findEntity("Account", $data['transfer']['account_to_id']);
-		$accountFrom = findEntity("Account", $data['transfer']['account_from_id']);
+		$transfer = Entities::findEntity($this->route_params['controller'], $id);
+		$accountTo = Entities::findEntity("Account", $data['transfer']['account_to_id']);
+		$accountFrom = Entities::findEntity("Account", $data['transfer']['account_from_id']);
 		
 		
 		$transfer->setName($data['transfer']['name']);
@@ -40,8 +40,8 @@ class Transfer extends \App\Controllers\ManagerController
 		$transfer->setAccountTo($accountTo);	
 		
 
-		entityService()->persist($transfer);
-		entityService()->flush();
+		Entities::persist($transfer);
+		Entities::flush();
 		
 	}
 	
@@ -49,8 +49,8 @@ class Transfer extends \App\Controllers\ManagerController
 
 		$transfer = new \App\Models\Transfer();
 
-		$accountTo = findEntity("Account", $data['transfer']['account_to_id']);
-		$accountFrom = findEntity("Account", $data['transfer']['account_from_id']);
+		$accountTo = Entities::findEntity("Account", $data['transfer']['account_to_id']);
+		$accountFrom = Entities::findEntity("Account", $data['transfer']['account_from_id']);
 		
 		$transfer->setName($data['transfer']['name']);
 		$transfer->setAmount($data['transfer']['amount']);
@@ -59,8 +59,8 @@ class Transfer extends \App\Controllers\ManagerController
 		$transfer->setAccountTo($accountTo);	
 		
 
-		entityService()->persist($transfer);
-		entityService()->flush();
+		Entities::persist($transfer);
+		Entities::flush();
 
 		return $transfer->getId();
 		
