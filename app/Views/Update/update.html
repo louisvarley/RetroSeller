@@ -29,7 +29,7 @@
 				'readonly': true,
 			}%}			
 			
-			{% if( account.id ) %}
+			{% if( version.current != version.remote ) %}
 			
 				{% include '/Buttons/update-button.html' %}
 			
