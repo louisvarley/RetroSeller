@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 
 use \Core\Services\ToastService as Toast;
-use \Core\Services\UpdateService as Update
+use \Core\Services\UpdateService as Updater
 use \Core\Services\entityService as Entities;
 
 /**
@@ -174,7 +174,7 @@ define('_DB_DUMPER','mysqldump');";
 		}
 		
 		Entities::flush();
-		toast::throwSuccess("Ready to Rock and Roll...", 	"Updated to Version " .  Update::currentVersion());	
+		toast::throwSuccess("Ready to Rock and Roll...", 	"Updated to Version " .  Updater::currentVersion());	
 		
 		header('Location: /');
 				
