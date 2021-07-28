@@ -7,6 +7,7 @@ use \Core\View;
 use \Core\Services\ToastService as Toast;
 use \Core\Services\UpdateService as Updater;
 use \Core\Services\EntityService as Entities;
+use \Core\Services\AuthenticationService as Authentication;
 
 /**
  * Home controller
@@ -99,7 +100,7 @@ define('_DB_DUMPER','mysqldump');";
 
 		require(_CONFIG_FILE);
 		
-		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities));
+		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities);
 		$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
 		$schemaTool->createSchema($classes);					
 						
