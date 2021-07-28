@@ -4,7 +4,7 @@ namespace Core\Services;
 
 use \Core\Services\ToastService as Toast;
 use \Core\Services\SessionService as Session;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 class AuthenticationService{
 		

@@ -5,7 +5,7 @@ namespace Core;
 
 use Twig\Extra\Intl\IntlExtension;
 use \Core\Services\ToastService as Toast;
-use \Core\Services\pluginService as Plugins;
+use \Core\Services\PluginService as Plugins;
 
 /**
  * View

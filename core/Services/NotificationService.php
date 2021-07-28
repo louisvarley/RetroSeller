@@ -3,7 +3,7 @@
 namespace Core\Services;
 
 use App\Config;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 class NotificationService
 {

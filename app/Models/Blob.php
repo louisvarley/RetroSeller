@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 /**
  * @ORM\Entity

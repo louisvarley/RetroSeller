@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models;
 use \Core\Services\ToastService as Toast;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 /**
  * Home controller

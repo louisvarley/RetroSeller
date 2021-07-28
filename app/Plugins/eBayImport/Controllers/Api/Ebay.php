@@ -5,7 +5,7 @@ namespace App\Plugins\eBayImport\Controllers\Api;
 
 use \Core\View;
 use \App\Models\Purchase;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 /**
  * Home controller

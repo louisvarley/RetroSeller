@@ -6,7 +6,7 @@ use \DTS\eBaySDK\Constants;
 use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use \DTS\eBaySDK\Trading\Enums;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 class EbayService
 {

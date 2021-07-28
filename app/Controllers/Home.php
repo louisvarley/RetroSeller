@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 /**
  * Home controller
  *

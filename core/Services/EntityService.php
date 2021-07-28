@@ -5,7 +5,7 @@ namespace Core\Services;
 use App\Config;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use \Core\Services\pluginService as Plugins;
+use \Core\Services\PluginService as Plugins;
 
 class EntityService{
 	

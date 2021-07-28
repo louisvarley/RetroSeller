@@ -3,8 +3,8 @@
 use \Core\Services\NotificationService as Notifications;
 use \Core\Services\SessionService as Session;
 use \Core\Services\UpdateService as Update;
-use \Core\Services\pluginService as Plugins;
-use \Core\Services\entityService as Entities;
+use \Core\Services\PluginService as Plugins;
+use \Core\Services\EntityService as Entities;
 
 use Doctrine\ORM\Query\ResultSetMapping;
 

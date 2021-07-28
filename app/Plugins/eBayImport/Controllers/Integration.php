@@ -7,7 +7,7 @@ use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use \Core\Services\ToastService as Toast;
 
 use \App\Plugins\eBayImport\Services\EbayService as eBay;
-use \Core\Services\entityService as Entities;
+use \Core\Services\EntityService as Entities;
 
 
 /**
