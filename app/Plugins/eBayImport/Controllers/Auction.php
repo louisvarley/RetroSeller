@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Plugins\eBayImport\Controllers;
 
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -20,9 +20,7 @@ class Auction extends \Core\Controller
 	
 	protected $authentication = true;	
 	public $page_data = ["title" => "eBay", "description" => "eBay Selling"];	
-	
 
-	
 	public function sellingAction(){
 
 		$auctions = [];

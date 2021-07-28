@@ -18,7 +18,7 @@ class eBayImport
 			$nav['sales']['subitems'][] = ['type' => 'item', 'title' => 'eBay Auctions', 'link' => '/auction/selling'];
 			
 			$nav['configuration']['subitems'][] = ['type' => 'divider'];			
-			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'eBay Intergrations', 'link' => '/integration/list'];
+			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'eBay Integrations', 'link' => '/integration/list'];
 			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Import eBay Sales', 'link' => '/import/ebayImports'];		
 			
 			return $nav;
