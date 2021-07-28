@@ -65,7 +65,7 @@ class View
 		
 		/* Include all plugins as template dirs */
 		foreach(Plugins::list() as $plugin){
-			$templateDirs[] = $plugin->directory . '/' . 'views';
+			$templateDirs[] = $plugin->directory . '/' . 'Views';
 		}
 
         if ($twig === null) {
