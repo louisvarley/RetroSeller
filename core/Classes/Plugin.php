@@ -25,7 +25,7 @@ class Plugin
 		if(file_exists($directory . '/' . 'plugin.php')){
 			require($directory . '/' . 'plugin.php');
 		}
-		
+	
 
 		$this->directory = $directory;
 		$this->name = basename($directory);
@@ -39,11 +39,11 @@ class Plugin
 			$this->fullName::init();
 		}
 
-		if(file_exists($directory . '/models')){
+		if(file_exists($directory . '/Models')){
 			$this->findModels();
 		}
 
-		if(file_exists($directory . '/controllers')){
+		if(file_exists($directory . '/Controllers')){
 			$this->findControllers();
 		}
 
@@ -68,7 +68,7 @@ class Plugin
 	
 	public function findModels(){
 		
-		$models = glob($this->directory . '/models/*.{php}' , GLOB_BRACE);
+		$models = glob($this->directory . '/Models/*.{php}' , GLOB_BRACE);
 		
 		foreach($models as $model){
 			require($model); // Import Model
@@ -80,7 +80,7 @@ class Plugin
 	public function findControllers(){
 		
 
-		$dir = new \RecursiveDirectoryIterator($this->directory . '/controllers');
+		$dir = new \RecursiveDirectoryIterator($this->directory . '/Controllers');
 		$ite = new \RecursiveIteratorIterator($dir);
 		$files = new \RegexIterator($ite, '/.*\.php/', \RegexIterator::GET_MATCH);
 		$controllers = array();
