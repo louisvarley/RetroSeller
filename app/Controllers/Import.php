@@ -143,9 +143,9 @@ class Import extends \Core\Controller
 		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(20);			
 		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(50);		
 
-		$vendors = FindAll("PurchaseVendor");
-		$statuses = Findall("PurchaseStatus");
-		$categories = FindAll("PurchaseCategory");
+		$vendors = Entities::findAll("PurchaseVendor");
+		$statuses = Entities::findall("PurchaseStatus");
+		$categories = Entities::findAll("PurchaseCategory");
 		
 		
 		$x = 0;
