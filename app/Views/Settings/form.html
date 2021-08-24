@@ -55,6 +55,52 @@
 				'value': settings.undervalued_percentage
 			}%}		
 		
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'SMTP Email Settings',
+				'subtitle': 'Settings used for sending emails', 
+			}%}			
+				
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Host',
+				'id': 'host', 
+				'name': "#{controller}[emailer_host]", 
+				'description': 'Hostname of SMTP Server',
+				'value': settings.emailer_host
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Username',
+				'id': 'host', 
+				'name': "#{controller}[emailer_username]", 
+				'description': 'Username',
+				'value': settings.emailer_username
+			}%}		
+
+			{% include "Forms/Elements/text-password.html" with {
+				'label' : 'Password',
+				'id': 'host', 
+				'name': "#{controller}[emailer_password]", 
+				'description': 'Password',
+				'value': settings.emailer_password
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'From',
+				'id': 'host', 
+				'name': "#{controller}[emailer_from]", 
+				'description': 'Email Address to send from',
+				'value': settings.emailer_from
+			}%}						
+		
+		
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Port',
+				'id': 'host', 
+				'name': "#{controller}[emailer_port]", 
+				'description': 'SMTP Port',
+				'value': settings.emailer_port
+			}%}					
+		
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

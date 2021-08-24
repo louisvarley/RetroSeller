@@ -7,6 +7,7 @@ use \DTS\eBaySDK\Trading\Services;
 use \DTS\eBaySDK\Trading\Types;
 use \DTS\eBaySDK\Trading\Enums;
 use \Core\Services\EntityService as Entities;
+use \Core\Services\EmailService as Emailer;
 
 class EbayService
 {
@@ -669,6 +670,13 @@ class EbayService
 			
 			Entities::persist($sale);
 			Entities::flush();
+			
+			/* Notify all Users */
+
+			foreach(Entities::findAll("user") as $user){
+				Emailer::sendTemplate("new_sale", $user->getEmail(),"New Sale",['link' => _URL_ROOT . '/sale/edit/' . $sale->getId(), 'items' => $sale->getPurchasesString(), 'vendor' => $sale->getSaleVendor()->getName(), 'amount' => $sale->getGrossAmount(), 'profit' => $sale->getProfitAmount()]);	
+			}
+			
 			
 			unset($sale);
 

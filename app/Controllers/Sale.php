@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use \Core\Services\EntityService as Entities;
+use \Core\Services\EmailService as Emailer;
 
 /**
  * Home controller
@@ -84,7 +85,12 @@ class Sale extends \App\Controllers\ManagerController
 			Entities::persist($note);
 
 		}
-
+		
+		foreach(Entities::findAll("user") as $user){
+			Emailer::sendTemplate("new_sale", $user->getEmail(),"New Sale",['link' => _URL_ROOT . '/sale/edit/' . $sale->getId(), 'items' => $sale->getPurchasesString(), 'vendor' => $sale->getSaleVendor()->getName(), 'amount' => $sale->getGrossAmount(), 'profit' => $sale->getProfitAmount()]);	
+		}
+		
+	
 		Entities::flush();
 		
 	}
