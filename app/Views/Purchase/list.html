@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Name","Status","Category", "Date", "Total Spend","Share", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","","Name","Status","Category", "Date", "Selling", "Total Spend","Share", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr>			
@@ -14,6 +14,7 @@
 				<td data-label="Status"><span class="badge badge-purchase {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>										
 				<td data-label="Category">{{ entity.category.path }}</td>
 				<td data-label="Date">{{ entity.date | date('d/m/Y') }}</td>
+				<td data-label="Spent">{{ entity.valuation  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
 				<td data-label="Spent">{{ entity.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>
 				<td data-label="Share">
 					<div class="progress share">
