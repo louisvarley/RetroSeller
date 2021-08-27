@@ -667,15 +667,18 @@ class EbayService
 				"postageAmount" => $sale->getPostageAmount(),
 				"postageCost" => $sale->getPostageCost()
 			];
+
+			
+			/* Notify all Users if this is a new sale */
+			if(empty($sale->getId())){
+				foreach(Entities::findAll("user") as $user){
+					Emailer::sendTemplate("new_sale", $user->getEmail(),"New Sale",['link' => _URL_ROOT . '/sale/edit/' . $sale->getId(), 'items' => $sale->getPurchasesString(), 'vendor' => $sale->getSaleVendor()->getName(), 'amount' => $sale->getGrossAmount(), 'profit' => round($sale->getProfitAmount(),2)]);	
+				}
+			}
 			
 			Entities::persist($sale);
 			Entities::flush();
-			
-			/* Notify all Users */
 
-			foreach(Entities::findAll("user") as $user){
-				Emailer::sendTemplate("new_sale", $user->getEmail(),"New Sale",['link' => _URL_ROOT . '/sale/edit/' . $sale->getId(), 'items' => $sale->getPurchasesString(), 'vendor' => $sale->getSaleVendor()->getName(), 'amount' => $sale->getGrossAmount(), 'profit' => round($sale->getProfitAmount(),2)]);	
-			}
 			
 			unset($sale);
 		}
