@@ -201,7 +201,7 @@
 		<tr>
 		  <td data-label="#">{{ purchase.id }}</td>
 		  <td data-label="Date">{{ purchase.date | date('d/m/Y') }}</td>
-		  <td data-label="Vendor">{{ purchase.PurchaseVendor.name }}</td>
+		  <td data-label="Vendor"><a href="/purchase/edit/{{ purchase.id }}">{{ purchase.PurchaseVendor.name }}</a></td>
 		  <td data-label="Name">{{ purchase.name }}</td>
 		  <td data-label="Spend">{{ purchase.totalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>	
 		  <td data-label="Share">
