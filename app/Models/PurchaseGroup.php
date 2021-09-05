@@ -86,7 +86,7 @@ class PurchaseGroup
 		
 		foreach($this->getPurchases() as $purchase){
 			
-			if($purchase->getStatus == \App\Models\PurchaseStatus::Sold()){
+			if($purchase->getStatus() == \App\Models\PurchaseStatus::Sold()){
 				$x++;
 			}
 			

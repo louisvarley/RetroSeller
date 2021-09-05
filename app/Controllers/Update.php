@@ -31,14 +31,14 @@ class Update extends \Core\Controller
 		$current = Updater::currentVersion();
 		
 		shell_exec('cd ' . DIR_ROOT);
-		shell_exec('./.update.sh');
+		$ln = shell_exec('./.update.sh');
 		
 		$new = Updater::currentVersion();
 		
 		if($current != $new){
 			header("location:" . "/setup");		
 		}else{
-			toast::throwError("Update Failed", "Update failed to pull correctly, run .update.sh to manually update");
+			toast::throwError("Update Failed", "$ln ,run .update.sh to manually update");
 			header("location:" . "/");			
 		}
 
