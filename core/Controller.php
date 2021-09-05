@@ -81,6 +81,10 @@ abstract class Controller
 				['type' => 'item', 'title' => 'New Purchase Expense', 'link' => '/expense/new'],	
 				['type' => 'item', 'title' => 'All Purchase Expenses', 'link' => '/expense/list?orderby=id&order=desc'],	
 				['type' => 'item', 'title' => 'Purchase Categories', 'link' => '/purchaseCategory/list'],	
+				['type' => 'divider'],					
+				['type' => 'item', 'title' => 'New Purchase Group', 'link' => '/purchaseGroup/new'],
+				['type' => 'item', 'title' => 'All Purchase Groups', 'link' => '/purchaseGroup/list'],
+				['type' => 'divider'],			
 				['type' => 'item', 'title' => 'Stock List', 'link' => '/stock/list'],					
 			]],
 			'financials' => ['title' => 'Financials', 'link' => '#', 'subitems' => [

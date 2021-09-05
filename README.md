@@ -3,7 +3,7 @@
 This is a simple stock, purchase, sales manager i built for personal use
 
 
-Uses a https://github.com/daveh/php-mvc as its MVC engine as its simple and quick to get building. 
+Uses https://github.com/daveh/php-mvc as its MVC engine as its simple and quick to get building. 
 
 Doctrine handles entities and database
 
@@ -23,7 +23,9 @@ Each account has a balance and the amount can be withdrawn from the account as n
 # Install
 
 - Clone this repo and setup to run under PHP7/8
-- You will need to run `.composer.sh` to download all required components through composer
+- Ensure you have the following PHP Extensions installed and enabled [ext-zip,ext-dom,ext-gd,ext-curl,ext-mbstring]
+- run `composer update` to download all required components
+- run `./.update.sh` to prepare all entities
 - When first launching, you will be asked to choose your initial user details
 - You will be asked for your database details (MySQL)
 - Setup will install the database schema and when complete you will be free to login 
@@ -36,8 +38,8 @@ Each account has a balance and the amount can be withdrawn from the account as n
 
 # Additional Notes
 
-- `.create.sh` will drop and re-create your schema, this WILL lose all your data, use `.update.sh` for updating changes
-- `.composer.sh` providing composer is installed will download required composer components and update them
+- `.update.sh` will manually update without using the WebUI
+- `.composer.sh` runs a composer dump autoload, loading any changes to internal classes into composer
 
 # Manual Backup and Dumping
 

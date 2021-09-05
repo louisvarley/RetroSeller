@@ -4,11 +4,14 @@ namespace App\Models;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 use \Core\Services\EntityService as Entities;
+use \OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="rs_account")
  */
+ 
+
 class Account
 {
 	/**

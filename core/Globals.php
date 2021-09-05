@@ -136,20 +136,15 @@ function setMetadata($key, $value){
 
 		$meta = Entities::findBy("metadata",["key" => $key])[0];
 		$meta->setValue($value);
-	
-
 	}else{
 
 		$meta = new \App\Models\Metadata();
 		$meta->setValue($value);
 		$meta->setKey($key);
-
-
 	}
 
 	Entities::persist($meta);
 	Entities::flush();
-
 
 }
 

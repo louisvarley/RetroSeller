@@ -69,6 +69,13 @@ class Purchase
      */
     protected $sale;	
 	
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="PurchaseGroup", inversedBy="purchases")
+     * @ORM\JoinColumn(name="purchase_group_id", referencedColumnName="id")
+     */
+    protected $purchaseGroup;		
+	
 	/**
      * @ORM\Column(type="decimal", precision=7, scale=2)
     */
@@ -226,17 +233,19 @@ class Purchase
 
 	}	
 	
-
     public function setSale($sale)
     {
         $this->sale = $sale;
     }		
-
-
+	
+    public function setPurchaseGroup($purchaseGroup)
+    {
+        $this->purchaseGroup = $purchaseGroup;
+    }		
+	
 	public function getValuation()
 	{
-		return $this->valuation;
-		
+		return $this->valuation;	
 	}
 	
     public function setValuation($valuation)
@@ -248,6 +257,11 @@ class Purchase
 	{
 		return $this->sale;
 	}	
+	
+	public function getPurchaseGroup()
+	{
+		return $this->purchaseGroup;
+	}		
 	
 	public function getTotalSpend()
 	{

@@ -135,12 +135,6 @@ class Sale extends \App\Controllers\ManagerController
 
 		$sale->setDate(date_create_from_format('d/m/Y', $data['sale']['date']));	
 		
-		
-		foreach(Entities::findAll("user") as $user){
-			Emailer::sendTemplate("new_sale", $user->getEmail(),"New Sale",['link' => _URL_ROOT . '/sale/edit/' . $sale->getId(), 'items' => $sale->getPurchasesString(), 'vendor' => $sale->getSaleVendor()->getName(), 'amount' => $sale->getGrossAmount(), 'profit' => round($sale->getProfitAmount(),2)]);	
-		}
-				
-		
 		Entities::persist($sale);
 		Entities::flush();
 		

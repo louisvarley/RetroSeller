@@ -32,10 +32,8 @@
 			
 			</div>
 		</li>	
-	
-
 	  
-{% for item in nav %}
+	{% for item in nav %}
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="{{item.link}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			  {{item.title}}
@@ -52,113 +50,8 @@
 			{% endfor %}
 			</div>
 		</li>
-{% endfor %}	  
-	  <!--
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Sales
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  <a class="dropdown-item" href="/sale/new">New Sale</a>
-		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/sale/list?orderby=id&&order=desc">All Sales</a>
-		  <div class="dropdown-divider"></div>		  
-		  <a class="dropdown-item" href="/sale/list?orderby=id&order=desc&search=%22Un-Paid%22">Pending Payment</a>	
-		  <a class="dropdown-item" href="/sale/list?orderby=id&order=desc&search=%22Paid%22">Awaiting Dispatch</a>			  
-		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/sale/list?orderby=gross_amount&&order=desc">Highiest Sold Price</a>	
-		  <div class="dropdown-divider"></div>
-		<a class="dropdown-item" href="/auction/selling">Active eBay Listings</a>		  
-		</div>
-	  </li>
+	{% endfor %}	  
 
-	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Purchases
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  <a class="dropdown-item" href="/purchase/new">New Purchase</a>	  
-		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc">All Purchases</a>		
-		  <div class="dropdown-divider"></div>		  
-		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22for%20sale%22">Purchases For Sale</a>
-		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22sold%22">Purchases Sold</a>	
-		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22held%22">Purchases Held</a>
-		  <a class="dropdown-item" href="/purchase/list?orderby=id&order=desc&search=%22requires%20repair%22">Purchases Needing Repair</a>	
-		  <a class="dropdown-item" href="/purchase/list?orderby=valuation&order=desc">Highiest Valued</a>
-
-
-	
-		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/expense/new">New Purchase Expense</a>
-
-		  <a class="dropdown-item" href="/expense/list?orderby=id&order=desc">All Purchase Expenses</a>
-				  
-		  
-		  
-		  <div class="dropdown-divider"></div>		  
-		  <a class="dropdown-item" href="/purchaseCategory/list">All Purchase Categories</a>	
-		  <div class="dropdown-divider"></div>	
-		  <a class="dropdown-item" target="_blank" href="/stock/list">Public Stock List</a>					  
-		</div>
-	  </li>
-	  
-  
-	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Financials
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">			
-		  <a class="dropdown-item" href="/account/list">Accounts</a>
-		  <a class="dropdown-item" href="/withdrawal/list">Withdrawals</a>	
-		  <a class="dropdown-item" href="/transfer/list">Transfers</a>			  
-		  <a class="dropdown-item" href="/buyout/list">Buy Outs</a>		  
-		</div>
-	  </li>	 
-
-	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Reporting
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  <a class="dropdown-item" href="/report/accounts/statement">Account Statements</a>
-		  <a class="dropdown-item" href="/report/stock/statement">Stock Report</a>
-		  <a class="dropdown-item" href="/report/sales/statement">Sale Report</a>
-		  <a class="dropdown-item" href="/report/purchases/underValued">Under Valued Report</a>		  
-		</div>
-	  </li>		  	  
-	  
-	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Configuration
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		 
-		  <a class="dropdown-item" href="/paymentVendor/list">Payment Vendors</a>
-		  <a class="dropdown-item" href="/saleVendor/list">Sale Vendors</a>
-		  <a class="dropdown-item" href="/purchaseVendor/list">Purchase Vendors</a>
-		  <div class="dropdown-divider"></div>		  
-		  <a class="dropdown-item" href="/user/list">User Management</a>
-		  <a class="dropdown-item" href="/integration/list">eBay Integration Management</a>		  
-		  <div class="dropdown-divider"></div>	
-		  <a class="dropdown-item" href="/import/purchase">Import Purchases Spreadsheet</a>	
-		  <a data-confirmation="This will import any new sales across all eBay Intergrations?" class="dropdown-item" href="/import/ebayImports">Import eBay Sales</a>	
-		  <div class="dropdown-divider"></div>	
-		  <a class="dropdown-item" href="/update">Update</a>		  
-		  <a class="dropdown-item" href="/settings/edit">Settings</a>
-		</div>
-	  </li>	
-	  
-	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  Help
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  <a class="dropdown-item" target="_blank" href="https://github.com/louisvarley/RetroSeller/wiki">Wiki</a>			  
-		</div>
-	  </li>		
-
--->
-	  
 	</ul>
 	
 	

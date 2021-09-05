@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}sales{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( purchaseGroup.id ) %}
+
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'ID',
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'description': 'ID of this group',
+					'readonly': 'readonly',
+					'value': purchaseGroup.id
+				}%}
+				
+				<hr class="my-4">		
+
+			{% endif %}	
+			
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Title',
+				'id': 'title', 
+				'name': "#{controller}[name]", 
+				'description': 'Name of this group',
+				'required': 'required',
+				'value': purchaseGroup.name,
+			}%}			
+			
+			{% include "Forms/Elements/textarea.html" with {
+				'label' : 'Description',
+				'id': 'description', 
+				'name': "#{controller}[description]", 
+				'description': 'Description of this purchase group',
+				'required': 'required',
+				'value' : purchaseGroup.description
+			}%}					
+
+			{% include "Forms/Elements/select-multiple.html" with {
+				'label' : 'Purchases',		
+				'id': 'purchase_id', 
+				'name': "#{controller}[purchases][]", 
+				'description': 'Purchases to assign to this group',
+				'required': 'required',
+				'value': [purchaseGroup.purchases, "id"],
+				'options': purchases						
+			}%}		
+			
+			<hr class="my-4">	
+			
+						
+			
+			<hr class="my-4">	
+
+			<hr class="my-4">	
+		
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+
+
