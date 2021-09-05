@@ -91,10 +91,7 @@ class PurchaseGroup
 			}
 			
 		}
-		
 		return $x;
-	
-		
 	}
 	
 	public function getTotalSpend(){
