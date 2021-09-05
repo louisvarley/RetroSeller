@@ -94,6 +94,21 @@ class PurchaseGroup
 		return $x;
 	}
 	
+	public function getTotalUnSold(){
+		
+		$x = 0;
+		
+		foreach($this->getPurchases() as $purchase){
+			
+			if($purchase->getStatus() == \App\Models\PurchaseStatus::ForSale()){
+				$x++;
+			}
+			
+		}
+		return $x;		
+		
+	}
+	
 	public function getTotalSpend(){
 		
 		$x = 0;
