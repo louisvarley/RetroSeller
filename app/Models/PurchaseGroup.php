@@ -28,6 +28,11 @@ class PurchaseGroup
     */
     protected $description;
 	
+	/**
+    * @ORM\Column(type="string")
+    */
+    protected $code;	
+	
     /**
      * One purchase group has many purchases. This is the inverse side.
      * @ORM\OneToMany(targetEntity="Purchase", mappedBy="purchaseGroup")
@@ -79,6 +84,17 @@ class PurchaseGroup
     {
         return $this->purchases;
     }		
+	
+	public function getCode(){
+		
+		return $this->code;
+	}
+	
+	public function generateCode(){
+		
+		$this->code = bin2hex(openssl_random_pseudo_bytes(6));
+				
+	}
 	
 	public function getTotalSold(){
 		

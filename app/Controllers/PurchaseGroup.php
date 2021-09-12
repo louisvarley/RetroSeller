@@ -58,6 +58,7 @@ class PurchaseGroup extends \App\Controllers\ManagerController
 		$purchaseGroup = new \App\Models\PurchaseGroup();
 		$purchaseGroup->setName($data['purchaseGroup']['name']);
 		$purchaseGroup->setDescription($data['purchaseGroup']['description']);
+		$purchaseGroup->generateCode();
 		
 		Entities::persist($purchaseGroup);	
 

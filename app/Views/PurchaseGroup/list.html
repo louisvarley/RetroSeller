@@ -4,12 +4,13 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Name","Purchases","Sold", "Spend", "Aproximate Profit", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Name", "Code", "Purchases","Sold", "Spend", "Aproximate Profit", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td data-label="Id">{{ entity.id }}</td>
 			<td data-label="Name">{{ entity.name }}</td>
+			<td data-label="Code">{{ entity.code }}</td>			
 			<td data-label="Purchases">{{ entity.purchases.count }}</td>	
 			<td data-label="Sold">{{ entity.getTotalSold }}</td>	
 			<td data-label="Spend">{{ entity.getTotalSpend  | format_currency('GBP', {rounding_mode: 'floor'}) }}</td>				
