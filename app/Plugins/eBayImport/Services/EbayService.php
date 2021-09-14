@@ -406,7 +406,7 @@ class EbayService
                 }
 				
 				/* Find if is purchase group */
-				$purchaseGroup = Entities::findEntity("purchaseGroup", $sku);
+				$purchaseGroup = Entities::findBy("purchaseGroup", ["code" => $sku]);
 				
 				if($purchaseGroup){
 					
@@ -512,7 +512,7 @@ class EbayService
 					}
 					
 					/* Find if is purchase group */
-					$purchaseGroup = Entities::findEntity("purchaseGroup", $sku);
+					$purchaseGroup = Entities::findBy("purchaseGroup", ["code" => $sku]);
 					
 					if($purchaseGroup){
 						
