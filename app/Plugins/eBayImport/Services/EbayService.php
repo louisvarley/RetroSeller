@@ -406,9 +406,11 @@ class EbayService
                 }
 				
 				/* Find if is purchase group */
-				$purchaseGroup = Entities::findBy("purchaseGroup", ["code" => $sku]);
+				$purchaseGroups = Entities::findBy("purchaseGroup", ["code" => $sku]);
 				
-				if($purchaseGroup){
+				if($purchaseGroups){
+					
+					$purchaseGroup = $purchaseGroups[0];
 					
 					foreach($purchaseGroup->getPurchases() as $purchase){
 						
@@ -475,49 +477,51 @@ class EbayService
 						}
 					
 					}else{
-						
 						$quantity = $item->Quantity;
-						
 					}
-			
-					/* Find a purchase for this given SKU if its a purchase ID */
-					$purchase = Entities::findEntity("purchase", $sku);
 
-					/* If we found a Matched Purchase */
-					if($purchase){
-							
-						/* If Listing was a multi-quantity listing we have to do some fulfilment counting */
-						if($quantity > 1){
-
-							/* Stop when we have fulfilled the correct quantity */
-							if($fulfilled == $lineItem->quantity) continue;
-
-							/* If this is a new sale and purchase has no sale  */
-							if($purchase->getSale() == null){
-
-								/* add purchase ID to fulfilled purchases */
-								$fulfilledPurchaseIds[] = $purchase->getId();
-								$fulfilled++;
-														
-							/* If it was an existing sale, add anyway */
-							}
-
-						/* Otherwise we can just safely add it */
-						}else{
-
-							$fulfilledPurchaseIds[] = $purchase->getId();
-
-						}							
-
-					}
-					
 					/* Find if is purchase group */
-					$purchaseGroup = Entities::findBy("purchaseGroup", ["code" => $sku]);
+					$purchaseGroups = Entities::findBy("purchaseGroup", ["code" => $sku]);
 					
-					if($purchaseGroup){
+					if($purchaseGroups){
+					
+						$purchaseGroup = $purchaseGroups[0];
 						
 						foreach($purchaseGroup->getPurchases() as $purchase){
 							
+							/* If Listing was a multi-quantity listing we have to do some fulfilment counting */
+							if($quantity > 1){
+
+								/* Stop when we have fulfilled the correct quantity */
+								if($fulfilled == $lineItem->quantity) continue;
+
+								/* If this is a new sale and purchase has no sale  */
+								if($purchase->getSale() == null){
+
+									/* add purchase ID to fulfilled purchases */
+									$fulfilledPurchaseIds[] = $purchase->getId();
+									$fulfilled++;
+															
+								/* If it was an existing sale, add anyway */
+								}
+
+							/* Otherwise we can just safely add it */
+							}else{
+
+								$fulfilledPurchaseIds[] = $purchase->getId();
+
+							}							
+						}
+					
+						
+					}else{				
+			
+						/* Find a purchase for this given SKU if its a purchase ID */
+						$purchase = Entities::findEntity("purchase", $sku);	
+
+						/* If we found a Matched Purchase */
+						if($purchase){
+								
 							/* If Listing was a multi-quantity listing we have to do some fulfilment counting */
 							if($quantity > 1){
 
