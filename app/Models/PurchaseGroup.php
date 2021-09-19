@@ -153,7 +153,7 @@ class PurchaseGroup
 	
 	public function getTotalProfit(){
 		
-		return $this->getTotalSpend() - $this->TotalNet();	
+		return $this->getTotalSpend() - $this->getTotalNet();	
 	}
   
 }
