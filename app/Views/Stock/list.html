@@ -4,7 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Image", "Name", "Category", "Description", "Price"]	} %}
+	{% embed "Tables/table-base.public.html" with {'table_id': controller, 'headers': ["Image", "Name", "Category", "Description"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 				<tr style="background-color:{{ entity.category.color}}">		
@@ -12,7 +12,7 @@
 				<td data-label="Name">{{ entity.name }}</td>	
 				<td data-label="Category">{{ entity.category.path }}</td>
 				<td data-label="Description">{{ entity.description }}</td>					
-				<td data-label="Price">{{ entity.valuation  | format_currency('GBP', {rounding_mode: 'floor'})  }}</td>				
+				<!--<td data-label="Price">{{ entity.valuation  | format_currency('GBP', {rounding_mode: 'floor'})  }}</td>-->			
 				</tr>
 			{% endfor %}
 		{% endblock %}
