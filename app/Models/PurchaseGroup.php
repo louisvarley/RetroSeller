@@ -125,6 +125,19 @@ class PurchaseGroup
 		
 	}
 	
+	public function getTotalNet(){
+		
+		$x = 0;
+		
+		foreach($this->getPurchases() as $purchase){
+			if($purchase->getSale()){
+				$x += $purchase->getSale()->getNetAmount() / $purchase->getSale()->getPurchases()->count();
+			}
+		}
+		
+		return $x;		
+	}
+	
 	public function getTotalSpend(){
 		
 		$x = 0;
@@ -140,16 +153,7 @@ class PurchaseGroup
 	
 	public function getTotalProfit(){
 		
-		$x = 0;
-		
-		foreach($this->getPurchases() as $purchase){
-			if($purchase->getSale()){
-				
-			$x += $purchase->getSale()->getProfitAmount() / $purchase->getSale()->getPurchases()->count();
-			}
-		}
-		
-		return $x;		
+		return $this->getTotalSpend() - $this->TotalNet();	
 	}
   
 }
