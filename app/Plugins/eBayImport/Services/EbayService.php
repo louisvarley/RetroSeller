@@ -444,6 +444,8 @@ class EbayService
         /* Start By Looping all our orders */
         foreach (self::getMyOrdersRest() as $order) {
 
+			if($order->cancelStatus->cancelState == 'CANCELED') continue;
+
 			/* These are any purchases this order fulfilled */
 			$fulfilledPurchaseIds = [];
 			
