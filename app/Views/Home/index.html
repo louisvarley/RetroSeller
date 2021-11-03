@@ -1,32 +1,8 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
 
 {% block body %}
-
-<div class="row">
-<div class="card mb-4">
-
-	<div class="card mb-4 text-white" style="background-color:#666">
-		<div class="card-header">
-			<h4 class="card-title mb-0">Bank</h4>
-		</div>
-
-		<div class="card-body pb-0 d-flex justify-content-between align-items-start">
-			<div>
-				<div class="fs-5 fw-semibold">{{ account.balance | format_currency('GBP', {rounding_mode: 'floor'}) }}</div>
-				<div>Balance</div>		 
-			</div>
-			
-		</div>
-	    <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-			<canvas class="chart" id="{{account.id}}_accountChart" style="display: block; box-sizing: border-box; height: 70px; width: 274px;" width="274" height="70"></canvas>
-		</div>
-	</div>
-   </div>
-
-</div>
-
 
 <div class="row">
  {% for account in accounts %}
