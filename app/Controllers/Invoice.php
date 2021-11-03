@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use \Core\Services\EntityService as Entities;
+use \Core\Services\FilterService as Filter;
 
 /**
  * Home controller
@@ -59,7 +60,7 @@ class Invoice extends \Core\Controller
 			$invoice->setLogo($tmpUri); 
 		
 		}
-		
+		$invoice->hideToFromHeaders();
 		$invoice->setColor($account->getColor());      // pdf color scheme
 		$invoice->setType("Invoice");    // Invoice Type
 		$invoice->setReference($this->invPad($sale->getId()));   // Reference
@@ -76,8 +77,7 @@ class Invoice extends \Core\Controller
 			\Core\Classes\Countries::get($account->getBusinessAddress()->getCountry())));
 		}
 		
-		
-		//$invoice->setTo(array("Purchaser Name","Sample Company Name","128 AA Juanita Ave","Glendora , CA 91740"));
+		$invoice->setTo(Filter::action("invoice_customer", array("","","",""), $this->route_params['id']));
 
 		$total = 0;
 		foreach($sale->getPurchases() as $purchase){

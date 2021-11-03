@@ -18,12 +18,12 @@ class FilterService{
 		
 	}
 	
-	public static function action($id, $var){
+	public static function action($id, $var, $arg = null){
 	
 		if(array_key_exists($id, self::$filters)){
 			
 			foreach(self::$filters[$id] as $filter){
-				$var = call_user_func($filter, $var);			
+				$var = call_user_func($filter, $var, $arg);			
 			}
 			
 		}
