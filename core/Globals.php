@@ -15,9 +15,13 @@ use Doctrine\ORM\Query\ResultSetMapping;
  
 /* Enable or Disable Errors from being displayed */ 
 define('_SHOW_ERRORS', true); 
+
+if(!defined('STDIN') ) {
   
 define("_URL_ROOT", (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://") . $_SERVER['HTTP_HOST']); 
  
+}
+
 /* Directories */
 define("DIR_ROOT", dirname(dirname(__FILE__)));
 define("DIR_APP", DIR_ROOT . '/app');	
