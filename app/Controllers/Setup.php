@@ -57,13 +57,12 @@ class Setup extends \Core\Controller
 
 		} catch (mysqli_sql_exception $e) {
 			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
-			View::renderTemplate('Setup/index.html');
 			return;			
 		}
 
 		if(!is_resource($connection)){
 			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
-			View::renderTemplate('Setup/index.html');
+			return;
 		}
 	
 		try {
@@ -71,7 +70,6 @@ class Setup extends \Core\Controller
 			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
 		} catch (\mysqli_sql_exception $e) {
 			toast::throwError("Error...", ("MySQL Connection failed, please check your details and try again"));
-			View::renderTemplate('Setup/index.html');
 			return;			
 		}
 
@@ -82,7 +80,6 @@ class Setup extends \Core\Controller
 		if ($row == null) {	
 			$conn->close();
 			toast::throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
-			View::renderTemplate('Setup/index.html');
 			return;
 		}
 		
