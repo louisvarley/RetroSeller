@@ -1,10 +1,9 @@
 <?php
+namespace Core\Services;
 
 use App\Config;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-
-namespace Core\Services;
 
 class PluginService{
 	
