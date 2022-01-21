@@ -53,7 +53,11 @@ abstract class Controller
     public function __construct($route_params)
     {
         $this->route_params = $route_params;
-		$this->notifications = array('notifications' => Notifications::fetch());
+		
+		if(_IS_SETUP){
+			$this->notifications = array('notifications' => Notifications::fetch());
+		}
+		
 		$this->inputData();
 		$this->navigation();
     }

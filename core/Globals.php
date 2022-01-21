@@ -13,6 +13,8 @@ use Doctrine\ORM\Query\ResultSetMapping;
  * Config
  */
  
+
+ 
 /* Enable or Disable Errors from being displayed */ 
 define('_SHOW_ERRORS', true); 
 
@@ -29,6 +31,7 @@ define("DIR_CORE", DIR_ROOT . '/core');
 define("DIR_PUBLIC", DIR_ROOT . '/');
 define("DIR_STATIC", DIR_PUBLIC  . '/static');	
 define("DIR_PROXIES", DIR_CORE  . '/Proxies');
+define("DIR_VENDOR", DIR_ROOT . '/vendor');
 
 define("DIR_VIEWS", DIR_APP . '/Views');	
 define("DIR_CONTROLLERS", DIR_APP . '/Controllers');	
@@ -45,6 +48,8 @@ define("WWW_IMG", WWW_STATIC  . '/img');
 define("_MODELS", "\\App\\Models\\");
 define("_CONTROLLERS", "\\App\\Controllers\\");
 define("_VIEWS", "\\App\\Views\\");	
+
+define("_CONFIG_FILE",DIR_APP . '/Config.php');
 
 /* Global Image Sizes */
 define("_IMAGE_SIZES",[
@@ -74,6 +79,13 @@ define("_SALE_STATUSES", array(
 	'DISPATCHED' => array('id' => 4, 'name' => 'Dispatched')		
 	)
 );
+
+
+if(file_exists(_CONFIG_FILE)){
+	define("_IS_SETUP", true);
+}else{
+	define("_IS_SETUP", false);	
+}
 
 /* CLI Mode */
 if(php_sapi_name() !== 'cli'){
@@ -113,10 +125,13 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 /**
  * First Launch
  */
-if(!defined("_FIRST_LAUNCH")){
+ 
 
+if(!_IS_SETUP){
+	
 	if($_SERVER['REQUEST_URI'] != "/setup"){
 		header('Location: /setup');
+		die();
 	}
 	return false;
 }

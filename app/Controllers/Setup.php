@@ -24,14 +24,16 @@ class Setup extends \Core\Controller
      */
     public function indexAction(){
 		
-		define("_CONFIG_FILE",DIR_APP . '/Config.php');
+		
 		
 		/* Config File Exists, Update */
-		if(file_exists(_CONFIG_FILE)){
+		if(_IS_SETUP){
 			
 			if(Authentication::loggedIn()){
 				$this->update();
 			}
+			
+			header('Location: /');
 			
 		}else{
 			
@@ -43,7 +45,7 @@ class Setup extends \Core\Controller
 			
 		}
 				
-		header('Location: /');
+		
 	}
 	
 	public function install(){
