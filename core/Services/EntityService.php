@@ -34,6 +34,7 @@ class EntityService{
 			'user'     => _DB_USER,
 			'password' => _DB_PASSWORD,
 			'dbname'   => _DB_NAME,
+			'host' 	   => _DB_HOST,
 		);
 		
 		$cacheDir = DIR_PROXIES;
