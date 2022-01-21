@@ -195,6 +195,8 @@ function dbCheck(){
 
 function schemaGenerate(){
 	
+	Entities::load();
+	
 	$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities::em());
 	$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
 	$schemaTool->createSchema($classes);					
