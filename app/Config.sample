@@ -1,17 +1,17 @@
 <?php
 
 /* Debug Mode */
-define('_SHOW_ERRORS', true);
+define('_SHOW_ERRORS', false);
 
 /* Database Config */
 define('_DB_HOST','localhost');
 define('_DB_NAME','retroseller');
-define('_DB_USER','root');
-define('_DB_PASSWORD','');
+define('_DB_USER','retroseller');
+define('_DB_PASSWORD','retroseller');
 define('_DB_PORT','3306');
-define('_DB_DUMPER','C:\wamp64\bin\mysql\mysql8.0.22\bin\mysqldump.exe');
+define('_DB_DUMPER','mysqldump');
 
 /* Admin Login */
-define('_ADMIN_USER','admin');
+define('_ADMIN_USER','admin@admin.com');
 define('_ADMIN_PASSWORD','admin');
 

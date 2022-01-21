@@ -132,9 +132,9 @@ if(!_IS_SETUP){
 	return false;
 }
 
-
+/* Create Proxies and Database Schema if not set */
 if(proxiesEmpty()){
-	schemaGenerate();
+	entities::generateSchema();
 }
 
 function getMetadata($key){
