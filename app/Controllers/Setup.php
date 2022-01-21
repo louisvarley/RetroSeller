@@ -70,7 +70,7 @@ class Setup extends \Core\Controller
 			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
 		} catch (\mysqli_sql_exception $e) {
-			toast::throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
+			toast::throwError("Error...", ("MySQL Connection failed, please check your details and try again"));
 			View::renderTemplate('Setup/index.html');
 			return;			
 		}
