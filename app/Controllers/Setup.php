@@ -56,20 +56,20 @@ class Setup extends \Core\Controller
 			$connection = @fsockopen($this->post['db_host'], $this->post['db_port']);
 
 		} catch (mysqli_sql_exception $e) {
-			toast::throwError("Error...", ("MySQL Connection failed: Host Server not Found");
+			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
 			View::renderTemplate('Setup/index.html');
 			return;			
 		}
 
 		if(!is_resource($connection)){
-			toast::throwError("Error...", ("MySQL Connection failed: Host Server not Found"));
+			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
 			View::renderTemplate('Setup/index.html');
 		}
 	
 		try {
 			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
-		} catch (mysqli_sql_exception $e) {
+		} catch (\mysqli_sql_exception $e) {
 			toast::throwError("Error...", ("MySQL Connection failed: " . $conn->connect_error));
 			View::renderTemplate('Setup/index.html');
 			return;			
