@@ -105,6 +105,9 @@ define('_DB_DUMPER','mysqldump');";
 		require(_CONFIG_FILE);
 		
 		schemaGenerate();
+			
+		toast::throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
+		header('Location: /login');
 		
 	}
 	

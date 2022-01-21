@@ -133,6 +133,10 @@ if(!_IS_SETUP){
 }
 
 
+if(proxiesEmpty()){
+	schemaGenerate();
+}
+
 function getMetadata($key){
 
 	$meta = Entities::findBy("metadata",["key" => $key]);
@@ -163,6 +167,20 @@ function setMetadata($key, $value){
 
 }
 
+function proxiesEmpty(){
+	
+  $handle = opendir(DIR_PROXIES);
+  while (false !== ($entry = readdir($handle))) {
+    if ($entry != "." && $entry != "..") {
+      closedir($handle);
+      return false;
+    }
+  }
+  closedir($handle);
+  return true;
+
+}
+
 function dbCheck(){
 
 	try {
@@ -177,22 +195,18 @@ function dbCheck(){
 
 function schemaGenerate(){
 	
-	
 	$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities);
-		$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
+	$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
 	$schemaTool->createSchema($classes);					
-					
 
 	$proxyFactory = Entities::em()-getProxyFactory();
 	$metadatas = Entities::em()-getMetadataFactory()->getAllMetadata();
 	$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
-	
 
 	$user = new \App\Models\User();
 	$user->setEmail($this->post['user_email']);	
 	$user->setPassword($this->post['user_password']);
 	Entities::persist($user);
-	
 	
 	foreach(_PURCHASE_STATUSES as $purchaseStatus){
 		
@@ -202,18 +216,13 @@ function schemaGenerate(){
 	}
 	
 	foreach(_SALE_STATUSES as $saleStatus){
-		
-
+	
 		$status = new \App\Models\SaleStatus();
 		$status->setname($saleStatus['name']);
 		Entities::persist($status);
-		
 	}
 	
 	Entities::flush();
-	
-	toast::throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
-	header('Location: /login');
 	
 }
 
