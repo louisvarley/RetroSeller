@@ -92,8 +92,6 @@ class Setup extends \Core\Controller
 		/* Build New Config */
 		$config = "<?php			
 
-define('_FIRST_LAUNCH','FALSE');
-
 /* Database Config */
 define('_DB_HOST','" . $this->post['db_host'] . "');
 define('_DB_NAME','" . $this->post['db_name'] . "');
@@ -106,43 +104,7 @@ define('_DB_DUMPER','mysqldump');";
 
 		require(_CONFIG_FILE);
 		
-		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities);
-		$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
-		$schemaTool->createSchema($classes);					
-						
-
-		$proxyFactory = Entities::em()-getProxyFactory();
-		$metadatas = Entities::em()-getMetadataFactory()->getAllMetadata();
-		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
-		
-
-		$user = new \App\Models\User();
-		$user->setEmail($this->post['user_email']);	
-		$user->setPassword($this->post['user_password']);
-		Entities::persist($user);
-		
-		
-		foreach(_PURCHASE_STATUSES as $purchaseStatus){
-			
-			$status = new \App\Models\PurchaseStatus();
-			$status->setname($purchaseStatus['name']);
-			Entities::persist($status);
-		}
-		
-		foreach(_SALE_STATUSES as $saleStatus){
-			
-
-			$status = new \App\Models\SaleStatus();
-			$status->setname($saleStatus['name']);
-			Entities::persist($status);
-			
-		}
-		
-		Entities::flush();
-		
-		toast::throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
-		header('Location: /login');
-		
+		schemaGenerate();
 		
 	}
 	
