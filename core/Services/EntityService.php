@@ -192,43 +192,43 @@ class EntityService{
 
 	public static function generateSchema(){
 		
-		Entities::load();
+		self::load();
 	
-		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities::em());
-		$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
+		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(self::em());
+		$classes = self::em()->getMetadataFactory()->getAllMetadata();
 		$schemaTool->createSchema($classes);					
 
-		$proxyFactory = Entities::em()-getProxyFactory();
-		$metadatas = Entities::em()-getMetadataFactory()->getAllMetadata();
+		$proxyFactory = self::em()-getProxyFactory();
+		$metadatas = self::em()-getMetadataFactory()->getAllMetadata();
 		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 		
 		foreach(_PURCHASE_STATUSES as $purchaseStatus){
 			
 			$status = new \App\Models\PurchaseStatus();
 			$status->setname($purchaseStatus['name']);
-			Entities::persist($status);
+			self::persist($status);
 		}
 		
 		foreach(_SALE_STATUSES as $saleStatus){
 		
 			$status = new \App\Models\SaleStatus();
 			$status->setname($saleStatus['name']);
-			Entities::persist($status);
+			self::persist($status);
 		}
 		
-		Entities::flush();
+		self::flush();
 			
 		
 	}
 	
 	public static function initialUserCheck(){
 		
-		if(!Entities::findAll("user")){
+		if(!self::findAll("user")){
 		
 			$user = new \App\Models\User();
 			$user->setEmail(_ADMIN_USER);	
 			$user->setPassword(_ADMIN_PASSWORD);
-			Entities::persist($user);
+			self::persist($user);
 		
 		}
 		
