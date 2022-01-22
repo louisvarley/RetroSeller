@@ -189,18 +189,25 @@ class EntityService{
 		
 		return self::em()->remove($entity);
 	}
+	
+	public static function generateProxies(){
+		
+		self::load();
+		
+		/* Generates Proxy Classes */
+		$proxyFactory = self::em()-getProxyFactory();
+		$metadatas = self::em()-getMetadataFactory()->getAllMetadata();
+		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
+	}
 
 	public static function generateSchema(){
 		
 		self::load();
-	
+		
+		/* Generates Schema */
 		$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(self::em());
 		$classes = self::em()->getMetadataFactory()->getAllMetadata();
 		$schemaTool->createSchema($classes);					
-
-		$proxyFactory = self::em()-getProxyFactory();
-		$metadatas = self::em()-getMetadataFactory()->getAllMetadata();
-		$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 		
 		foreach(_PURCHASE_STATUSES as $purchaseStatus){
 			
@@ -217,6 +224,7 @@ class EntityService{
 		}
 		
 		self::flush();
+			
 			
 		
 	}
