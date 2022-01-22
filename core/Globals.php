@@ -201,13 +201,13 @@ function schemaGenerate(){
 	$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
 	$schemaTool->createSchema($classes);					
 
-	$proxyFactory = Entities::em()->getProxyFactory();
-	$metadatas = Entities::em()->getMetadataFactory()->getAllMetadata();
+	$proxyFactory = Entities::em()-getProxyFactory();
+	$metadatas = Entities::em()-getMetadataFactory()->getAllMetadata();
 	$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
 
 	$user = new \App\Models\User();
-	$user->setEmail(_ADMIN_USER);	
-	$user->setPassword(_ADMIN_PASSWORD);
+	$user->setEmail($this->post['user_email']);	
+	$user->setPassword($this->post['user_password']);
 	Entities::persist($user);
 	
 	foreach(_PURCHASE_STATUSES as $purchaseStatus){

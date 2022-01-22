@@ -223,12 +223,14 @@ class EntityService{
 	
 	public static function initialUserCheck(){
 		
+		if(!Entities::findAll("user")){
 		
+			$user = new \App\Models\User();
+			$user->setEmail(_ADMIN_USER);	
+			$user->setPassword(_ADMIN_PASSWORD);
+			Entities::persist($user);
 		
-		$user = new \App\Models\User();
-		$user->setEmail(_ADMIN_USER);	
-		$user->setPassword(_ADMIN_PASSWORD);
-		Entities::persist($user);
+		}
 		
 	}
 
