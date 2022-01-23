@@ -132,10 +132,13 @@ if(!_IS_SETUP){
 	return false;
 }
 
+Plugins::load();
+Entities::load();
+
 /* Create Proxies and Database Schema if not set */
-if(proxiesEmpty()){
-	entities::generateSchema();
-}
+Entities::generateSchema();
+Entities::generateProxies();
+Entities::initialUserCheck();
 
 function getMetadata($key){
 
@@ -165,74 +168,6 @@ function setMetadata($key, $value){
 	Entities::persist($meta);
 	Entities::flush();
 
-}
-
-function proxiesEmpty(){
-	
-  $handle = opendir(DIR_PROXIES);
-  while (false !== ($entry = readdir($handle))) {
-    if ($entry != "." && $entry != "..") {
-      closedir($handle);
-      return false;
-    }
-  }
-  closedir($handle);
-  return true;
-
-}
-
-function dbCheck(){
-
-	try {
-		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-		$conn = new \mysqli(_DB_HOST, _DB_USER, _DB_PASSWORD);
-	} 
-	catch (mysqli_sql_exception $e) {
-		die('Unable to connect to MySQL Database ' . _DB_USER . '@' . _DB_NAME . ' on ' . _DB_HOST);	
-	}
-
-}
-
-function schemaGenerate(){
-	
-	Entities::load();
-	
-	$schemaTool = new \Doctrine\ORM\Tools\SchemaTool(Entities::em());
-	$classes = Entities::em()->getMetadataFactory()->getAllMetadata();
-	$schemaTool->createSchema($classes);					
-
-	$proxyFactory = Entities::em()-getProxyFactory();
-	$metadatas = Entities::em()-getMetadataFactory()->getAllMetadata();
-	$proxyFactory->generateProxyClasses($metadatas, DIR_PROXIES);
-
-	$user = new \App\Models\User();
-	$user->setEmail($this->post['user_email']);	
-	$user->setPassword($this->post['user_password']);
-	Entities::persist($user);
-	
-	foreach(_PURCHASE_STATUSES as $purchaseStatus){
-		
-		$status = new \App\Models\PurchaseStatus();
-		$status->setname($purchaseStatus['name']);
-		Entities::persist($status);
-	}
-	
-	foreach(_SALE_STATUSES as $saleStatus){
-	
-		$status = new \App\Models\SaleStatus();
-		$status->setname($saleStatus['name']);
-		Entities::persist($status);
-	}
-	
-	Entities::flush();
-	
-}
-
-Entities::load();
-Plugins::load();
-
-if(php_sapi_name() !== 'cli'){
-	dbCheck();
 }
 
 

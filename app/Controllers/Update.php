@@ -29,13 +29,13 @@ class Update extends \Core\Controller
 	public function installAction(){
 		
 		$current = Updater::currentVersion();
-		
-		shell_exec('cd ' . DIR_ROOT);
-		$ln = shell_exec('./.update.sh');
+				
+		Entities::generateStaticData();	
 		
 		$new = Updater::currentVersion();
 		
 		if($current != $new){
+			Updater::update();	
 			header("location:" . "/setup");		
 		}else{
 			toast::throwError("Update Failed", "$ln ,run .update.sh to manually update");

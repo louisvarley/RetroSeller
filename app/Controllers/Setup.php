@@ -50,47 +50,17 @@ class Setup extends \Core\Controller
 	
 	public function install(){
 		
-
-		try {
-					
-			$connection = @fsockopen($this->post['db_host'], $this->post['db_port']);
-
-		} catch (mysqli_sql_exception $e) {
-			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
-			return;			
-		}
-
-		if(!is_resource($connection)){
-			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
-			return;
-		}
-	
-		try {
-			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-			$conn = new \mysqli($this->post['db_host'], $this->post['db_user'], $this->post['db_password']);
-		} catch (\mysqli_sql_exception $e) {
-			toast::throwError("Error...", ("MySQL Connection failed, please check your details and try again"));
-			return;			
-		}
-
-		$query = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='" . $this->post['db_name'] . "'");
-		$row = $query->fetch_object();
-
-
-		if ($row == null) {	
-			$conn->close();
-			toast::throwError("Error...", ("Database '" . $this->post['db_name'] . "' not found or user has no permission"));
-			return;
-		}
-		
-		$conn->close();
-
 		/* Delete Old Config */
 		if(file_exists(_CONFIG_FILE))
 		unlink(_CONFIG_FILE);
 
 		/* Build New Config */
 		$config = "<?php			
+
+
+/* Admin Login */
+define('_ADMIN_USER','" . $this->post['user_email'] . "');
+define('_ADMIN_PASSWORD','" . $this->post['user_password'] . "');
 
 /* Database Config */
 define('_DB_HOST','" . $this->post['db_host'] . "');
@@ -104,52 +74,32 @@ define('_DB_DUMPER','mysqldump');";
 
 		require(_CONFIG_FILE);
 		
-		schemaGenerate();
+		
+		/* Check DB Server Connection */
+		if(!Entities::dbServerExists()){
+			toast::throwError("Error...", "MySQL Connection failed: Host Server not Found");
+			return ;
+		}
+		
+
+		
+		/* Create the Database */
+		if(!Entities::dbExists()){
+			Entities::createDatabase();
+		}
+				
+		/* Generate all Schema and Proxies */
+		Entities::generateSchema();
+		Entities::generateProxies();
+		Entities::generateStaticData();	
+		
+		/* Add new User */
+		Entities::initialUserCheck();
 			
 		toast::throwSuccess("Ready to Rock and Roll...", "You are setup and ready to go");
 		header('Location: /login');
 		
 	}
 	
-	public function update(){
-		
-		
-		/* Everything here should handle any updating needed by checking and adding, processing and removing etc */
-		
-		foreach(_PURCHASE_STATUSES as $purchaseStatus){
-			
-			$pStatus = Entities::findEntity("purchaseStatus", $purchaseStatus['id']);
-			
-			if($pStatus){
-				$pStatus->setName($purchaseStatus['name']);			
-			}else{
-				$pStatus = new \App\Models\PurchaseStatus();
-				$pStatus->setName($purchaseStatus['name']);
-			}
-			
-			Entities::persist($pStatus);
-		}
-		
-		foreach(_SALE_STATUSES as $saleStatus){
-			
-			$sStatus = Entities::findEntity("saleStatus", $saleStatus['id']);
-			
-			if($sStatus){
-				$sStatus->setName($saleStatus['name']);			
-			}else{
-				$sStatus = new \App\Models\SaleStatus();
-				$sStatus->setName($saleStatus['name']);
-			}
-			
-			Entities::persist($sStatus);	
-
-		}
-		
-		Entities::flush();
-		toast::throwSuccess("Ready to Rock and Roll...", 	"Updated to Version " .  Updater::currentVersion());	
-		
-		header('Location: /');
-				
-	}
 	
 }

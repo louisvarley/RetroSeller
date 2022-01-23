@@ -43,7 +43,7 @@ class Error
         }
         http_response_code($code);
 
-        if (_SHOW_ERRORS) {
+        if (!defined("_SHOW_ERRORS") || _SHOW_ERRORS) {
 			
 			echo "<div style='font-family: Arial, Helvetica, sans-serif; text-align:center'>";
             echo "<h1>Fatal error</h1>";

@@ -64,7 +64,7 @@
 	<script src="/static/js/rs.selectmodal.js"></script>	
 		
 	
-	
+	<!-- Toasts -->
 	<script>
 	$( document ).ready(function() {
 		{% for toast in session.toasts %}rs.throw{{toast.type|capitalize}}("{{toast.title}}","{{toast.text}}");

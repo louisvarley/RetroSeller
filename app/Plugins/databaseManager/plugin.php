@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Plugins\databaseManager;
+namespace App\Plugins\DatabaseManager;
 
 use \Core\Services\FilterService as Filter;
 use \Core\Services\EntityService as Entities;
 
-class databaseManager
+class DatabaseManager
 {
 	public static $title = "Database Manager";
 	public static $description = "For exporting and importing your database across RetroSeller Instances";

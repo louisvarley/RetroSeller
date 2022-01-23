@@ -41,4 +41,24 @@ class UpdateService{
 		}
 		
 	}
+	
+	public static function update(){
+		
+		$cmd = "<<<CMD
+		cd " . DIR_ROOT . " \
+		git checkout . \
+		git fetch \
+		git pull \
+		composer update \
+		composer dump-autoload -o \
+		CMD;";
+	
+		$ln = shell_exec($cmd);
+		
+		Entities::generateSchema();
+		Entities::generateProxies();
+		Entities::generateStaticData();
+		
+	
+	}
 }
