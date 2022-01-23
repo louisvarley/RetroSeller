@@ -25,7 +25,7 @@ class EntityService{
 		foreach(plugins::list() as $plugin){
 	
 			if(count($plugin->models) > 0){
-				$paths[] = $plugin->directory . '/models';
+				$paths[] = $plugin->directory . '/Models';
 			}
 			
 		}
@@ -363,7 +363,9 @@ class EntityService{
 			echo 'mysqldump-php error: ' . $e->getMessage();
 		}
 		
-		return file_get_contents($tmpSql);
+		$raw =  file_get_contents($tmpSql);
+		
+		return \gzcompress($raw,9);
 		
 	}
 	
@@ -377,14 +379,17 @@ class EntityService{
 
 		$link = self::dbConnect();
 
-		
-		
 		mysqli_query($link, "DROP DATABASE " . self::$dbParams['dbname'] . ";");
 		mysqli_query($link, "CREATE DATABASE " . self::$dbParams['dbname'] . ";");		
 		mysqli_query($link, "USE " . self::$dbParams['dbname'] . ";");
 
 		// Temporary variable, used to store current query
 		$templine = '';
+		
+		$contents = gzuncompress(file_get_contents($filename));
+		
+		file_put_contents($filename,$contents);
+		
 		$handle = fopen($filename , 'r');
 		if ($handle) {
 			while (!feof($handle)) { // Loop through each line
