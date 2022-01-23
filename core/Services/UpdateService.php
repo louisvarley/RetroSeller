@@ -2,6 +2,8 @@
 
 namespace Core\Services;
 
+use \Core\Services\EntityService as Entities;
+
 class UpdateService{
 	
 
@@ -51,13 +53,15 @@ class UpdateService{
 		git pull \
 		composer update \
 		composer dump-autoload -o \
-		CMD;";
+		CMD";
 	
 		$ln = shell_exec($cmd);
 		
 		Entities::generateSchema();
 		Entities::generateProxies();
 		Entities::generateStaticData();
+		
+		return $ln;
 		
 	
 	}
