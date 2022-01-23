@@ -24,7 +24,7 @@ class Database extends \App\Controllers\ManagerController
 	
 	/* Authenticate an Integration */
 	public function exportAction(){
-		$date = new DateTime();
+		$date = new \DateTime();
 		
 		header("Content-type: application/sql");
 		header("Cache-Control: no-store, no-cache");
