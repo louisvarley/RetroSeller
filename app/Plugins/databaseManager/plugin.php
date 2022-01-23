@@ -17,8 +17,7 @@ class DatabaseManager
 
 
 			$nav['configuration']['subitems'][] = ['type' => 'divider'];			
-			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Export Database', 'link' => '/database/export'];
-			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Import Database', 'link' => '/database/import'];		
+			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Export Database', 'link' => '/database/export'];	
 			
 			return $nav;
 			

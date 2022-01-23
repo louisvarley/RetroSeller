@@ -363,9 +363,9 @@ class EntityService{
 			echo 'mysqldump-php error: ' . $e->getMessage();
 		}
 		
-		$raw =  file_get_contents($tmpSql);
+		$raw = file_get_contents($tmpSql);
 		
-		return \gzcompress($raw,9);
+		return ($raw);
 		
 	}
 	
@@ -386,7 +386,7 @@ class EntityService{
 		// Temporary variable, used to store current query
 		$templine = '';
 		
-		$contents = gzuncompress(file_get_contents($filename));
+		$contents = (file_get_contents($filename));
 		
 		file_put_contents($filename,$contents);
 		

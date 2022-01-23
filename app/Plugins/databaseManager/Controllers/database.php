@@ -24,10 +24,12 @@ class Database extends \App\Controllers\ManagerController
 	
 	/* Authenticate an Integration */
 	public function exportAction(){
+		$date = new DateTime();
 		
 		header("Content-type: application/sql");
 		header("Cache-Control: no-store, no-cache");
-		header('Content-Disposition: attachment; filename="RetroSeller.bak"');
+		header('Content-Disposition: attachment; filename="RetroSeller-Backup-' . $date->format("y-m-d h:i:s") . '.sql"');
+		
 		echo Entities::MySqlDump();
 		return;
 		
