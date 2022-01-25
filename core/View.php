@@ -89,7 +89,9 @@ class View
         }
 		
 		$twig->addGlobal('session', $_SESSION);
-
+		
+		Toast::throwSuccess("hello",time());
+		
 		/* Move these filters to their own class file */
 		$twig->addFilter( new \Twig\TwigFilter('to_array', function ($stdClassObject) {
 			$response = array();
@@ -106,6 +108,7 @@ class View
 
 		/* We can clear any toasts now we have rendered */
 		Toast::clear();
+
     }
 	
     /**

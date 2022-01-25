@@ -1,0 +1,6 @@
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+<input type="file" id="{{ id }}" name="{{ name }}" class="{{ classes }}" accept=".bak">
+
+{% endblock %}
+{% endembed %}

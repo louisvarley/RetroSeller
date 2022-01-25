@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Plugins\databaseManager;
+namespace App\Plugins\DatabaseManager;
 
 use \Core\Services\FilterService as Filter;
 use \Core\Services\EntityService as Entities;
 
-class databaseManager
+class DatabaseManager
 {
 	public static $title = "Database Manager";
 	public static $description = "For exporting and importing your database across RetroSeller Instances";
@@ -17,8 +17,7 @@ class databaseManager
 
 
 			$nav['configuration']['subitems'][] = ['type' => 'divider'];			
-			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Export Database', 'link' => '/database/export'];
-			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Import Database', 'link' => '/database/import'];		
+			$nav['configuration']['subitems'][] = ['type' => 'item', 'title' => 'Export Database', 'link' => '/database/export'];	
 			
 			return $nav;
 			

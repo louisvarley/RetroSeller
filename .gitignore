@@ -7,3 +7,4 @@ core/proxies
 core/cache
 .idea
 .vs
+*.sql

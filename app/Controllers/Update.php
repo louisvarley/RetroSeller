@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \Core\Services\ToastService as Toast;
 use \Core\Services\UpdateService as Updater;
+use \Core\Services\EntityService as Entities;
 
 /**
  * Home controller
@@ -29,21 +30,32 @@ class Update extends \Core\Controller
 	public function installAction(){
 		
 		$current = Updater::currentVersion();
+				
+		Entities::generateStaticData();	
 		
-		shell_exec('cd ' . DIR_ROOT);
-		$ln = shell_exec('./.update.sh');
-		
-		$new = Updater::currentVersion();
-		
+		$new = Updater::remoteVersion();
+
 		if($current != $new){
-			header("location:" . "/setup");		
-		}else{
-			toast::throwError("Update Failed", "$ln ,run .update.sh to manually update");
-			header("location:" . "/");			
+
+			$ln = Updater::update();
+			
+			$current = Updater::currentVersion();
+
+			if($current == $new){
+				
+				toast::throwSuccess("Updated Successfully", "Updated to Version $current");
+				header("location:" . "/");		
+			
+			}else{
+			
+				toast::throwError("Update Failed", "Run .update.sh to manually update");
+				
+			}
+					
 		}
-
-
 		
+		header("location:" . "/");	
+
 	}
 	
 }

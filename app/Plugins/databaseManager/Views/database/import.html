@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}eBay integrations{% endblock %}
+
+{% block body %}
+	{% embed "Forms/import-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }} - Import
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% include "Forms/Elements/sql-uploader.html" with {
+				'label' : 'Backup File',
+				'id': 'backup', 
+				'name': "#{controller}[backup]", 
+				'description': 'RetroSeller Backup File',
+			}%}		
+						
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

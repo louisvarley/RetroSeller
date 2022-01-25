@@ -2,6 +2,8 @@
 
 namespace Core\Services;
 
+use \Core\Services\EntityService as Entities;
+
 class UpdateService{
 	
 
@@ -40,5 +42,27 @@ class UpdateService{
 			return true;
 		}
 		
+	}
+	
+	public static function update(){
+		
+		$cmd = "<<<CMD
+		cd " . DIR_ROOT . " \
+		git checkout . \
+		git fetch \
+		git pull \
+		composer update \
+		composer dump-autoload -o \
+		CMD";
+	
+		$ln = shell_exec($cmd);
+		
+		Entities::generateSchema();
+		Entities::generateProxies();
+		Entities::generateStaticData();
+		
+		return $ln;
+		
+	
 	}
 }
