@@ -55,8 +55,9 @@ class UpdateService{
 		composer dump-autoload -o \
 		CMD";
 	
-		$ln = shell_exec($cmd);
+		$ln = shell_exec("$cmd");
 		
+
 		Entities::generateSchema();
 		Entities::generateProxies();
 		Entities::generateStaticData();
