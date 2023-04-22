@@ -17,7 +17,7 @@ $category->setColor("");
 entityManager()->persist($category);
 
 $category = new \App\Models\PurchaseCategory();
-$category->setname("Sega Mastersystem");
+$category->setname("Sega Master System");
 $category->setColor("");
 entityManager()->persist($category);
 
