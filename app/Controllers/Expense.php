@@ -29,6 +29,37 @@ class Expense extends \App\Controllers\ManagerController
 		);	
 	} 
 
+    /**
+     * Override
+     *
+     * @return void
+     */		
+	public function newAction(){
+		
+		/* ON POST */
+		if($this->isPOST() && !array_key_exists("id", $this->route_params)){
+			$id = $this->insertEntity($this->post);
+			header('Location: /'. $this->route_params['controller'] . '/edit/' . $id);
+			die();
+		}	
+		
+		/* ON GET */
+		if($this->isGET()){
+			
+			/* Pre-filler */
+			if(array_key_exists("id", $this->route_params)){
+				
+				$this->render($this->route_params['controller'] . '/form.html', ($this->getEntity()));
+				
+			}else{
+				
+				$this->render($this->route_params['controller'] . '/form.html', array_combine($this->getEntity(), array('purchase_id' => $this->route_params['id'])));
+			}
+			
+			
+		}
+	}
+
 	public function updateEntity($id, $data){
 		
 		$expense = Entities::findEntity($this->route_params['controller'], $id);

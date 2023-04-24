@@ -106,7 +106,20 @@ class Import extends \Core\Controller
 				$purchase->setCategory($purchaseCategory);	
 
 				Entities::persist($purchase);
-							
+				
+				if(!empty($value[7]) && !empty($value[8])){
+					
+					$account = Entities::findBy("Account", ["name" => $value[7]])[0];
+			
+					$expense = new \App\Models\Expense();
+					$expense->setName("Initial Purchase");
+					$expense->setAmount($value[8]);
+					$expense->setDate(date_create_from_format('d/m/Y', date("d/m/Y")));		
+					$expense->setAccount($account);
+					$expense->getPurchases()->add($purchase);
+					Entities::persist($expense);
+				}
+			
 			}
 		};
 		
@@ -134,6 +147,8 @@ class Import extends \Core\Controller
 		$spreadsheet->getActiveSheet()->setCellValue('E1','Purchase Vendor');	
 		$spreadsheet->getActiveSheet()->setCellValue('F1','Date');
 		$spreadsheet->getActiveSheet()->setCellValue('G1','Description');
+		$spreadsheet->getActiveSheet()->setCellValue('H1','Expense Account');
+		$spreadsheet->getActiveSheet()->setCellValue('I1','Expense Amount');		
 		
 		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);		
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(20);			
@@ -142,10 +157,13 @@ class Import extends \Core\Controller
 		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);	
 		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(20);			
 		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(50);		
+		$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);		
+		$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);				
 
 		$vendors = Entities::findAll("PurchaseVendor");
 		$statuses = Entities::findall("PurchaseStatus");
 		$categories = Entities::findAll("PurchaseCategory");
+		$accounts = Entities::findAll("Account");
 		
 		
 		$x = 0;
@@ -165,7 +183,12 @@ class Import extends \Core\Controller
 			$z++;
 			$spreadsheet->getActiveSheet()->setCellValue('Z' . $z,$vendor->getName());			
 		}	
-				
+		
+		$w = 0;
+		foreach($accounts as $account){
+			$w++;
+			$spreadsheet->getActiveSheet()->setCellValue('W' . $w,$account->getName());			
+		}					
 
 		$validation = $spreadsheet->getActiveSheet()->getCell('C2')->getDataValidation();
 		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
@@ -181,9 +204,15 @@ class Import extends \Core\Controller
 		
 		$validation = $spreadsheet->getActiveSheet()->getCell('E2')->getDataValidation();
 		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);	
-		$validation->setFormula1('Worksheet!ZX$1:$Z$' . $z);
+		$validation->setFormula1('Worksheet!Z$1:$Z$' . $z);
 		$validation->setAllowBlank(true);		
 		$validation->setShowDropDown(true);			
+		
+		$validation = $spreadsheet->getActiveSheet()->getCell('H2')->getDataValidation();
+		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);	
+		$validation->setFormula1('Worksheet!W$1:$W$' . $w);
+		$validation->setAllowBlank(true);		
+		$validation->setShowDropDown(true);		
 		
 		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
 		ob_end_clean();
